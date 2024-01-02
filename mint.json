@@ -1,29 +1,38 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Swyftpay",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#654FF0",
+    "light": "#654FF0",
+    "dark": "#654FF0",
     "anchors": {
       "from": "#0D9373",
-      "to": "#07C983"
+      "to": "#654FF0"
+    },
+    "background": {
+      "dark": "#000000",
+      "light": "#ffffff"
     }
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:office@swyftpay.io"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://business.swyftpay.io"
   },
   "tabs": [
     {
@@ -51,15 +60,27 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "pages": [
+        "introduction",
+        "quickstart",
+        "development"
+      ]
     },
     {
       "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "pages": [
+        "essentials/markdown",
+        "essentials/code",
+        "essentials/images",
+        "essentials/settings",
+        "essentials/navigation"
+      ]
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
+      "pages": [
+        "api-reference/introduction"
+      ]
     },
     {
       "group": "Endpoint Examples",
@@ -71,8 +92,8 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/swyftpay_io",
+    "github": "https://github.com/Swerv-Ltd",
+    "linkedin": "https://www.linkedin.com/company/swervltd/"
   }
 }
