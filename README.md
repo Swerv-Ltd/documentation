@@ -1,30 +1,49 @@
-# Mintlify Starter Kit
+<div align="center">
+  <a href="https://swyftpay.io" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://avatars.githubusercontent.com/u/108650375?s=200&v=4">
+    <img src="https://avatars.githubusercontent.com/u/108650375?s=200&v=4" width="160" alt="Logo"/>
+  </picture>
+  </a>
+</div>
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+<h1 align="center">Neo bank for Nigerians 🇳🇬</h1>
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+<div align="center">
+Make swift payments in any currency with multiple payment options. Gain financial freedom.
+</div>
 
-### Development
+  <p align="center">
+    <br />
+    <a href="https://docs.swyftpay.io" rel="dofollow"><strong>Explore the docs »</strong></a>
+    <br />
+ </p>
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
+  <br/>
+  
+  <p align="center">  
+    <a href="https://twitter.com/swyftpay_io">X (Twitter)</a>
+    ·
+    <a href="https://www.linkedin.com/company/swervltd">Linkedin</a>
+    ·
+    <a href="https://docs.swyftpay.io/changelog">Changelog</a>
+  </p>
+
+### 👩‍💻 Docs Contribution
+
+First, install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) locally. To install, use the following command
 
 ```
 npm i -g mintlify
 ```
 
-Run the following command at the root of your documentation (where mint.json is)
+**Note**: Please install Node.js (version 18 or higher) before proceeding.
+
+Run the following command at the root of the documentation (where mint.json is) to preview the documentation changes
 
 ```
 mintlify dev
 ```
-
-### Publishing Changes
-
-Install our Github App to autopropagate changes from youre repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
 
 #### Troubleshooting
 

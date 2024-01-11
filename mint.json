@@ -38,13 +38,17 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "SDKs",
+      "url": "sdks"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Changelog",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "/changelog"
     },
     {
       "name": "Community",
@@ -62,18 +66,26 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
+        "authentication",
         "development"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Customers",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation"
+        "customers/markdown"
+      ]
+    },
+    {
+      "group": "Cards",
+      "pages": [
+        "cards/markdown"
+      ]
+    },
+    {
+      "group": "Webhook Events",
+      "pages": [
+        "webhooks/introduction"
       ]
     },
     {
@@ -83,11 +95,25 @@
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Customers",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/customers/get",
+        "api-reference/customers/create",
+        "api-reference/customers/delete"
+      ]
+    },
+    {
+      "group": "Cards",
+      "pages": [
+        "api-reference/cards/get",
+        "api-reference/cards/create",
+        "api-reference/cards/terminate"
+      ]
+    },
+    {
+      "group": "SDKs",
+      "pages": [
+        "sdks/introduction"
       ]
     }
   ],
