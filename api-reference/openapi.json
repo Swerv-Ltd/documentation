@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.swyftpay.io/api/v1"
     }
   ],
   "security": [
@@ -19,14 +19,23 @@
     }
   ],
   "paths": {
-    "/plants": {
+    "/customers": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "description": "Returns all customers",
         "parameters": [
           {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "Page Limit",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page size",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -35,19 +44,19 @@
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Customers response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "$ref": "#/components/schemas/Customer"
                   }
                 }
               }
             }
           },
-          "400": {
+          "500": {
             "description": "Unexpected error",
             "content": {
               "application/json": {
@@ -60,30 +69,30 @@
         }
       },
       "post": {
-        "description": "Creates a new plant in the store",
+        "description": "Creates a new customer",
         "requestBody": {
-          "description": "Plant to add to the store",
+          "description": "Customer to add",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPlant"
+                "$ref": "#/components/schemas/NewCustomer"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "plant response",
+          "201": {
+            "description": "Customer response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/Customer"
                 }
               }
             }
           },
-          "400": {
+          "500": {
             "description": "unexpected error",
             "content": {
               "application/json": {
@@ -96,27 +105,170 @@
         }
       }
     },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
+    "/wallets": {
+      "get": {
+        "description": "Returns all wallets",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
+            "name": "limit",
+            "in": "query",
+            "description": "Page Limit",
             "schema": {
               "type": "integer",
-              "format": "int64"
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
+          "200": {
+            "description": "Wallets response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wallet"
+                  }
+                }
+              }
+            }
           },
-          "400": {
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "description": "Returns all transactions",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Page Limit",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transactions response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "get": {
+        "description": "Get transaction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of transaction",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "description": "Get customers",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of customer",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Customer"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "unexpected error",
             "content": {
               "application/json": {
@@ -132,53 +284,265 @@
   },
   "components": {
     "schemas": {
-      "Plant": {
+      "Wallet": {
         "required": [
           "name"
         ],
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The name of the plant",
+          "id": {
+            "description": "Wallet ID",
             "type": "string"
           },
-          "tag": {
-            "description": "Tag to specify the type",
+          "business_id": {
+            "description": "Business ID",
+            "type": "string"
+          },
+          "parent_id": {
+            "description": "Parent Wallet ID",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "Customer ID",
+            "type": "string"
+          },
+          "account_name": {
+            "description": "Account Name",
+            "type": "string"
+          },
+          "account_number": {
+            "description": "Account number",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          },
+          "bank_name": {
+            "description": "Bank Name",
+            "type": "string"
+          },
+          "routing_number": {
+            "description": "Routing Number",
+            "type": "string"
+          },
+          "account_type": {
+            "description": "Account Type",
+            "type": "string"
+          },
+          "bank_address": {
+            "description": "Bank Address",
+            "type": "string"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "integer",
+            "format": "float64"
+          },
+          "total_received": {
+            "description": "Total Received",
+            "type": "integer",
+            "format": "float64"
+          },
+          "pending_balance": {
+            "description": "Pending Balance",
+            "type": "integer",
+            "format": "float64"
+          },
+          "created_at": {
+            "description": "Created at",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Update at",
             "type": "string"
           }
         }
       },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
+      "Transaction": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Wallet ID",
+            "type": "string"
           },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
+          "business_id": {
+            "description": "Business ID",
+            "type": "string"
+          },
+          "asset_id": {
+            "description": "Asset Id",
+            "type": "string"
+          },
+          "wallet_id": {
+            "description": "Wallet ID",
+            "type": "string"
+          },
+          "sub_wallet_id": {
+            "description": "Sub-wallet ID",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "Customer ID",
+            "type": "string"
+          },
+          "reference": {
+            "description": "Reference",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount",
+            "type": "integer",
+            "format": "float64"
+          },
+          "charges": {
+            "description": "Charges",
+            "type": "integer",
+            "format": "float64"
+          },
+          "fiat_rate": {
+            "description": "Fiat Rate",
+            "type": "integer",
+            "format": "float64"
+          },
+          "account_name": {
+            "description": "Account Name",
+            "type": "string"
+          },
+          "account_number": {
+            "description": "Account number",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          },
+          "bank_name": {
+            "description": "Bank Name",
+            "type": "string"
+          },
+          "detail": {
+            "description": "Summary",
+            "type": "string"
+          },
+          "category": {
+            "description": "Category",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type",
+            "type": "string"
+          },
+          "session_id": {
+            "description": "Session ID",
+            "type": "string"
+          },
+          "report": {
+            "description": "Report",
+            "type": "boolean"
+          },
+          "report_message": {
+            "description": "Report message",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Created at",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Update at",
+            "type": "string"
           }
-        ]
+        }
+      },
+      "Customer": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Customer ID",
+            "type": "string"
+          },
+          "firstname": {
+            "description": "Customer firstname",
+            "type": "string"
+          },
+          "lastname": {
+            "description": "Customer lastname",
+            "type": "string"
+          },
+          "middlename": {
+            "description": "Customer middlename",
+            "type": "string"
+          },
+          "country": {
+            "description": "Customer country e.g Nigeria",
+            "type": "string"
+          },
+          "email": {
+            "description": "Customer email",
+            "type": "string"
+          },
+          "is_blacklisted": {
+            "description": "Is customer blacklisted",
+            "type": "string"
+          },
+          "created_at": {
+            "description": "Created at",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Update at",
+            "type": "string"
+          }
+        }
+      },
+      "NewCustomer": {
+        "required": [
+          "email",
+          "lastname",
+          "firstname",
+          "country"
+        ],
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "description": "Customer firstname",
+            "type": "string"
+          },
+          "lastname": {
+            "description": "Customer lastname",
+            "type": "string"
+          },
+          "middlename": {
+            "description": "Customer middlename",
+            "type": "string"
+          },
+          "country": {
+            "description": "Customer country e.g Nigeria",
+            "type": "string"
+          },
+          "email": {
+            "description": "Customer email",
+            "type": "string"
+          }
+        }
       },
       "Error": {
         "required": [
-          "error",
           "message"
         ],
         "type": "object",
         "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
           "message": {
             "type": "string"
           }

@@ -1,14 +1,21 @@
 ---
-title: 'Get Customer'
-openapi: 'GET /customers/{id}'
+title: 'Blacklist Customer'
+openapi: 'PUT /customers/{id}'
 ---
 
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/customers/{id} \
+curl -X PUT https://api.swyftpay.io/api/v1/customers/{id} \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstname": "user",
+    "lastname": "user",
+    "middlename": "user",
+    "country": "user",
+    "email": "user@mailinator.com"
+  }'
 ```
 
 ```javascript Node.js
@@ -21,7 +28,9 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.customer.get('{id}')
+await swyftpay.customer.blacklist({
+    customerId: "user"
+})
 ```
 
 ```php PHP
@@ -29,7 +38,9 @@ use SwyftpayClient\SDK\Client;
 
 $swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
 
-$swyftpayClient->customer->get('{id}')->toArray();
+$swyftpayClient->customer->blacklist([
+    "customerId" => "user"
+])->toArray();
 ```
 
 
@@ -53,8 +64,11 @@ func main() {
         SecretKey: secretKey
     })
 
+    data := swyftpayClient.CustomerBlacklist{
+        CustomerId: "user"
+    }
 
-	resp, err := swyftpayClient.customer.get(ctx, '{id}')
+	resp, err := swyftpayClient.customer.blacklist(ctx, data)
 
 	if err != nil {
 		log.Fatal("novu error", err.Error())
@@ -64,3 +78,4 @@ func main() {
 ```
 
 </RequestExample>
+

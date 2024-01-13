@@ -1,12 +1,13 @@
 ---
-title: 'Get Customer'
-openapi: 'GET /customers/{id}'
+title: 'Get All Wallets'
+openapi: 'GET /wallets'
 ---
 
+{/* <Snippet file="authorization.mdx" /> */}
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/customers/{id} \
+curl -X GET https://api.swyftpay.io/api/v1/wallets \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -21,7 +22,7 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.customer.get('{id}')
+await swyftpay.wallet.gets()
 ```
 
 ```php PHP
@@ -29,7 +30,7 @@ use SwyftpayClient\SDK\Client;
 
 $swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
 
-$swyftpayClient->customer->get('{id}')->toArray();
+$swyftpayClient->wallet->gets()->toArray();
 ```
 
 
@@ -54,7 +55,7 @@ func main() {
     })
 
 
-	resp, err := swyftpayClient.customer.get(ctx, '{id}')
+	resp, err := swyftpayClient.wallet.gets(ctx)
 
 	if err != nil {
 		log.Fatal("novu error", err.Error())

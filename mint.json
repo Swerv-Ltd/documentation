@@ -48,7 +48,7 @@
     {
       "name": "Changelog",
       "icon": "book-open-cover",
-      "url": "/changelog"
+      "url": "https://docs.swervpay.com/changelog"
     },
     {
       "name": "Community",
@@ -97,9 +97,10 @@
     {
       "group": "Customers",
       "pages": [
+        "api-reference/customers/get-all-customers",
         "api-reference/customers/get",
         "api-reference/customers/create",
-        "api-reference/customers/delete"
+        "api-reference/customers/blacklist"
       ]
     },
     {
@@ -108,6 +109,19 @@
         "api-reference/cards/get",
         "api-reference/cards/create",
         "api-reference/cards/terminate"
+      ]
+    },
+    {
+      "group": "Wallets",
+      "pages": [
+        "api-reference/wallets/get-all-wallets"
+      ]
+    },
+    {
+      "group": "Transactions",
+      "pages": [
+        "api-reference/transactions/get-all-transactions",
+        "api-reference/transactions/get"
       ]
     },
     {

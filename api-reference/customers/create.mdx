@@ -2,3 +2,108 @@
 title: 'Create Customer'
 openapi: 'POST /customers'
 ---
+
+{/* <Snippet file="authorization.mdx" /> */}
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swyftpay.io/api/v1/customers \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstname": "user",
+    "lastname": "user",
+    "middlename": "user",
+    "country": "user",
+    "email": "user@mailinator.com"
+  }'
+```
+
+```javascript Node.js
+import { SwyftpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swyftpay = new SwyftpayClient(config);
+
+await swyftpay.customer.create({
+    firstname: "user",
+    lastname: "user",
+    middlename: "user",
+    country: "user",
+    email: "user@mailinator.com"
+})
+```
+
+```php PHP
+use SwyftpayClient\SDK\Client;
+
+$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+
+$swyftpayClient->customer->create([
+    "firstname" => "user",
+    "lastname" => "user",
+    "middlename" => "user",
+    "country" => "user",
+    "email" => "user@mailinator.com"
+])->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	"log"
+)
+
+func main() {
+	secretKey := "<SECRET_KEY>"
+    businessId := "<BUSINESS_ID>"
+	ctx := context.Background()
+
+	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+        BusinessId: businessId
+        SecretKey: secretKey
+    })
+
+
+    data := swyftpayClient.CustomerCreate{
+        Firstname: "user",
+        Lastname: "user",
+        Middlename: "user",
+        Country: "user",
+        Email: "user@mailinator.com"
+    }
+
+	resp, err := swyftpayClient.customer.create(ctx, data)
+
+	if err != nil {
+		log.Fatal("novu error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
+
+{/* <ResponseExample>
+
+```json Response
+{
+    "data": {
+        "acknowledged": true,
+        "status": "processed",
+        "transactionId": "string"
+    }
+}
+```
+
+</ResponseExample> */}
