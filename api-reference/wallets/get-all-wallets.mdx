@@ -58,7 +58,7 @@ func main() {
 	resp, err := swyftpayClient.wallet.gets(ctx)
 
 	if err != nil {
-		log.Fatal("novu error", err.Error())
+		log.Fatal("error", err.Error())
 		return
 	}
 }

@@ -106,6 +106,7 @@
     {
       "group": "Cards",
       "pages": [
+        "api-reference/cards/get-all-cards",
         "api-reference/cards/get",
         "api-reference/cards/create",
         "api-reference/cards/terminate"

@@ -105,6 +105,168 @@
         }
       }
     },
+    "/cards": {
+      "get": {
+        "description": "Returns all cards",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Page Limit",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cards response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Card"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Creates a new card",
+        "requestBody": {
+          "description": "Card to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCard"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Card response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Card"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/{id}": {
+      "get": {
+        "description": "Get card",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Card",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Card response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Card"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/{id}/terminate": {
+      "put": {
+        "description": "Terminate card",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Card",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/wallets": {
       "get": {
         "description": "Returns all wallets",
@@ -245,7 +407,7 @@
     },
     "/customers/{id}": {
       "get": {
-        "description": "Get customers",
+        "description": "Get customer",
         "parameters": [
           {
             "name": "id",
@@ -280,10 +442,155 @@
           }
         }
       }
+    },
+    "/customers/{id}/blacklist": {
+      "put": {
+        "description": "Blacklist customer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of Customer",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Card": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Card ID",
+            "type": "string"
+          },
+          "business_id": {
+            "description": "Business ID",
+            "type": "string"
+          },
+          "parent_id": {
+            "description": "Parent Wallet ID",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "Customer ID",
+            "type": "string"
+          },
+          "address_postal_code": {
+            "description": "Address Postal Code",
+            "type": "string"
+          },
+          "address_street": {
+            "description": "Address Street",
+            "type": "string"
+          },
+          "address_city": {
+            "description": "Address City",
+            "type": "string"
+          },
+          "address_state": {
+            "description": "Address State",
+            "type": "string"
+          },
+          "address_country": {
+            "description": "Address Country",
+            "type": "string"
+          },
+          "status": {
+            "description": "Card Status",
+            "type": "string"
+          },
+          "type": {
+            "description": "Card Type",
+            "type": "string"
+          },
+          "issuer": {
+            "description": "Card Issuer",
+            "type": "string"
+          },
+          "card_expiry": {
+            "description": "Card Expiry",
+            "type": "string"
+          },
+          "card_cvv": {
+            "description": "Card CVV",
+            "type": "string"
+          },
+          "card_name": {
+            "description": "Card Name",
+            "type": "string"
+          },
+          "card_numbeer": {
+            "description": "Card Number",
+            "type": "string"
+          },
+          "masked_pan": {
+            "description": "Masked PAN",
+            "type": "string"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "integer",
+            "format": "float64"
+          },
+          "created_at": {
+            "description": "Created at",
+            "type": "string"
+          },
+          "updated_at": {
+            "description": "Update at",
+            "type": "string"
+          }
+        }
+      },
+      "NewCard": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "business_id": {
+            "description": "Business ID",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "Customer ID",
+            "type": "string"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "integer",
+            "format": "float64"
+          }
+        }
+      },
       "Wallet": {
         "required": [
           "name"
@@ -429,11 +736,11 @@
             "type": "string"
           },
           "category": {
-            "description": "Category",
+            "description": "Category e.g DEPOSIT, SWAP, REVERSAL, REFUND, TRANSFER",
             "type": "string"
           },
           "type": {
-            "description": "Type",
+            "description": "Type e.g DEBIT & CREDIT",
             "type": "string"
           },
           "session_id": {
@@ -449,7 +756,7 @@
             "type": "string"
           },
           "status": {
-            "description": "Status",
+            "description": "Status e.g  PENDING, QUEUED, CONFIRMED, COMPLETED, PROCESSING, PROCESSED, FAILED",
             "type": "string"
           },
           "created_at": {
@@ -533,6 +840,17 @@
           },
           "email": {
             "description": "Customer email",
+            "type": "string"
+          }
+        }
+      },
+      "Success": {
+        "required": [
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "message": {
             "type": "string"
           }
         }

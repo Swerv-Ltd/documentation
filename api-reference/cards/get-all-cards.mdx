@@ -1,12 +1,13 @@
 ---
-title: 'Blacklist Customer'
-openapi: 'PUT /customers/{id}/blacklist'
+title: 'Get All Cards'
+openapi: 'GET /cards'
 ---
 
+{/* <Snippet file="authorization.mdx" /> */}
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/customers/{id}/blacklist \
+curl -X POST https://api.swyftpay.io/api/v1/cards \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -21,9 +22,7 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.customer.blacklist({
-    customerId: "user"
-})
+await swyftpay.card.gets()
 ```
 
 ```php PHP
@@ -31,9 +30,7 @@ use SwyftpayClient\SDK\Client;
 
 $swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
 
-$swyftpayClient->customer->blacklist([
-    "customerId" => "user"
-])->toArray();
+$swyftpayClient->card->gets()->toArray();
 ```
 
 
@@ -53,15 +50,12 @@ func main() {
 	ctx := context.Background()
 
 	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
-        BusinessId: businessId
-        SecretKey: secretKey
-    })
+      BusinessId: businessId
+      SecretKey: secretKey
+  })
 
-    data := swyftpayClient.CustomerBlacklist{
-        CustomerId: "user"
-    }
 
-	resp, err := swyftpayClient.customer.blacklist(ctx, data)
+	resp, err := swyftpayClient.card.gets(ctx)
 
 	if err != nil {
 		log.Fatal("error", err.Error())
@@ -71,4 +65,3 @@ func main() {
 ```
 
 </RequestExample>
-
