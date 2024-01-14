@@ -1,0 +1,66 @@
+---
+title: 'Get banks'
+openapi: 'GET /banks'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swyftpay.io/api/v1/banks \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwyftpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swyftpay = new SwyftpayClient(config);
+
+await swyftpay.other.banks()
+```
+
+```php PHP
+use SwyftpayClient\SDK\Client;
+
+$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+
+$swyftpayClient->other->banks()->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	"log"
+)
+
+func main() {
+	secretKey := "<SECRET_KEY>"
+    businessId := "<BUSINESS_ID>"
+	ctx := context.Background()
+
+	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+        BusinessId: businessId
+        SecretKey: secretKey
+    })
+
+
+	resp, err := swyftpayClient.other.banks()
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>

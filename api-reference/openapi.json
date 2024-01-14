@@ -480,10 +480,262 @@
           }
         }
       }
+    },
+    "/payouts/{id}": {
+      "get": {
+        "description": "Get payout",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of payout",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payout response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payouts": {
+      "post": {
+        "description": "Creates a new payout",
+        "requestBody": {
+          "description": "Payout details",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPayout"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Payout response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Success"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resolve-account-number": {
+      "post": {
+        "description": "Resolve bank account number",
+        "requestBody": {
+          "description": "Account number to resolve",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewAccountNumber"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountNumber"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/banks": {
+      "get": {
+        "description": "Returns all banks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Page Limit",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page size",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Banks response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Bank"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "NewAccountNumber": {
+        "required": [
+          "account_number",
+          "bank_code"
+        ],
+        "type": "object",
+        "properties": {
+          "account_number": {
+            "description": "Account Number",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          }
+        }
+      },
+      "AccountNumber": {
+        "type": "object",
+        "properties": {
+          "account_name": {
+            "description": "Account Name",
+            "type": "string"
+          },
+          "bank_name": {
+            "description": "Bank Name",
+            "type": "string"
+          },
+          "account_number": {
+            "description": "Account Number",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          }
+        }
+      },
+      "Bank": {
+        "type": "object",
+        "properties": {
+          "bank_name": {
+            "description": "Bank Name",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          }
+        }
+      },
+      "NewPayout": {
+        "required": [
+          "amount",
+          "account_number",
+          "account_name",
+          "bank_code",
+          "currency"
+        ],
+        "type": "object",
+        "properties": {
+          "amount": {
+            "description": "Amount",
+            "type": "integer",
+            "format": "float64"
+          },
+          "account_number": {
+            "description": "Account Number",
+            "type": "string"
+          },
+          "bank_code": {
+            "description": "Bank Code",
+            "type": "string"
+          },
+          "currency": {
+            "description": "Currency e.g NGN",
+            "type": "string"
+          },
+          "narration": {
+            "description": "Narration",
+            "type": "string"
+          },
+          "reference": {
+            "description": "Reference",
+            "type": "string"
+          }
+        }
+      },
       "Card": {
         "type": "object",
         "properties": {

@@ -104,6 +104,13 @@
       ]
     },
     {
+      "group": "FX",
+      "pages": [
+        "api-reference/fx/get",
+        "api-reference/fx/create"
+      ]
+    },
+    {
       "group": "Cards",
       "pages": [
         "api-reference/cards/get-all-cards",
@@ -123,6 +130,20 @@
       "pages": [
         "api-reference/transactions/get-all-transactions",
         "api-reference/transactions/get"
+      ]
+    },
+    {
+      "group": "Payouts",
+      "pages": [
+        "api-reference/payouts/create",
+        "api-reference/payouts/get"
+      ]
+    },
+    {
+      "group": "Others",
+      "pages": [
+        "api-reference/others/get-banks",
+        "api-reference/others/resolve-account-number"
       ]
     },
     {

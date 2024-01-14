@@ -1,0 +1,116 @@
+---
+title: 'Create payout'
+openapi: 'POST /payouts'
+---
+
+{/* <Snippet file="authorization.mdx" /> */}
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swyftpay.io/api/v1/payouts \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "bankCode": "user",
+    "accountNumber": "user",
+    "amount": "user",
+    "currency": "NGN",
+    "reference": "user",
+    "naration": "user",
+  }'
+```
+
+```javascript Node.js
+import { SwyftpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swyftpay = new SwyftpayClient(config);
+
+await swyftpay.payout.create({
+    bankCode: "user",
+    accountNumber: "user",
+    amount: "user",
+    currency: "NGN",
+    reference: "user",
+    naration: "user",
+    email: "user@mailinator.com"
+})
+```
+
+```php PHP
+use SwyftpayClient\SDK\Client;
+
+$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+
+$swyftpayClient->payout->create([
+    "bankCode" => "user",
+    "accountNumber" => "user",
+    "amount" => "user",
+    "currency" => "NGN",
+    "reference" => "user",
+    "naration" => "user",
+    "email" => "user@mailinator.com"
+])->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	"log"
+)
+
+func main() {
+	secretKey := "<SECRET_KEY>"
+    businessId := "<BUSINESS_ID>"
+	ctx := context.Background()
+
+	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+        BusinessId: businessId
+        SecretKey: secretKey
+    })
+
+
+    data := swyftpayClient.PayoutCreate{
+        BankCode: "user",
+        AccountNumber: "user",
+        Amount: "user",
+        Currency: "NGN",
+        Reference: "user",
+        Naration: "user",
+        Email: "user@mailinator.com"
+    }
+
+	resp, err := swyftpayClient.payout.create(ctx, data)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
+
+{/* <ResponseExample>
+
+```json Response
+{
+    "data": {
+        "acknowledged": true,
+        "status": "processed",
+        "transactionId": "string"
+    }
+}
+```
+
+</ResponseExample> */}
