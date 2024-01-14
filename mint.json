@@ -116,6 +116,9 @@
         "api-reference/cards/get-all-cards",
         "api-reference/cards/get",
         "api-reference/cards/create",
+        "api-reference/cards/fund-card",
+        "api-reference/cards/withdraw-from-card",
+        "api-reference/cards/freeze",
         "api-reference/cards/terminate"
       ]
     },

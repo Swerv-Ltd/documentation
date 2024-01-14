@@ -1,18 +1,19 @@
 ---
-title: 'Resolve Account Number'
-openapi: 'POST /resolve-account-number'
+title: 'Withdraw from Card'
+openapi: 'POST /cards/{id}/withdraw'
 ---
+
+{/* <Snippet file="authorization.mdx" /> */}
 
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/resolve-account-number \
+curl -X POST https://api.swyftpay.io/api/v1/cards/{id}/withdraw \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
-    -d '{
-        "account_number": "user",
-        "bank_code": "user"
-    }'
+  -d '{
+    "amount": 1000
+  }'
 ```
 
 ```javascript Node.js
@@ -25,9 +26,9 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.other.resolveAccountNumber({
-    'accountNumber': 'user',
-    'bankCode': 'user'
+await swyftpay.card.withdraw({
+    cardId: "user",
+    amount: "user"
 })
 ```
 
@@ -36,9 +37,9 @@ use SwyftpayClient\SDK\Client;
 
 $swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
 
-$swyftpayClient->other->resolveAccountNumber([
-    'accountNumber' => 'user',
-    'bankCode' => 'user
+$swyftpayClient->card->withdraw([
+    "cardId" => "user",
+    "amount" => "user"
 ])->toArray();
 ```
 
@@ -64,13 +65,12 @@ func main() {
     })
 
 
-    data := swyftpayClient.ResolveAccountNumber{
-        AccountNumber: "user",
-        BankCode: "user"
+    data := swyftpayClient.CardWithdraw{
+        CardId: "user",
+        Amount: 1000,
     }
 
-
-	resp, err := swyftpayClient.other.resolveAccountNumber(ctx, data)
+	resp, err := swyftpayClient.card.withdraw(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())
@@ -80,3 +80,17 @@ func main() {
 ```
 
 </RequestExample>
+
+{/* <ResponseExample>
+
+```json Response
+{
+    "data": {
+        "acknowledged": true,
+        "status": "processed",
+        "transactionId": "string"
+    }
+}
+```
+
+</ResponseExample> */}
