@@ -534,7 +534,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Payout response",
             "content": {
               "application/json": {
@@ -572,7 +572,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Success response",
             "content": {
               "application/json": {
@@ -1053,7 +1053,7 @@
           },
           "is_blacklisted": {
             "description": "Is customer blacklisted",
-            "type": "string"
+            "type": "boolean"
           },
           "created_at": {
             "description": "Created at",
