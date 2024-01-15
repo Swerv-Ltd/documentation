@@ -71,21 +71,43 @@
       ]
     },
     {
-      "group": "Customers",
+      "group": "Wallet",
       "pages": [
-        "customers/markdown"
+        "wallet/introduction"
       ]
     },
     {
-      "group": "Cards",
+      "group": "Customer",
       "pages": [
-        "cards/markdown"
+        "customer/introduction"
+      ]
+    },
+    {
+      "group": "Card",
+      "pages": [
+        "card/introduction"
+      ]
+    },
+    {
+      "group": "FX",
+      "pages": [
+        "fx/introduction"
+      ]
+    },
+    {
+      "group": "Payout",
+      "pages": [
+        "payout/introduction"
       ]
     },
     {
       "group": "Webhook Events",
       "pages": [
-        "webhooks/introduction"
+        "webhooks/introduction",
+        "webhooks/customer",
+        "webhooks/card",
+        "webhooks/payout",
+        "webhooks/wallet"
       ]
     },
     {
