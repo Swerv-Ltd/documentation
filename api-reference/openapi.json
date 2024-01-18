@@ -1,1129 +1,1797 @@
 {
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swyftpay Developer API Specification",
+        "version": "0.0.0"
     },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://api.swyftpay.io/api/v1"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/customers": {
-      "get": {
-        "description": "Returns all customers",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Page Limit",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page size",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Customers response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Customer"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+    "servers": [
+        {
+            "url": "https://api.swervpay.co/v1"
         }
-      },
-      "post": {
-        "description": "Creates a new customer",
-        "requestBody": {
-          "description": "Customer to add",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewCustomer"
-              }
+    ],
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ],
+    "paths": {
+        "/banks": {
+            "get": {
+                "tags": [
+                    "banks"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBank"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "banks"
             }
-          },
-          "required": true
         },
-        "responses": {
-          "201": {
-            "description": "Customer response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Customer"
-                }
-              }
+        "/business": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusiness"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getBusiness"
             }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/cards": {
-      "get": {
-        "description": "Returns all cards",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Page Limit",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page size",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cards response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Card"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new card",
-        "requestBody": {
-          "description": "Card to add",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewCard"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "201": {
-            "description": "Card response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Card"
-                }
-              }
+        "/cards": {
+            "get": {
+                "tags": [
+                    "cards"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page to return.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 30
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessVirtualCard"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "cardList"
             }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/cards/{id}": {
-      "get": {
-        "description": "Get card",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of Card",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Card response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Card"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/cards/{id}/terminate": {
-      "put": {
-        "description": "Terminate card",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of Card",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/wallets": {
-      "get": {
-        "description": "Returns all wallets",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Page Limit",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page size",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Wallets response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Wallet"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions": {
-      "get": {
-        "description": "Returns all transactions",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Page Limit",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page size",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transactions response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Transaction"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions/{id}": {
-      "get": {
-        "description": "Get transaction",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of transaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Transaction response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Transaction"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers/{id}": {
-      "get": {
-        "description": "Get customer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of customer",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Customer response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Customer"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/customers/{id}/blacklist": {
-      "put": {
-        "description": "Blacklist customer",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of Customer",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/payouts/{id}": {
-      "get": {
-        "description": "Get payout",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of payout",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Payout response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Transaction"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/payouts": {
-      "post": {
-        "description": "Creates a new payout",
-        "requestBody": {
-          "description": "Payout details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPayout"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Payout response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Success"
-                }
-              }
+        "/cards/{id}": {
+            "post": {
+                "tags": [
+                    "cards"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessVirtualCard"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getCard"
             }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/resolve-account-number": {
-      "post": {
-        "description": "Resolve bank account number",
-        "requestBody": {
-          "description": "Account number to resolve",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewAccountNumber"
-              }
-            }
-          },
-          "required": true
         },
-        "responses": {
-          "200": {
-            "description": "Success response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountNumber"
-                }
-              }
+        "/cards/{id}/freeze": {
+            "post": {
+                "tags": [
+                    "card.freeze"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "freezeCard"
             }
-          },
-          "500": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
+        },
+        "/cards/{id}/fund": {
+            "post": {
+                "tags": [
+                    "customer.blacklist"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiFundCardRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "fundCard"
             }
-          }
+        },
+        "/cards/{id}/terminate": {
+            "post": {
+                "tags": [
+                    "card.terminate"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "terminateCard"
+            }
+        },
+        "/cards/{id}/withdraw": {
+            "post": {
+                "tags": [
+                    "card.withdrawal"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiFundCardRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "cardWithdrawal"
+            }
+        },
+        "/customers": {
+            "get": {
+                "tags": [
+                    "customers"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page to return.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 30
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessCustomer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "customerList"
+            },
+            "post": {
+                "tags": [
+                    "customers"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CustomerCreateInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessCustomer"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "newCustomer"
+            }
+        },
+        "/customers/{id}": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessCustomer"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getCustomer"
+            }
+        },
+        "/customers/{id}/blacklist": {
+            "post": {
+                "tags": [
+                    "customer.blacklist"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "customerBlacklist"
+            }
+        },
+        "/customers/{id}/kyc": {
+            "post": {
+                "tags": [
+                    "customer.kyc"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiCustomerKycRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "customerKyc"
+            }
+        },
+        "/fx/exchange": {
+            "post": {
+                "tags": [
+                    "fx.exchange"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesCreateExchangeRateInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "createExchange"
+            }
+        },
+        "/fx/rate": {
+            "post": {
+                "tags": [
+                    "fx.rate"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesCreateExchangeRateInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getExchangeRate"
+            }
+        },
+        "/payouts": {
+            "post": {
+                "tags": [
+                    "payouts"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesCreatePayoutInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "createPayout"
+            }
+        },
+        "/payouts/{id}": {
+            "get": {
+                "tags": [
+                    "payout"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessTransaction"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getPayout"
+            }
+        },
+        "/resolve-account-number": {
+            "post": {
+                "tags": [
+                    "bank.account"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesBankAccountInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBankAccountResolver"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "resolveAccount"
+            }
+        },
+        "/transactions": {
+            "get": {
+                "tags": [
+                    "transactions"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page to return.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 30
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessTransaction"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "transactionList"
+            }
+        },
+        "/transactions/{id}": {
+            "get": {
+                "tags": [
+                    "transactions"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "307": {
+                        "description": "Temporary Redirect",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessTransaction"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "getTransaction"
+            }
+        },
+        "/wallets": {
+            "get": {
+                "tags": [
+                    "transactions"
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page to return.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 100,
+                            "minimum": 1,
+                            "type": "integer",
+                            "default": 30
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessWallet"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "walletList"
+            }
         }
-      }
     },
-    "/banks": {
-      "get": {
-        "description": "Returns all banks",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Page Limit",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page size",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Banks response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Bank"
-                  }
+    "components": {
+        "schemas": {
+            "CustomerCreateInput": {
+                "type": "object",
+                "properties": {
+                    "country": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "type": "string"
+                    },
+                    "middlename": {
+                        "type": "string"
+                    }
                 }
-              }
-            }
-          },
-          "500": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "OpenapiCustomerKycRequest": {
+                "type": "object",
+                "properties": {
+                    "document": {
+                        "$ref": "#/components/schemas/TypesTier2KycInput"
+                    },
+                    "information": {
+                        "$ref": "#/components/schemas/TypesTier1KycInput"
+                    },
+                    "tier": {
+                        "type": "string"
+                    }
                 }
-              }
+            },
+            "OpenapiFundCardRequest": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "ResponseSuccessResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBank": {
+                "type": "object",
+                "properties": {
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBankAccountInput": {
+                "type": "object",
+                "properties": {
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBankAccountResolver": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBusiness": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "slug": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessCustomer": {
+                "type": "object",
+                "properties": {
+                    "business_id": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "is_blacklisted": {
+                        "type": "boolean"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "middle_name": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessTransaction": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "asset_id": {
+                        "type": "string"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "business_id": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "charges": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "fiat_rate": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "report": {
+                        "type": "boolean"
+                    },
+                    "report_message": {
+                        "type": "string"
+                    },
+                    "session_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "sub_wallet_id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "wallet_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBusinessVirtualCard": {
+                "type": "object",
+                "properties": {
+                    "business_id": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessWallet": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "account_type": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "asset_id": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
+                    "bank_address": {
+                        "type": "string"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "business_id": {
+                        "type": "string"
+                    },
+                    "can_received": {
+                        "type": "boolean"
+                    },
+                    "can_send": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "is_blocked": {
+                        "type": "boolean"
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "parent_wallet_id": {
+                        "type": "string"
+                    },
+                    "pending_balance": {
+                        "type": "number"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "routing_number": {
+                        "type": "string"
+                    },
+                    "total_received": {
+                        "type": "number"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesCreateExchangeRateInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "from_currency": {
+                        "type": "string"
+                    },
+                    "to_currency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesCreatePayoutInput": {
+                "type": "object",
+                "properties": {
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "narration": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesTier1KycInput": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string"
+                    },
+                    "bvn": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "postal_code": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesTier2KycInput": {
+                "type": "object",
+                "properties": {
+                    "document": {
+                        "type": "string"
+                    },
+                    "document_number": {
+                        "type": "string"
+                    },
+                    "document_type": {
+                        "type": "string"
+                    },
+                    "passport": {
+                        "type": "string"
+                    }
+                }
+            },
+            "UsererrorError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "values": {
+                        "type": "object",
+                        "additionalProperties": {}
+                    }
+                }
             }
-          }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
         }
-      }
     }
-  },
-  "components": {
-    "schemas": {
-      "NewAccountNumber": {
-        "required": [
-          "account_number",
-          "bank_code"
-        ],
-        "type": "object",
-        "properties": {
-          "account_number": {
-            "description": "Account Number",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          }
-        }
-      },
-      "AccountNumber": {
-        "type": "object",
-        "properties": {
-          "account_name": {
-            "description": "Account Name",
-            "type": "string"
-          },
-          "bank_name": {
-            "description": "Bank Name",
-            "type": "string"
-          },
-          "account_number": {
-            "description": "Account Number",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          }
-        }
-      },
-      "Bank": {
-        "type": "object",
-        "properties": {
-          "bank_name": {
-            "description": "Bank Name",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          }
-        }
-      },
-      "NewPayout": {
-        "required": [
-          "amount",
-          "account_number",
-          "account_name",
-          "bank_code",
-          "currency"
-        ],
-        "type": "object",
-        "properties": {
-          "amount": {
-            "description": "Amount",
-            "type": "integer",
-            "format": "float64"
-          },
-          "account_number": {
-            "description": "Account Number",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          },
-          "currency": {
-            "description": "Currency e.g NGN",
-            "type": "string"
-          },
-          "narration": {
-            "description": "Narration",
-            "type": "string"
-          },
-          "reference": {
-            "description": "Reference",
-            "type": "string"
-          }
-        }
-      },
-      "Card": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Card ID",
-            "type": "string"
-          },
-          "business_id": {
-            "description": "Business ID",
-            "type": "string"
-          },
-          "parent_id": {
-            "description": "Parent Wallet ID",
-            "type": "string"
-          },
-          "customer_id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "address_postal_code": {
-            "description": "Address Postal Code",
-            "type": "string"
-          },
-          "address_street": {
-            "description": "Address Street",
-            "type": "string"
-          },
-          "address_city": {
-            "description": "Address City",
-            "type": "string"
-          },
-          "address_state": {
-            "description": "Address State",
-            "type": "string"
-          },
-          "address_country": {
-            "description": "Address Country",
-            "type": "string"
-          },
-          "status": {
-            "description": "Card Status",
-            "type": "string"
-          },
-          "type": {
-            "description": "Card Type",
-            "type": "string"
-          },
-          "issuer": {
-            "description": "Card Issuer",
-            "type": "string"
-          },
-          "card_expiry": {
-            "description": "Card Expiry",
-            "type": "string"
-          },
-          "card_cvv": {
-            "description": "Card CVV",
-            "type": "string"
-          },
-          "card_name": {
-            "description": "Card Name",
-            "type": "string"
-          },
-          "card_numbeer": {
-            "description": "Card Number",
-            "type": "string"
-          },
-          "masked_pan": {
-            "description": "Masked PAN",
-            "type": "string"
-          },
-          "balance": {
-            "description": "Balance",
-            "type": "integer",
-            "format": "float64"
-          },
-          "created_at": {
-            "description": "Created at",
-            "type": "string"
-          },
-          "updated_at": {
-            "description": "Update at",
-            "type": "string"
-          }
-        }
-      },
-      "NewCard": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "business_id": {
-            "description": "Business ID",
-            "type": "string"
-          },
-          "customer_id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "balance": {
-            "description": "Balance",
-            "type": "integer",
-            "format": "float64"
-          }
-        }
-      },
-      "Wallet": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Wallet ID",
-            "type": "string"
-          },
-          "business_id": {
-            "description": "Business ID",
-            "type": "string"
-          },
-          "parent_id": {
-            "description": "Parent Wallet ID",
-            "type": "string"
-          },
-          "customer_id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "account_name": {
-            "description": "Account Name",
-            "type": "string"
-          },
-          "account_number": {
-            "description": "Account number",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          },
-          "bank_name": {
-            "description": "Bank Name",
-            "type": "string"
-          },
-          "routing_number": {
-            "description": "Routing Number",
-            "type": "string"
-          },
-          "account_type": {
-            "description": "Account Type",
-            "type": "string"
-          },
-          "bank_address": {
-            "description": "Bank Address",
-            "type": "string"
-          },
-          "balance": {
-            "description": "Balance",
-            "type": "integer",
-            "format": "float64"
-          },
-          "total_received": {
-            "description": "Total Received",
-            "type": "integer",
-            "format": "float64"
-          },
-          "pending_balance": {
-            "description": "Pending Balance",
-            "type": "integer",
-            "format": "float64"
-          },
-          "created_at": {
-            "description": "Created at",
-            "type": "string"
-          },
-          "updated_at": {
-            "description": "Update at",
-            "type": "string"
-          }
-        }
-      },
-      "Transaction": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Wallet ID",
-            "type": "string"
-          },
-          "business_id": {
-            "description": "Business ID",
-            "type": "string"
-          },
-          "asset_id": {
-            "description": "Asset Id",
-            "type": "string"
-          },
-          "wallet_id": {
-            "description": "Wallet ID",
-            "type": "string"
-          },
-          "sub_wallet_id": {
-            "description": "Sub-wallet ID",
-            "type": "string"
-          },
-          "customer_id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "reference": {
-            "description": "Reference",
-            "type": "string"
-          },
-          "amount": {
-            "description": "Amount",
-            "type": "integer",
-            "format": "float64"
-          },
-          "charges": {
-            "description": "Charges",
-            "type": "integer",
-            "format": "float64"
-          },
-          "fiat_rate": {
-            "description": "Fiat Rate",
-            "type": "integer",
-            "format": "float64"
-          },
-          "account_name": {
-            "description": "Account Name",
-            "type": "string"
-          },
-          "account_number": {
-            "description": "Account number",
-            "type": "string"
-          },
-          "bank_code": {
-            "description": "Bank Code",
-            "type": "string"
-          },
-          "bank_name": {
-            "description": "Bank Name",
-            "type": "string"
-          },
-          "detail": {
-            "description": "Summary",
-            "type": "string"
-          },
-          "category": {
-            "description": "Category e.g DEPOSIT, SWAP, REVERSAL, REFUND, TRANSFER",
-            "type": "string"
-          },
-          "type": {
-            "description": "Type e.g DEBIT & CREDIT",
-            "type": "string"
-          },
-          "session_id": {
-            "description": "Session ID",
-            "type": "string"
-          },
-          "report": {
-            "description": "Report",
-            "type": "boolean"
-          },
-          "report_message": {
-            "description": "Report message",
-            "type": "string"
-          },
-          "status": {
-            "description": "Status e.g  PENDING, QUEUED, CONFIRMED, COMPLETED, PROCESSING, PROCESSED, FAILED",
-            "type": "string"
-          },
-          "created_at": {
-            "description": "Created at",
-            "type": "string"
-          },
-          "updated_at": {
-            "description": "Update at",
-            "type": "string"
-          }
-        }
-      },
-      "Customer": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "firstname": {
-            "description": "Customer firstname",
-            "type": "string"
-          },
-          "lastname": {
-            "description": "Customer lastname",
-            "type": "string"
-          },
-          "middlename": {
-            "description": "Customer middlename",
-            "type": "string"
-          },
-          "country": {
-            "description": "Customer country e.g Nigeria",
-            "type": "string"
-          },
-          "email": {
-            "description": "Customer email",
-            "type": "string"
-          },
-          "is_blacklisted": {
-            "description": "Is customer blacklisted",
-            "type": "boolean"
-          },
-          "created_at": {
-            "description": "Created at",
-            "type": "string"
-          },
-          "updated_at": {
-            "description": "Update at",
-            "type": "string"
-          }
-        }
-      },
-      "NewCustomer": {
-        "required": [
-          "email",
-          "lastname",
-          "firstname",
-          "country"
-        ],
-        "type": "object",
-        "properties": {
-          "firstname": {
-            "description": "Customer firstname",
-            "type": "string"
-          },
-          "lastname": {
-            "description": "Customer lastname",
-            "type": "string"
-          },
-          "middlename": {
-            "description": "Customer middlename",
-            "type": "string"
-          },
-          "country": {
-            "description": "Customer country e.g Nigeria",
-            "type": "string"
-          },
-          "email": {
-            "description": "Customer email",
-            "type": "string"
-          }
-        }
-      },
-      "Success": {
-        "required": [
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "Error": {
-        "required": [
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  }
 }
