@@ -1359,6 +1359,126 @@
                 },
                 "operationId": "walletList"
             }
+        },
+        "/webhook/log/{id}/retry": {
+            "post": {
+                "tags": [
+                    "webhook"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "retryWebhookLog"
+            }
+        },
+        "/webhook/{id}/test": {
+            "post": {
+                "tags": [
+                    "webhook"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "testWebhook"
+            }
         }
     },
     "components": {
@@ -1517,6 +1637,9 @@
                     "middle_name": {
                         "type": "string"
                     },
+                    "phone_number": {
+                        "type": "string"
+                    },
                     "status": {
                         "type": "string"
                     },
@@ -1605,14 +1728,62 @@
             "TypesBusinessVirtualCard": {
                 "type": "object",
                 "properties": {
+                    "address_city": {
+                        "type": "string"
+                    },
+                    "address_country": {
+                        "type": "string"
+                    },
+                    "address_postal_code": {
+                        "type": "string"
+                    },
+                    "address_state": {
+                        "type": "string"
+                    },
+                    "address_street": {
+                        "type": "string"
+                    },
+                    "balance": {
+                        "type": "number"
+                    },
                     "business_id": {
+                        "type": "string"
+                    },
+                    "card_number": {
                         "type": "string"
                     },
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
                     },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "cvv": {
+                        "type": "string"
+                    },
+                    "expiry": {
+                        "type": "string"
+                    },
+                    "freeze": {
+                        "type": "boolean"
+                    },
                     "id": {
+                        "type": "string"
+                    },
+                    "masked_pan": {
+                        "type": "string"
+                    },
+                    "name_on_card": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "total_funded": {
+                        "type": "number"
+                    },
+                    "type": {
                         "type": "string"
                     },
                     "updated_at": {
