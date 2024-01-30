@@ -173,6 +173,13 @@
       ]
     },
     {
+      "group": "Webhook",
+      "pages": [
+        "api-reference/webhook/test",
+        "api-reference/webhook/retry"
+      ]
+    },
+    {
       "group": "SDKs",
       "pages": [
         "sdks/introduction"
