@@ -1,87 +1,119 @@
 ---
-title: 'Introduction'
-description: 'Text, title, and styling in standard markdown'
+title: 'Overview'
+description: 'The SwyftPay Cards API provides a powerful, secure, and easy-to-use set of endpoints for card management, including creation, retrieval, freezing, and termination of cards. This guide will cover essential operations to help you manage card transactions within your applications.'
 ---
 
-## Titles
+### Authentication
 
-Best used for section headers.
+All interactions with the Cards API require authenticated requests. Include an authorization token in your request headers. Learn how to obtain your [Bearer `<TOKEN>`](#authentication) in our authentication guide.
 
-```md
-## Titles
+###  📇 Create a Card
+
+Initiate the creation of a virtual or physical card by sending a request to the [create](/api-reference/cards/create) cards endpoint.
+
+**Parameters**
+
+- `customerId`: string *(required)*
+  - The unique identifier for the customer to whom the card will be issued.
+
+- `lastname`: string *(required)*
+  - The cardholder's last name as it will appear on the card.
+
+- `middlename`: string *(optional)*
+  - The cardholder's middle name or initial that may appear on the card.
+
+- `country`: string *(required)*
+  - The country code where the card will be used. Use ISO 3166-1 alpha-2 country codes.
+
+- `email`: string *(required)*
+  - The email address of the cardholder. This will be used for sending notifications related to card activities and transactions.
+
+**Request Body**
+
+Provide necessary details to set up a new card.
+
+```json
+{
+    "customerId": "user",
+    "lastname": "user",
+    "middlename": "user",
+    "country": "user",
+    "email": "user@mailinator.com"
+}
 ```
 
-### Subtitles
+###  🔍 Get a Card
+Retrieve information about a specific card with its unique identifier using the [get](/api-reference/cards/get) card endpoint.
 
-Best use to subsection headers.
+**Parameters**
 
-```md
-### Subtitles
+- `id` (required): 
+  - The unique identifier of the card to retrieve.
+
+### ❄️  Freeze a Card
+Temporarily disable a card to prevent new transactions by using the [freeze](/api-reference/cards/freeze) card endpoint.
+
+**Parameters**
+
+- `id` (required): 
+  - The unique identifier of the card to retrieve.
+
+### 🚫 Terminate a Card
+Permanently disable a card and remove it from your account with the [terminate](/api-reference/cards/terminate) card endpoint.
+
+**Parameters**
+
+- `id` (required): 
+  - The unique identifier of the card to retrieve.
+
+###  💸  Withdraw from Card
+Withdraw funds from the card back to your business account using the [withdraw-from-card](/api-reference/cards/withdraw-from-card) endpoint.
+
+**Parameters**
+
+- `id` (required): 
+  - The unique identifier of the card from which to withdraw funds.
+
+- `amount` (required): 
+  - The amount to withdraw in the smallest currency unit.
+
+### 🗂️ Get All Cards
+
+To retrieve a comprehensive list of all the cards, use the [get all](/api-reference/cards/get-all-cards) cards endpoint. This method provides a paginated list of cards, complete with details for each card, allowing for effective oversight and management.
+
+**Response**
+
+The response returns an array of card objects with their respective details.
+```json
+[
+  {
+    "id": "card_123456789",
+    "type": "virtual",
+    "status": "active",
+    "card_number": "4242424242424242",
+    "expiry": "12/34",
+    "cvv": "123",
+    "name_on_card": "John Doe",
+    "business_id": "business_987654321",
+    "customer_id": "cust_123456789",
+    "balance": 500000, // Balance in the smallest currency unit
+    "total_funded": 1500000, // Total funded in the smallest currency unit
+    "freeze": false,
+    "address_street": "123 Swyft Street",
+    "address_city": "Paytown",
+    "address_state": "Paystate",
+    "address_country": "NG",
+    "address_postal_code": "123456",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-02T00:00:00Z",
+    "masked_pan": "424242******4242"
+  }
+  // ...other cards
+]
+
 ```
 
 <Tip>
-
-Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
+Use the card ID received from the create card response or from your card list.
 
 </Tip>
-
-## Text Formatting
-
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
-
-| Style         | How to write it   | Result          |
-| ------------- | ----------------- | --------------- |
-| Bold          | `**bold**`        | **bold**        |
-| Italic        | `_italic_`        | _italic_        |
-| Strikethrough | `~strikethrough~` | ~strikethrough~ |
-
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
-
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
-
-| Text Size   | How to write it          | Result                 |
-| ----------- | ------------------------ | ---------------------- |
-| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
-| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
-
-## Linking to Pages
-
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
-
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
-
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
-
-## Blockquotes
-
-### Singleline
-
-To create a blockquote, add a `>` in front of a paragraph.
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
-```
-
-### Multiline
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-```
-
-### LaTeX
-
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
-
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-
-```md
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-```
