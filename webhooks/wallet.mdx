@@ -1,0 +1,25 @@
+---
+title: 'Wallet'
+description: 'Overview of Wallet Webhook Events'
+---
+
+## Overview
+
+Our wallet webhook events are fired based on the following triggers:
+
+- Updated webhook event
+
+## Updated webhook event
+
+This event is fired when a wallet is updated.
+
+```json
+{
+  "event": "wallet.updated",
+  "data": {
+    "id": "wt_ywLTBi1QWMi66v82JaX3",
+    "parent_id": null,
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+  }
+}
+```

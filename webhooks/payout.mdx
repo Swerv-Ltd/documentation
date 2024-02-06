@@ -1,0 +1,55 @@
+---
+title: 'Payout'
+description: 'Overview of Payout Webhook Events'
+---
+
+## Overview
+
+Our payout webhook events are fired based on the following triggers:
+
+- Completed webhook event
+
+- Failed webhook event
+
+## Completed webhook event
+
+This event is fired when a payout is completed.
+
+```json
+{
+  "event": "payout.completed",
+  "data": {
+    "reference": "ref_ywLTBi1QWMi66v82JaX3",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "COMPLETED",
+    "amount": 1000,
+    "charges": 0,
+    "type": "DEBIT",
+    "detail": "Thank you",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Failed webhook event
+
+This event is fired when a payout is failed.
+
+```json
+{
+  "event": "payout.failed",
+  "data": {
+    "reference": "ref_ywLTBi1QWMi66v82JaX3",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "FAILED",
+    "amount": 1000,
+    "charges": 0,
+    "type": "DEBIT",
+    "detail": "Thank you",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
