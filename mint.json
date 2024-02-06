@@ -104,8 +104,8 @@
       "group": "Webhook Events",
       "pages": [
         "webhooks/introduction",
-        "webhooks/customer",
         "webhooks/card",
+        "webhooks/customer",
         "webhooks/payout",
         "webhooks/wallet"
       ]

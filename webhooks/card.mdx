@@ -1,1 +1,146 @@
+---
+title: 'Card'
+description: 'Overview of Card Webhook Events'
+---
+
+## Overview
+
+Our card webhook events are fired based on the following triggers:
+
+- Created webhook event
+
+- Terminated webhook event
+
+- Freeze webhook event
+
+- Unfreeze webhook event
+
+- Fund webhook event
+
+- Withdraw webhook event
+
+- Transaction webhook event
+
+## Created webhook event
+
+This event is fired when a card is created.
+
+```json
+{
+  "event": "card.created",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "STATUS",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Terminated webhook event
+
+This event is fired when a card is terminated.
+
+```json
+{
+  "event": "card.terminated",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "STATUS",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Freeze webhook event
+
+This event is fired when a card is frozen.
+
+```json
+{
+  "event": "card.frozen",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "STATUS",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Unfreeze webhook event
+
+This event is fired when a card is unfrozen.
+
+```json
+{
+  "event": "card.unfrozen",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "status": "STATUS",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Fund webhook event
+
+This event is fired when a card is funded.
+
+```json
+{
+  "event": "card.funded",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "balance": 1000,
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Withdraw webhook event
+
+This event is fired when a card is withdrawn.
+
+```json
+{
+  "event": "card.withdrawn",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "balance": 1000,
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
+
+## Transaction webhook event
+
+This event is fired when a card transaction is made.
+
+```json
+{
+  "event": "card.transaction",
+  "data": {
+    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "amount": 1000,
+    "status": "APPROVED",
+    "type": "DEBIT",
+    "description": "Transaction description",
+    "merchant": "Google Inc",
+    "created_at": "2024-02-06T02:49:18Z",
+    "updated_at": "2024-02-06T02:49:18Z"
+  }
+}
+```
 
