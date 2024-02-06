@@ -45,7 +45,7 @@ Retrieve detailed information of a specific customer with their unique identifie
 - `id` (required): 
   - The unique identifier of the user to retrieve.
 
-### List All Customers
+### Get All Customers
 Retrieve a comprehensive list of all customers in your system using the [get](/api-reference/customers/get-all-customers) all customers endpoint.
 
 **Query Parameters**
@@ -59,3 +59,11 @@ Retrieve a comprehensive list of all customers in your system using the [get](/a
 
 ## Perform KYC for a Customer
 Conduct Know Your Customer (KYC) checks to verify the identity of your customers using the [post](/api-reference/customers/kyc) customer KYC endpoint.
+
+**Parameters**
+
+- `id` string *(required)*: 
+  - The unique identifier of the card to retrieve.
+**Body**
+- `amount` integer :
+  - The amount to fund in the smallest currency unit.
