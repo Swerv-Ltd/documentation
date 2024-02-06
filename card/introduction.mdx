@@ -1,7 +1,9 @@
 ---
 title: 'Overview'
-description: 'The SwyftPay Cards API allows businesses to create card for their customer to pay anywhere global'
+description: 'Swyftpay Card API allows businesses to create card for their customer to pay anywhere global'
 ---
+
+This API provides a powerful, secure, and easy-to-use set of endpoints for card management, including creation, retrieval, freezing, and termination of cards. This guide will cover essential operations to help you manage card transactions within your applications
 ###  📇 Create a Card
 
 Initiate the creation of a virtual or physical card by sending a request to the [create](/api-reference/cards/create) cards endpoint.
@@ -37,44 +39,70 @@ Provide necessary details to set up a new card.
 }
 ```
 
+### 💳➕ Fund Card
+Add funds to an existing card using the [fund](/api-reference/cards/fund) endpoint. This operation is essential for increasing the card's available balance for use.
+
+**Parameters**
+
+- `id` string *(required)*: 
+  - The unique identifier of the card to retrieve.
+
+**Body**
+- `amount` integer :
+  - The amount to fund in the smallest currency unit.
+
 ###  🔍 Get a Card
 Retrieve information about a specific card with its unique identifier using the [get](/api-reference/cards/get) card endpoint.
 
 **Parameters**
 
-- `id` (required): 
+- `id` string *(required)*: 
   - The unique identifier of the card to retrieve.
 
-### ❄️  Freeze a Card
+### ❄️ Freeze a Card
 Temporarily disable a card to prevent new transactions by using the [freeze](/api-reference/cards/freeze) card endpoint.
 
-**Parameters**
+**Path Parameters**
 
-- `id` (required): 
+- `id` string *(required)*: 
   - The unique identifier of the card to retrieve.
+
+**Response**
+
+- `message' string:
+  - 'Card has been frozen successfully'
 
 ### 🚫 Terminate a Card
 Permanently disable a card and remove it from your account with the [terminate](/api-reference/cards/terminate) card endpoint.
 
-**Parameters**
+**Path Parameters**
 
-- `id` (required): 
+- `id` string *(required)*: 
   - The unique identifier of the card to retrieve.
 
 ###  💸  Withdraw from Card
 Withdraw funds from the card back to your business account using the [withdraw-from-card](/api-reference/cards/withdraw-from-card) endpoint.
 
-**Parameters**
+**Path Parameters**
 
-- `id` (required): 
+- `id` string *(required)*: 
   - The unique identifier of the card from which to withdraw funds.
 
-- `amount` (required): 
+**Body**
+- `amount` integer *(required)*: 
   - The amount to withdraw in the smallest currency unit.
 
 ### 🗂️ Get All Cards
 
 To retrieve a comprehensive list of all the cards, use the [get all](/api-reference/cards/get-all-cards) cards endpoint. This method provides a paginated list of cards, complete with details for each card, allowing for effective oversight and management.
+
+**Query Parameters**
+
+- `page` integer *(Default: 1)*: 
+  - The page to return.
+
+- `limit` integer *(Default: 30)*: 
+  - The maximum number of results to return.
 
 **Response**
 

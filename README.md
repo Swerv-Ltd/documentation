@@ -1,9 +1,6 @@
 <div align="center">
   <a href="https://swyftpay.io" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://avatars.githubusercontent.com/u/108650375?s=200&v=4">
-    <img src="https://avatars.githubusercontent.com/u/108650375?s=200&v=4" width="160" alt="Logo"/>
-  </picture>
+    ![Logo](https://avatars.githubusercontent.com/u/108650375?s=200&v=4)
   </a>
 </div>
 
@@ -13,21 +10,23 @@
 Make swift payments in any currency with multiple payment options. Gain financial freedom.
 </div>
 
-  <p align="center">
-    <br />
-    <a href="https://docs.swyftpay.io" rel="dofollow"><strong>Explore the docs »</strong></a>
-    <br />
- </p>
+<p align="center">
+  <br />
+  <a href="https://docs.swyftpay.io" rel="dofollow"><strong>Explore the docs »</strong></a>
+  <br />
+</p>
 
-  <br/>
+<br/>
   
-  <p align="center">  
-    <a href="https://twitter.com/swyftpay_io">X (Twitter)</a>
-    ·
-    <a href="https://www.linkedin.com/company/swervltd">Linkedin</a>
-    ·
-    <a href="https://docs.swyftpay.io/changelog">Changelog</a>
-  </p>
+<p align="center">  
+  <a href="https://twitter.com/swyftpay_io">X (Twitter)</a>
+  ·
+  <a href="https://www.linkedin.com/company/swervltd">Linkedin</a>
+  ·
+  <a href="https://docs.swyftpay.io/changelog">Changelog</a>
+</p>
+
+### 👩‍💻 Docs Contribution
 
 ### 👩‍💻 Docs Contribution
 
