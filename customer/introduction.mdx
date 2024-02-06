@@ -1,87 +1,69 @@
 ---
-title: 'Introduction'
-description: 'Text, title, and styling in standard markdown'
+title: 'Overview'
+description: 'Manage your customers efficiently with the SwyftPay Customers API.'
 ---
 
-## Titles
+### Create a Customer
 
-Best used for section headers.
+To add a new customer to your system, use the [create](/api-reference/customers/create) customer endpoint.
 
-```md
-## Titles
+**Body**
+
+- `firstName`: string *(required)*
+  - The customer's first name. It must match the customer's government-issued identification for KYC purposes.
+
+- `lastName`: string *(required)*
+  - The customer's last name or surname. It must match the customer's government-issued identification for KYC purposes.
+
+- `middleName`: string *(optional)*
+  - The customer's middle name or initial. This can be used for additional verification and should match the customer's government-issued identification if provided.
+
+- `country`: string *(required)*
+  - The country of the customer's residence or operation. Use ISO 3166-1 alpha-2 country codes.
+
+- `email`: string *(required)*
+  - The customer's email address. It is used for sending transactional notifications and for login purposes if applicable.
+
+**Request Body**
+
+Provide necessary details to set up a new card.
+
+```json
+{
+    "firstname": "user",
+    "lastname": "user",
+    "middlename": "user",
+    "country": "user",
+    "email": "user@mailinator.com"
+  }
 ```
 
-### Subtitles
+### Get Customer Details
+Retrieve detailed information of a specific customer with their unique identifier using the [get](/api-reference/customers/get) customer endpoint.
 
-Best use to subsection headers.
+**Path Parameters**
+- `id` (required): 
+  - The unique identifier of the user to retrieve.
 
-```md
-### Subtitles
-```
+### Get All Customers
+Retrieve a comprehensive list of all customers in your system using the [get](/api-reference/customers/get-all-customers) all customers endpoint.
 
-<Tip>
+**Query Parameters**
 
-Each **title** and **subtitle** creates an anchor and also shows up on the table of contents on the right.
+- `page` Default: 1: 
+  - The page to return.
 
-</Tip>
+- `limit` Default: 30: 
+  - The maximum number of results to return.
 
-## Text Formatting
 
-We support most markdown formatting. Simply add `**`, `_`, or `~` around text to format it.
+## Perform KYC for a Customer
+Conduct Know Your Customer (KYC) checks to verify the identity of your customers using the [post](/api-reference/customers/kyc) customer KYC endpoint.
 
-| Style         | How to write it   | Result          |
-| ------------- | ----------------- | --------------- |
-| Bold          | `**bold**`        | **bold**        |
-| Italic        | `_italic_`        | _italic_        |
-| Strikethrough | `~strikethrough~` | ~strikethrough~ |
+**Parameters**
 
-You can combine these. For example, write `**_bold and italic_**` to get **_bold and italic_** text.
-
-You need to use HTML to write superscript and subscript text. That is, add `<sup>` or `<sub>` around your text.
-
-| Text Size   | How to write it          | Result                 |
-| ----------- | ------------------------ | ---------------------- |
-| Superscript | `<sup>superscript</sup>` | <sup>superscript</sup> |
-| Subscript   | `<sub>subscript</sub>`   | <sub>subscript</sub>   |
-
-## Linking to Pages
-
-You can add a link by wrapping text in `[]()`. You would write `[link to google](https://google.com)` to [link to google](https://google.com).
-
-Links to pages in your docs need to be root-relative. Basically, you should include the entire folder path. For example, `[link to text](/writing-content/text)` links to the page "Text" in our components section.
-
-Relative links like `[link to text](../text)` will open slower because we cannot optimize them as easily.
-
-## Blockquotes
-
-### Singleline
-
-To create a blockquote, add a `>` in front of a paragraph.
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
-```
-
-### Multiline
-
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-
-```md
-> Dorothy followed her through many of the beautiful rooms in her castle.
->
-> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
-```
-
-### LaTeX
-
-Mintlify supports [LaTeX](https://www.latex-project.org) through the Latex component.
-
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-
-```md
-<Latex>8 x (vk x H1 - H2) = (0,1)</Latex>
-```
+- `id` string *(required)*: 
+  - The unique identifier of the card to retrieve.
+**Body**
+- `amount` integer :
+  - The amount to fund in the smallest currency unit.
