@@ -32,7 +32,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://business.swyftpay.io"
+    "url": "https://app.swervpay.co"
   },
   "tabs": [
     {
@@ -48,17 +48,17 @@
     {
       "name": "Changelog",
       "icon": "book-open-cover",
-      "url": "https://docs.swervpay.com/changelog"
+      "url": "https://docs.swervpay.co/changelog"
     },
     {
       "name": "Community",
       "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "url": "https://swervpay.co/slack"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://swervpay.co/blog"
     }
   ],
   "navigation": [
