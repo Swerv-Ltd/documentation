@@ -1,0 +1,58 @@
+---
+title: 'Customer'
+description: 'Overview of Customer Webhook Events'
+---
+
+## Overview
+
+Our customer webhook events are fired based on the following triggers:
+
+- Created webhook event
+
+- Updated webhook event
+
+- KYC webhook event
+
+## Created webhook event
+
+This event is fired when a customer is created.
+
+```json
+{
+  "event": "customer.created",
+  "data": {
+      "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+      "id": "cus_BJ8ptMSAcm3n6qp6bFpc"
+  }
+}
+```
+
+## Updated webhook event
+
+This event is fired when a customer is updated.
+
+```json
+{
+  "event": "customer.updated",
+  "data": {
+      "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+      "id": "cus_BJ8ptMSAcm3n6qp6bFpc"
+  }
+}
+```
+
+## KYC webhook event
+
+This event is fired when a customer's KYC status is updated.
+
+```json
+{
+  "event": "customer.kyc.updated",
+  "data": {
+      "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+      "id": "cus_BJ8ptMSAcm3n6qp6bFpc",
+      "kyc_status": "APPROVED"
+  }
+}
+```
+
