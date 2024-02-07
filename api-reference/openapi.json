@@ -20,6 +20,8 @@
                 "tags": [
                     "banks"
                 ],
+                "description": "Get banks",
+                "operationId": "banks",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -64,15 +66,16 @@
                             }
                         }
                     }
-                },
-                "operationId": "banks"
+                }
             }
         },
         "/business": {
             "get": {
                 "tags": [
-                    "customer"
+                    "business"
                 ],
+                "description": "Get business",
+                "operationId": "getBusiness",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -114,8 +117,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "getBusiness"
+                }
             }
         },
         "/cards": {
@@ -123,28 +125,21 @@
                 "tags": [
                     "cards"
                 ],
+                "description": "List all cards",
+                "operationId": "cardList",
                 "parameters": [
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "The page to return.",
-                        "required": false,
                         "schema": {
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 1
+                            "type": "integer"
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "The maximum number of results to return.",
-                        "required": false,
                         "schema": {
-                            "maximum": 100,
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 30
+                            "type": "integer"
                         }
                     }
                 ],
@@ -192,15 +187,74 @@
                             }
                         }
                     }
+                }
+            },
+            "post": {
+                "tags": [
+                    "card"
+                ],
+                "description": "Create card",
+                "operationId": "createCard",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesCreateCardInput"
+                            }
+                        }
+                    }
                 },
-                "operationId": "cardList"
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/cards/{id}": {
-            "post": {
+            "get": {
                 "tags": [
                     "cards"
                 ],
+                "description": "Get card",
+                "operationId": "getCard",
                 "parameters": [
                     {
                         "name": "id",
@@ -212,8 +266,8 @@
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -252,8 +306,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "getCard"
+                }
             }
         },
         "/cards/{id}/freeze": {
@@ -261,6 +314,8 @@
                 "tags": [
                     "card.freeze"
                 ],
+                "description": "Freeze card",
+                "operationId": "freezeCard",
                 "parameters": [
                     {
                         "name": "id",
@@ -312,15 +367,16 @@
                             }
                         }
                     }
-                },
-                "operationId": "freezeCard"
+                }
             }
         },
         "/cards/{id}/fund": {
             "post": {
                 "tags": [
-                    "customer.blacklist"
+                    "card.fund"
                 ],
+                "description": "Fund card",
+                "operationId": "fundCard",
                 "parameters": [
                     {
                         "name": "id",
@@ -381,8 +437,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "fundCard"
+                }
             }
         },
         "/cards/{id}/terminate": {
@@ -390,6 +445,8 @@
                 "tags": [
                     "card.terminate"
                 ],
+                "description": "Get card",
+                "operationId": "terminateCard",
                 "parameters": [
                     {
                         "name": "id",
@@ -441,8 +498,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "terminateCard"
+                }
             }
         },
         "/cards/{id}/withdraw": {
@@ -450,6 +506,8 @@
                 "tags": [
                     "card.withdrawal"
                 ],
+                "description": "Freeze card",
+                "operationId": "cardWithdrawal",
                 "parameters": [
                     {
                         "name": "id",
@@ -510,8 +568,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "cardWithdrawal"
+                }
             }
         },
         "/customers": {
@@ -519,28 +576,21 @@
                 "tags": [
                     "customers"
                 ],
+                "description": "Get customers",
+                "operationId": "customerList",
                 "parameters": [
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "The page to return.",
-                        "required": false,
                         "schema": {
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 1
+                            "type": "integer"
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "The maximum number of results to return.",
-                        "required": false,
                         "schema": {
-                            "maximum": 100,
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 30
+                            "type": "integer"
                         }
                     }
                 ],
@@ -588,13 +638,14 @@
                             }
                         }
                     }
-                },
-                "operationId": "customerList"
+                }
             },
             "post": {
                 "tags": [
                     "customers"
                 ],
+                "description": "Get customers",
+                "operationId": "customerList",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -605,8 +656,8 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -645,8 +696,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "newCustomer"
+                }
             }
         },
         "/customers/{id}": {
@@ -654,6 +704,8 @@
                 "tags": [
                     "customer"
                 ],
+                "description": "Get customer",
+                "operationId": "getCustomer",
                 "parameters": [
                     {
                         "name": "id",
@@ -705,8 +757,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "getCustomer"
+                }
             }
         },
         "/customers/{id}/blacklist": {
@@ -714,6 +765,8 @@
                 "tags": [
                     "customer.blacklist"
                 ],
+                "description": "Blacklist customer",
+                "operationId": "customerBlacklist",
                 "parameters": [
                     {
                         "name": "id",
@@ -765,8 +818,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "customerBlacklist"
+                }
             }
         },
         "/customers/{id}/kyc": {
@@ -774,6 +826,8 @@
                 "tags": [
                     "customer.kyc"
                 ],
+                "description": "Update customer kyc",
+                "operationId": "customerKyc",
                 "parameters": [
                     {
                         "name": "id",
@@ -799,6 +853,79 @@
                         "content": {
                             "application/json": {
                                 "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessCustomer"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customers/{id}/update": {
+            "post": {
+                "tags": [
+                    "customer.update"
+                ],
+                "description": "Update customer detail",
+                "operationId": "customerUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiUpdatecustomerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
                                     "$ref": "#/components/schemas/ResponseSuccessResponse"
                                 }
                             }
@@ -834,8 +961,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "customerKyc"
+                }
             }
         },
         "/fx/exchange": {
@@ -843,6 +969,8 @@
                 "tags": [
                     "fx.exchange"
                 ],
+                "description": "Create exchange",
+                "operationId": "createExchange",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -893,8 +1021,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "createExchange"
+                }
             }
         },
         "/fx/rate": {
@@ -902,6 +1029,8 @@
                 "tags": [
                     "fx.rate"
                 ],
+                "description": "Get exchange rate",
+                "operationId": "getExchangeRate",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -952,8 +1081,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "getExchangeRate"
+                }
             }
         },
         "/payouts": {
@@ -961,6 +1089,8 @@
                 "tags": [
                     "payouts"
                 ],
+                "description": "Create payout",
+                "operationId": "createPayout",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1011,8 +1141,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "createPayout"
+                }
             }
         },
         "/payouts/{id}": {
@@ -1020,6 +1149,8 @@
                 "tags": [
                     "payout"
                 ],
+                "description": "Get payout",
+                "operationId": "getPayout",
                 "parameters": [
                     {
                         "name": "id",
@@ -1071,8 +1202,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "getPayout"
+                }
             }
         },
         "/resolve-account-number": {
@@ -1080,6 +1210,8 @@
                 "tags": [
                     "bank.account"
                 ],
+                "description": "Resolve bank account number",
+                "operationId": "resolveAccount",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -1130,8 +1262,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "resolveAccount"
+                }
             }
         },
         "/transactions": {
@@ -1139,28 +1270,21 @@
                 "tags": [
                     "transactions"
                 ],
+                "description": "Get list of transactions",
+                "operationId": "transactionList",
                 "parameters": [
                     {
                         "name": "page",
                         "in": "query",
-                        "description": "The page to return.",
-                        "required": false,
                         "schema": {
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 1
+                            "type": "integer"
                         }
                     },
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "The maximum number of results to return.",
-                        "required": false,
                         "schema": {
-                            "maximum": 100,
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 30
+                            "type": "integer"
                         }
                     }
                 ],
@@ -1208,15 +1332,16 @@
                             }
                         }
                     }
-                },
-                "operationId": "transactionList"
+                }
             }
         },
         "/transactions/{id}": {
             "get": {
                 "tags": [
-                    "transactions"
+                    "transaction"
                 ],
+                "description": "Get transaction",
+                "operationId": "getTransaction",
                 "parameters": [
                     {
                         "name": "id",
@@ -1228,8 +1353,8 @@
                     }
                 ],
                 "responses": {
-                    "307": {
-                        "description": "Temporary Redirect",
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1258,16 +1383,6 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/UsererrorError"
-                                }
-                            }
-                        }
-                    },
                     "500": {
                         "description": "Internal Server Error",
                         "content": {
@@ -1278,40 +1393,16 @@
                             }
                         }
                     }
-                },
-                "operationId": "getTransaction"
+                }
             }
         },
         "/wallets": {
             "get": {
                 "tags": [
-                    "transactions"
+                    "wallets"
                 ],
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page to return.",
-                        "required": false,
-                        "schema": {
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 1
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "The maximum number of results to return.",
-                        "required": false,
-                        "schema": {
-                            "maximum": 100,
-                            "minimum": 1,
-                            "type": "integer",
-                            "default": 30
-                        }
-                    }
-                ],
+                "description": "Get wallets",
+                "operationId": "walletList",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1356,8 +1447,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "walletList"
+                }
             }
         },
         "/webhook/log/{id}/retry": {
@@ -1365,6 +1455,8 @@
                 "tags": [
                     "webhook"
                 ],
+                "description": "Retry webhook log",
+                "operationId": "retryWebhookLog",
                 "parameters": [
                     {
                         "name": "id",
@@ -1416,8 +1508,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "retryWebhookLog"
+                }
             }
         },
         "/webhook/{id}/test": {
@@ -1425,6 +1516,8 @@
                 "tags": [
                     "webhook"
                 ],
+                "description": "Send test webhook",
+                "operationId": "testWebhook",
                 "parameters": [
                     {
                         "name": "id",
@@ -1476,8 +1569,7 @@
                             }
                         }
                     }
-                },
-                "operationId": "testWebhook"
+                }
             }
         }
     },
@@ -1522,6 +1614,17 @@
                 "properties": {
                     "amount": {
                         "type": "integer"
+                    }
+                }
+            },
+            "OpenapiUpdatecustomerRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "type": "string"
                     }
                 }
             },
@@ -1756,6 +1859,9 @@
                         "type": "string",
                         "format": "date-time"
                     },
+                    "currency": {
+                        "type": "string"
+                    },
                     "customer_id": {
                         "type": "string"
                     },
@@ -1769,6 +1875,9 @@
                         "type": "boolean"
                     },
                     "id": {
+                        "type": "string"
+                    },
+                    "issuer": {
                         "type": "string"
                     },
                     "masked_pan": {
@@ -1865,6 +1974,20 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                }
+            },
+            "TypesCreateCardInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "provider": {
+                        "type": "string"
                     }
                 }
             },
