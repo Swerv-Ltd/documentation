@@ -77,6 +77,12 @@
       ]
     },
     {
+      "group": "Transactions",
+      "pages": [
+        "transaction/introduction"
+      ]
+    },
+    {
       "group": "Customer",
       "pages": [
         "customer/introduction"
