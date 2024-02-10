@@ -67,7 +67,8 @@
       "pages": [
         "introduction",
         "authentication",
-        "development"
+        "development",
+        "go-live-checklist"
       ]
     },
     {
@@ -77,7 +78,7 @@
       ]
     },
     {
-      "group": "Transactions",
+      "group": "Transaction",
       "pages": [
         "transaction/introduction"
       ]
