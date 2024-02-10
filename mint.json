@@ -47,7 +47,7 @@
   "anchors": [
     {
       "name": "Changelog",
-      "icon": "book-open-cover",
+      "icon": "timer",
       "url": "https://docs.swervpay.co/changelog"
     },
     {
@@ -67,8 +67,8 @@
       "pages": [
         "introduction",
         "authentication",
-        "development",
-        "go-live-checklist"
+        "go-live-checklist",
+        "quickstart"
       ]
     },
     {
