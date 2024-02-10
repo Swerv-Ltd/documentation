@@ -1,18 +1,15 @@
 ---
-title: 'Resolve Account Number'
-openapi: 'POST /resolve-account-number'
+title: 'Get Wallet'
+openapi: 'GET /wallets/{id}'
 ---
 
+{/* <Snippet file="authorization.mdx" /> */}
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/resolve-account-number \
+curl -X GET https://api.swyftpay.io/api/v1/wallets/{id} \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json" \
-    -d '{
-        "account_number": "user",
-        "bank_code": "user"
-    }'
+  -H "Content-Type: application/json"
 ```
 
 ```javascript Node.js
@@ -25,10 +22,7 @@ const config = {
 
 const swyftpay = new SwervpayClient(config);
 
-await swyftpay.other.resolve_account_number({
-    'accountNumber': 'user',
-    'bankCode': 'user'
-})
+await swyftpay.wallet.get('<WALLET_ID>')
 ```
 
 ```php PHP
@@ -41,10 +35,7 @@ $config = [
 
 $swyftpayClient = new Swervpay($config);
 
-$swyftpayClient->other->resolve_account_number([
-    'account_number' => 'user',
-    'bank_code' => 'user
-]);
+$swyftpayClient->wallet->get('<WALLET_ID>');
 ```
 
 
@@ -69,13 +60,7 @@ func main() {
     })
 
 
-    data := swyftpayClient.ResolveAccountNumber{
-        AccountNumber: "user",
-        BankCode: "user"
-    }
-
-
-	resp, err := swyftpayClient.other.resolveAccountNumber(ctx, data)
+	resp, err := swyftpayClient.wallet.get(ctx, '<WALLET_ID>')
 
 	if err != nil {
 		log.Fatal("error", err.Error())

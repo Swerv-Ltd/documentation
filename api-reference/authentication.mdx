@@ -1,0 +1,117 @@
+---
+title: 'Authentication'
+description: 'Authenticate with Swervpay API'
+---
+
+Swervpay employs OAuth 2.0 as its fundamental security protocol. Access to Swervpay endpoints necessitates obtaining an access token, granting entry to restricted endpoints.
+
+To get an access token, you must first authenticate with the Swervpay API. This is done by sending a POST request to the `/auth` endpoint with your business ID and secret key encoded in base64 as Basic Authorization in the request header.
+
+<Info>Authentication URL: `POST` `https://api.swervpay.co/api/v1/auth`</Info>
+
+### Sample Request
+
+<CodeGroup>
+```javascript Javascript
+const response = await fetch(`https://api.swervpay.co/api/v1/auth`, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization:  `Basic ${Buffer.from(`<BUSINESS_ID>:<SECRET_KEY>`).toString("base64")}`
+    },
+    body: JSON.stringify({}),
+});
+
+if (response.status !== 200 && response.status !== 201) {
+    const body = await response.json();
+
+    throw new Error(body as any);
+}
+
+const token = await response.json();
+```
+```php PHP
+<?php
+
+$businessId = '<BUSINESS_ID>';
+$secretKey = '<SECRET_KEY>';
+$auth = base64_encode("{$businessId}:{$secretKey}");
+
+$options = [
+    'http' => [
+        'header'  => "Content-type: application/json\r\nAuthorization: Basic {$auth}",
+        'method'  => 'POST',
+        'content' => json_encode([]),
+    ],
+];
+
+$context  = stream_context_create($options);
+$response = file_get_contents('https://api.swervpay.co/api/v1/auth', false, $context);
+
+if ($response === FALSE) {
+    throw new Exception('Error occurred while making request');
+}
+
+$httpCode = http_response_code();
+if ($httpCode !== 200 && $httpCode !== 201) {
+    throw new Exception($response);
+}
+
+$token = json_decode($response, true);
+
+?>
+```
+```go Go
+package main
+
+import (
+    "bytes"
+    "encoding/base64"
+    "encoding/json"
+    "errors"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    businessID := "<BUSINESS_ID>"
+    secretKey := "<SECRET_KEY>"
+    auth := base64.StdEncoding.EncodeToString([]byte(businessID + ":" + secretKey))
+
+    client := &http.Client{}
+    req, _ := http.NewRequest("POST", "https://api.swervpay.co/api/v1/auth", bytes.NewBuffer([]byte("{}")))
+    req.Header.Set("Content-Type", "application/json")
+    req.Header.Set("Authorization", "Basic "+auth)
+
+    resp, err := client.Do(req)
+    if err != nil {
+        panic(err)
+    }
+    defer resp.Body.Close()
+
+    if resp.StatusCode != 200 && resp.StatusCode != 201 {
+        bodyBytes, _ := ioutil.ReadAll(resp.Body)
+        panic(errors.New(string(bodyBytes)))
+    }
+
+    var token map[string]interface{}
+    json.NewDecoder(resp.Body).Decode(&token)
+}
+```
+</CodeGroup>
+
+### Sample Response
+
+```json Response
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDc1OTc0NDMsImlhdCI6MTcwNzU5Mzg0MywiaXNzIjoiU3dlcnZwYXkiLCJpZCI6ImJ1c19tdml1TlNNS2k3NHZUWTh5dmZQNm5RIiwidGtuIjp7InR5cCI6ImJlYXJlciIsImlkIjoiZGY2OTNjY2MtM2YwYy00NDAwLWE0YTQtMmM1YjE4YjBjZTNiIn19.53eKLonZZ8zvC_i2M_P4sQfZlmc7x-bSc8J95TCtIwY",
+  "token": {
+    "business_id": "bus_********",
+    "type": "bearer",
+    "expires_at": 1707597443075,
+    "issued_at": 1707593843075,
+    "created_at": "2024-02-10T20:37:23.076993+01:00",
+    "updated_at": "2024-02-10T20:37:23.076993+01:00"
+  }
+}
+```

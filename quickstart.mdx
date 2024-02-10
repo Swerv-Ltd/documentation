@@ -29,7 +29,7 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new swervpay.SwyftpayClient(config);
+const swyftpay = new swervpay.SwervpayClient(config);
 
 // Create a new customer
 await swyftpay.customer.create({

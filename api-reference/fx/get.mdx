@@ -14,14 +14,14 @@ curl -X PUT https://api.swyftpay.io/api/v1/fx/rate \
 ```
 
 ```javascript Node.js
-import { SwyftpayClient } from '@swervpaydev/sdk';
+import { SwervpayClient } from '@swervpaydev/sdk';
 
 const config = {
     secretKey: "<SECRET_KEY>",
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwyftpayClient(config);
+const swyftpay = new SwervpayClient(config);
 
 await swyftpay.fx.rate({
     amount: 100,

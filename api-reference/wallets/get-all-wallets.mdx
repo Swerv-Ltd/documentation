@@ -13,14 +13,14 @@ curl -X GET https://api.swyftpay.io/api/v1/wallets \
 ```
 
 ```javascript Node.js
-import { SwyftpayClient } from '@swervpaydev/sdk';
+import { SwervpayClient } from '@swervpaydev/sdk';
 
 const config = {
     secretKey: "<SECRET_KEY>",
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwyftpayClient(config);
+const swyftpay = new SwervpayClient(config);
 
 await swyftpay.wallet.gets()
 ```

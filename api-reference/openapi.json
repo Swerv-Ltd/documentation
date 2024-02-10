@@ -15,6 +15,57 @@
         }
     ],
     "paths": {
+        "/auth": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "description": "Authentication using business id and secret key",
+                "operationId": "authentication",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessTokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/banks": {
             "get": {
                 "tags": [
@@ -853,10 +904,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/TypesBusinessCustomer"
-                                    }
+                                    "$ref": "#/components/schemas/TypesBusinessCustomer"
                                 }
                             }
                         }
@@ -986,7 +1034,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/TypesBusinessTransaction"
                                 }
                             }
                         }
@@ -1450,6 +1498,67 @@
                 }
             }
         },
+        "/wallets/{id}": {
+            "get": {
+                "tags": [
+                    "wallet"
+                ],
+                "description": "Get wallet",
+                "operationId": "getWallet",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessWallet"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/webhook/log/{id}/retry": {
             "post": {
                 "tags": [
@@ -1749,6 +1858,43 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessToken": {
+                "type": "object",
+                "properties": {
+                    "business_id": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "expires_at": {
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "issued_at": {
+                        "type": "integer"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessTokenResponse": {
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "$ref": "#/components/schemas/TypesBusinessToken"
                     }
                 }
             },
