@@ -2,3 +2,71 @@
 title: 'Test Webhook'
 openapi: 'POST /webhook/{id}/test'
 ---
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swyftpay.io/api/v1/webhook/{id}/test \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwyftpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swyftpay = new SwyftpayClient(config);
+
+await swyftpay.webhook.test('<WEBHOOK_ID>');
+```
+
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$swyftpayClient = new Swervpay($config);
+
+$swyftpayClient->webhook->test('<WEBHOOK_ID>');
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	"log"
+)
+
+func main() {
+	secretKey := "<SECRET_KEY>"
+    businessId := "<BUSINESS_ID>"
+	ctx := context.Background()
+
+	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+        BusinessId: businessId
+        SecretKey: secretKey
+    })
+
+
+	resp, err := swyftpayClient.webhook.test(ctx, '<WEBHOOK_ID>')
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>

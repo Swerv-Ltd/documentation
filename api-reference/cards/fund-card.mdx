@@ -8,7 +8,7 @@ openapi: 'POST /cards/{id}/fund'
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards \
+curl -X POST https://api.swyftpay.io/api/v1/cards/{id}/fund \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -26,21 +26,24 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.card.fund({
-    cardId: "user",
+await swyftpay.card.fund('<CARD_ID>', {
     amount: "user"
 })
 ```
 
 ```php PHP
-use SwyftpayClient\SDK\Client;
+use Swervpaydev\SDK\Swervpay;
 
-$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
 
-$swyftpayClient->card->fund([
-    "cardId" => "user",
+$swyftpayClient = new Swervpay($config);
+
+$swyftpayClient->card->fund('<CARD_ID>', [
     "amount" => "user"
-])->toArray();
+]);
 ```
 
 
@@ -66,11 +69,10 @@ func main() {
 
 
     data := swyftpayClient.CardFund{
-        CardId: "user",
         Amount: 1000
     }
 
-	resp, err := swyftpayClient.card.fund(ctx, data)
+	resp, err := swyftpayClient.card.fund(ctx, '<CARD_ID>', data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

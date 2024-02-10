@@ -6,15 +6,11 @@ openapi: 'POST /cards/{id}/terminate'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/cards/{id} \
+curl -X PUT https://api.swyftpay.io/api/v1/cards/{id}/terminate \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
-    "firstname": "user",
-    "lastname": "user",
-    "middlename": "user",
-    "country": "user",
-    "email": "user@mailinator.com"
+
   }'
 ```
 
@@ -28,19 +24,20 @@ const config = {
 
 const swyftpay = new SwyftpayClient(config);
 
-await swyftpay.card.terminate({
-    customerId: "user"
-})
+await swyftpay.card.terminate('<CARD_ID>')
 ```
 
 ```php PHP
-use SwyftpayClient\SDK\Client;
+use Swervpaydev\SDK\Swervpay;
 
-$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
 
-$swyftpayClient->card->terminate([
-    "customerId" => "user"
-])->toArray();
+$swyftpayClient = new Swervpay($config);
+
+$swyftpayClient->card->terminate('<CARD_ID>');
 ```
 
 
@@ -64,11 +61,7 @@ func main() {
         SecretKey: secretKey
     })
 
-    data := swyftpayClient.CustomerBlacklist{
-        CustomerId: "user"
-    }
-
-	resp, err := swyftpayClient.card.terminate(ctx, data)
+	resp, err := swyftpayClient.card.terminate(ctx, '<CARD_ID>')
 
 	if err != nil {
 		log.Fatal("error", err.Error())

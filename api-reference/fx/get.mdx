@@ -2,3 +2,87 @@
 title: 'Get FX Rates'
 openapi: 'POST /fx/rate'
 ---
+
+
+
+<RequestExample>
+
+```bash cURL
+curl -X PUT https://api.swyftpay.io/api/v1/fx/rate \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwyftpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swyftpay = new SwyftpayClient(config);
+
+await swyftpay.fx.rate({
+    amount: 100,
+    currency: 'NGN',
+    to: 'USD'
+})
+```
+
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$swyftpayClient = new Swervpay($config);
+
+$swyftpayClient->fx->rate([
+    'amount' => 100,
+    'currency' => 'NGN',
+    'to' => 'USD'
+]);
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	"log"
+)
+
+func main() {
+	secretKey := "<SECRET_KEY>"
+    businessId := "<BUSINESS_ID>"
+	ctx := context.Background()
+
+	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+        BusinessId: businessId
+        SecretKey: secretKey
+    })
+
+    data := swyftpayClient.FxExchange{
+        Amount: 100,
+        Currency: "NGN",
+        To: "USD"
+    }
+
+	resp, err := swyftpayClient.fx.rate(ctx, data)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
+
