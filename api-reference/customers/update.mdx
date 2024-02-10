@@ -34,12 +34,17 @@ await swyftpay.customer.update("<CUSTOMER_ID>", {
 ```
 
 ```php PHP
-use SwyftpayClient\SDK\Client;
+use Swervpaydev\SDK\Swervpay;
 
-$swyftpayClient = new Client(<SECRET_KEY>, <BUSINESS_ID>);
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$swyftpayClient = new Swervpay($config);
 
 $swyftpayClient->customer->update("<CUSTOMER_ID>", [
-    "phoneNumber" => "user",
+    "phone_number" => "user",
     "email" => "user@mailinator.com"
 ])->toArray();
 ```
