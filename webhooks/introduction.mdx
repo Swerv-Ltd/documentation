@@ -15,6 +15,163 @@ You can create a webhook from the [dashboard](https://app.swervpay.co/-/develope
 
 All webhook requests include a ``SWERVPAY-SECRET`` header for verification. It should match the secret generated when creating the webhook.
 
+<CodeGroup>
+```js NodeJS
+const secret = process.env.SWERVPAY_SECRET;
+
+function verifyWebhook(req, res, next) {
+  if (req.headers['SWERVPAY-SECRET'] !== secret) {
+    return res.status(401).json({
+      message: "Unauthorized request."
+    });
+  }
+  next();
+}
+
+router.post('/webhook', verifyWebhook, (req, res) => {
+  const webhook = req.body;
+  switch(webhook.event) {
+    case "card.created":
+  
+    break;
+  }
+  return res.sendStatus(200);
+});
+
+```
+
+```php PHP
+$secret = getenv('SWERVPAY_SECRET');
+
+function verifyWebhook($secret) {
+    $header = $_SERVER['HTTP_SWERVPAY_SECRET'];
+    if ($header !== $secret) {
+        http_response_code(401);
+        echo 'Unauthorized request';
+        exit();
+    }
+}
+
+function handleWebhook() {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        http_response_code(400);
+        echo 'Invalid JSON body';
+        exit();
+    }
+
+    switch ($data['event']) {
+        case 'card.created':
+            // Handle the event
+            break;
+    }
+
+    http_response_code(200);
+}
+
+verifyWebhook($secret);
+handleWebhook();
+```
+
+```php Laravel
+// In your middleware
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class VerifyWebhook
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $secret = env('SWERVPAY_SECRET');
+        if ($request->header('SWERVPAY-SECRET') !== $secret) {
+            return response('Unauthorized request', 401);
+        }
+
+        return $next($request);
+    }
+}
+
+// In your controller
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class WebhookController extends Controller
+{
+    public function handle(Request $request)
+    {
+        $data = $request->json()->all();
+
+        switch ($data['event']) {
+            case 'card.created':
+                // Handle the event
+                break;
+        }
+
+        return response(null, 200);
+    }
+}
+
+// In your routes/web.php or routes/api.php
+Route::post('/webhook', 'App\Http\Controllers\WebhookController@handle')->middleware('App\Http\Middleware\VerifyWebhook');
+```
+
+```go Go
+package main
+
+import (
+    "encoding/json"
+    "net/http"
+    "os"
+
+    "github.com/gorilla/mux"
+)
+
+var secret = os.Getenv("SWERVPAY_SECRET")
+
+func verifyWebhook(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        if r.Header.Get("SWERVPAY-SECRET") != secret {
+            http.Error(w, "Unauthorized request", http.StatusUnauthorized)
+            return
+        }
+        next.ServeHTTP(w, r)
+    })
+}
+
+type Webhook struct {
+    Event string `json:"event"`
+}
+
+func handleWebhook(w http.ResponseWriter, r *http.Request) {
+    var webhook Webhook
+    err := json.NewDecoder(r.Body).Decode(&webhook)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusBadRequest)
+        return
+    }
+
+    switch webhook.Event {
+    case "card.created":
+        // Handle the event
+    }
+
+    w.WriteHeader(http.StatusOK)
+}
+
+func main() {
+    r := mux.NewRouter()
+    r.Use(verifyWebhook)
+    r.HandleFunc("/webhook", handleWebhook).Methods("POST")
+    http.ListenAndServe(":8080", r)
+}
+```
+</CodeGroup>
+
 
 ## Retry
 
