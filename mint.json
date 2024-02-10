@@ -198,5 +198,10 @@
     "twitter": "https://twitter.com/swyftpay_io",
     "github": "https://github.com/Swerv-Ltd",
     "linkedin": "https://www.linkedin.com/company/swervltd/"
+  },
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-T8NH65LW4C"
+    }
   }
 }
