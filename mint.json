@@ -124,6 +124,12 @@
       ]
     },
     {
+      "group": "Business",
+      "pages": [
+        "api-reference/business/get"
+      ]
+    },
+    {
       "group": "Customers",
       "pages": [
         "api-reference/customers/get-all-customers",
@@ -190,7 +196,12 @@
     {
       "group": "SDKs",
       "pages": [
-        "sdks/introduction"
+        "sdks/introduction",
+        "sdks/nodejs",
+        "sdks/go",
+        "sdks/php",
+        "sdks/laravel",
+        "sdks/dart"
       ]
     }
   ],

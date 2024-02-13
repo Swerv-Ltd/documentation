@@ -1,0 +1,254 @@
+---
+title: NodeJS
+description: "NodeJS Client for Swervpay"
+---
+
+### Installation
+
+Install [swervpay-node](https://www.npmjs.com/package/@swervpaydev/sdk) sdk into your new or existing NodeJS application using any of your favorite package manager.
+
+```bash Shell
+$ npm install @swervpaydev/sdk
+$ yarn add @swervpaydev/sdk
+$ pnpm add @swervpaydev/sdk
+$ bun install @swervpaydev/sdk
+```
+
+### Usage
+
+Create swervpay instance with your Business ID and secret.
+
+```javascript NodeJS
+import { SwervpayClient } from "@swervpaydev/sdk";
+
+const swervpay = new SwervpayClient({
+  businessId: process.env.SWERVPAY_API_KEY!,
+  secretKey: process.env.SWERVPAY_API_SECRET!,
+  logLevel: "debug",
+});
+```
+
+### Create a Payout
+
+Create a new payout
+
+```javascript NodeJS
+const payout = await swervpay.payout.create({
+    amount: req.body.amount,
+    currency: req.body.currency,
+    bank_code: req.body.bank_code,
+    account_number: req.body.account_number,
+    naration: req.body.narration,
+    email: req.body.email,
+    reference: req.body.reference,
+});
+```
+
+### Get payout
+
+Get a payout
+
+```javascript NodeJS
+const payout = await swervpay.payout.get(req.param.id);
+```
+
+### Get transactions
+
+Retrieve all transactions
+
+```javascript NodeJS
+const transactions = await swervpay.transaction.gets({
+    limit: parseInt(req.query.limit as string),
+    page: parseInt(req.query.page as string),
+});
+```
+
+### Get transaction
+
+Get a transaction
+
+```javascript NodeJS
+const transaction = await swervpay.transaction.get(req.param.id);
+```
+
+### Create a customer
+
+Create a new customer
+
+```javascript NodeJS
+const customer = await swervpay.customer.create({
+    firstname: req.body.first_name,
+    lastname: req.body.last_name,
+    email: req.body.email,
+    middlename: "",
+    country: req.body.country,
+});
+```
+
+### Update a customer
+
+Update a customer
+
+```javascript NodeJS
+ const customer = await swervpay.customer.update(req.params.id, {
+    email: req.body.email,
+    phone_number: req.body.phone_number,
+});
+```
+
+### Complete customer KYC
+
+Create/Update customer KYC
+
+```javascript NodeJS
+ const customer = await swervpay.customer.kyc(req.params.id, {
+    tier: req.body.tier as "ONE" | "TWO" | "FULL",
+    document: {
+        document_type: req.body.document_type,
+        document: req.body.document,
+        passport: req.body.passport,
+        document_number: req.body.document_number,
+    },
+    information: {
+        address: req.body.address,
+        city: req.body.city,
+        bvn: req.body.bvn,
+        state: req.body.state,
+        country: req.body.country,
+        postal_code: req.body.postal_code,
+    },
+});
+```
+
+### Get customers
+
+Retrieve all customers
+
+```javascript NodeJS
+const customers = await swervpay.customer.gets({
+    limit: parseInt(req.query.limit as string),
+    page: parseInt(req.query.page as string),
+});
+```
+
+### Get customer
+
+Get a customer
+
+```javascript NodeJS
+const customer = await swervpay.customer.get(req.param.id);
+```
+
+### Create a card
+
+Create a new card
+
+```javascript NodeJS
+const card = await swervpay.card.create({
+    amount: req.body.amount,
+    currency: req.body.currency,
+    customer_id: req.body.customer_id,
+    type: req.body.type as "LITE" | "DEFAULT" | "COOPERATE",
+    issuer: req.body.issuer as "MASTERCARD" | "VISA",
+    name_on_card: req.body.name_on_card,
+});
+```
+
+### Get cards
+
+Retrieve all cards
+
+```javascript NodeJS
+const cards = await swervpay.card.gets({
+    limit: parseInt(req.query.limit as string),
+    page: parseInt(req.query.page as string),
+});
+```
+
+### Get card
+
+Get a card
+
+```javascript NodeJS
+const card = await swervpay.card.get(req.param.id);
+```
+
+### Webhook test
+
+Send a test webhook
+
+```javascript NodeJS
+await swervpay.webhook.test(req.params.id);
+```
+
+### Webhook retry
+
+Retry a webhook log
+
+```javascript NodeJS
+await swervpay.webhook.retry(req.params.id);
+```
+
+### Get banks
+
+Retrieve all banks
+
+```javascript NodeJS
+const banks = await swervpay.other.banks();
+```
+
+### Resolve account number
+
+Resolve an account number
+
+```javascript NodeJS
+const result = await swervpay.other.resolve_account_number({
+    bank_code: req.body.bank_code as string,
+    account_number: req.body.account_number as string,
+});
+```
+
+### FX rate
+
+Get the current exchange rate
+
+```javascript NodeJS
+const result = await swervpay.fx.rate({
+    from: req.body.bank_code as string,
+    to: req.body.account_number as string,
+    amount: req.body.amount as number,
+});
+```
+
+### FX Exchnage
+
+Create a swap transaction
+
+```javascript NodeJS
+const result = await swervpay.fx.rate({
+    from: req.body.bank_code as string,
+    to: req.body.account_number as string,
+    amount: req.body.amount as number,
+});
+```
+
+### Get wallet
+
+Get a wallet
+
+```javascript NodeJS
+const wallet = await swervpay.wallet.get(req.params.id);
+```
+
+### Get wallets
+
+Retrieve all wallets
+
+```javascript NodeJS
+ const wallets = await swervpay.wallet.gets({
+    limit: parseInt(req.query.limit as string),
+    page: parseInt(req.query.page as string),
+});
+```
+
+See more [examples](https://github.com/Swerv-Ltd/swervpay-node/tree/main/examples)

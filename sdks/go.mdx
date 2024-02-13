@@ -1,0 +1,52 @@
+---
+title: Go
+description: "Go Client for Swervpay"
+---
+
+### Installation
+
+Install [swervpay-go](https://github.com/Swerv-Ltd/swervpay-go) sdk into your new or existing Go application.
+
+```bash Shell
+$ go get github.com/swerv-Ltd/swervpay-go
+```
+
+### Usage
+
+```go Go
+package main
+
+import (
+    "fmt"
+    "github.com/swerv-Ltd/swervpay-go"
+)
+
+func main() {
+
+
+    // Set your secret key and business id: remember to change this to your live secret key in production
+    config := swervpay.Config{
+        SecretKey: "sk_test_************",
+        BusinessId: "************",
+    }
+    // Create a new Swervpay client
+    client := swervpay.NewSwervpayClient(config)
+
+    // Create a new payout
+    payout, err := client.Payout.Create(&swervpay.PaymentParams{
+        Amount:   1000,
+        Currency: "usd",
+        Naration: "Test payout",
+        BankCode: "044",
+        AccountNumber: "1234567890",
+        Email: "",
+        Reference: "ref_sapa_1234567",
+    })
+
+    if err != nil {
+        fmt.Println(err)
+    }
+
+    fmt.Println(payout)
+}
+```

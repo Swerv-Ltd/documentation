@@ -47,9 +47,9 @@ $config = [
 	'secret_key' => '<SECRET_KEY>'
 ];
 
-$swyftpayClient = new Swervpay($config);
+$client = new Swervpay($config);
 
-$swyftpayClient->card->create([
+$client->card->create([
     "customer_id" => "user",
     "lastname" => "user",
     "middlename" => "user",
@@ -65,7 +65,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	swervpay "github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -74,13 +74,13 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.Config{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
 
-    data := swyftpayClient.CardCreate{
+    data := swervpay.CardCreate{
         CustomerId: "user",
         Lastname: "user",
         Middlename: "user",
@@ -88,7 +88,7 @@ func main() {
         Email: "user@mailinator.com"
     }
 
-	resp, err := swyftpayClient.card.create(ctx, data)
+	resp, err := client.Card.create(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

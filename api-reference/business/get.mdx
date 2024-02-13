@@ -1,13 +1,12 @@
 ---
-title: 'Get Wallet'
-openapi: 'GET /wallets/{id}'
+title: 'Get Business'
+openapi: 'GET /business'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
 <RequestExample>
 
 ```bash cURL
-curl -X GET https://api.swyftpay.io/api/v1/wallets/{id} \
+curl -X POST https://api.swyftpay.io/api/v1/business \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -22,7 +21,7 @@ const config = {
 
 const swyftpay = new SwervpayClient(config);
 
-await swyftpay.wallet.get('<WALLET_ID>')
+await swyftpay.business.get();
 ```
 
 ```php PHP
@@ -35,7 +34,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->wallet->get('<WALLET_ID>');
+$client->business->get();
 ```
 
 
@@ -60,7 +59,7 @@ func main() {
     })
 
 
-	resp, err := client.Wallet.get(ctx, "<WALLET_ID>")
+	resp, err := client.Business.get(ctx)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

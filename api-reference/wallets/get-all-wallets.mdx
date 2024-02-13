@@ -33,9 +33,9 @@ $config = [
 	'secret_key' => '<SECRET_KEY>'
 ];
 
-$swyftpayClient = new Swervpay($config);
+$client = new Swervpay($config);
 
-$swyftpayClient->wallet->gets()->toArray();
+$client->wallet->gets()->toArray();
 ```
 
 
@@ -45,7 +45,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	swervpay "github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -54,13 +54,19 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.Config{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
 
-	resp, err := swyftpayClient.wallet.gets(ctx)
+	query := swervpay.PageAndLimitQuery{
+		PageSize: 10,
+		Page: 1,
+	}
+
+
+	resp, err := client.Wallet.gets(ctx, query)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

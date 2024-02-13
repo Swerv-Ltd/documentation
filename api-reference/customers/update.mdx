@@ -41,9 +41,9 @@ $config = [
 	'secret_key' => '<SECRET_KEY>'
 ];
 
-$swyftpayClient = new Swervpay($config);
+$client = new Swervpay($config);
 
-$swyftpayClient->customer->update("<CUSTOMER_ID>", [
+$client->customer->update("<CUSTOMER_ID>", [
     "phone_number" => "user",
     "email" => "user@mailinator.com"
 ])->toArray();
@@ -56,7 +56,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	swervpay "github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -65,18 +65,18 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.Config{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
 
-    data := swyftpayClient.CustomerUpdate{
+    data := swervpay.CustomerUpdate{
         PhoneNumber: "user",
         Email: "user@mailinator.com"
     }
 
-	resp, err := swyftpayClient.customer.create(ctx, "<CUSTOMER_ID>", data)
+	resp, err := client.Customer.create(ctx, "<CUSTOMER_ID>", data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())
@@ -87,16 +87,3 @@ func main() {
 
 </RequestExample>
 
-{/* <ResponseExample>
-
-```json Response
-{
-    "data": {
-        "acknowledged": true,
-        "status": "processed",
-        "transactionId": "string"
-    }
-}
-```
-
-</ResponseExample> */}

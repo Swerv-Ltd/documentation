@@ -37,9 +37,9 @@ $config = [
 	'secret_key' => '<SECRET_KEY>'
 ];
 
-$swyftpayClient = new Swervpay($config);
+$client = new Swervpay($config);
 
-$swyftpayClient->card->freeze('<CARD_ID>');
+$client->card->freeze('<CARD_ID>');
 ```
 
 
@@ -49,7 +49,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	swervpay "github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -58,12 +58,12 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.Config{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-	resp, err := swyftpayClient.freeze.fund(ctx, '<CARD_ID>')
+	resp, err := client.freeze.fund(ctx, '<CARD_ID>')
 
 	if err != nil {
 		log.Fatal("error", err.Error())

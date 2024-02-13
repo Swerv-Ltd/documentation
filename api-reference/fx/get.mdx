@@ -39,9 +39,9 @@ $config = [
 	'secret_key' => '<SECRET_KEY>'
 ];
 
-$swyftpayClient = new Swervpay($config);
+$client = new Swervpay($config);
 
-$swyftpayClient->fx->rate([
+$client->fx->rate([
     'amount' => 100,
     'currency' => 'NGN',
     'to' => 'USD'
@@ -55,7 +55,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swyftpay "github.com/Swerv-Ltd/swyftpay-go/lib"
+	swervpay "github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -64,18 +64,18 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	swyftpayClient := swyftpay.NewAClient(&swyftpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.Config{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-    data := swyftpayClient.FxExchange{
+    data := swervpay.FxExchange{
         Amount: 100,
         Currency: "NGN",
         To: "USD"
     }
 
-	resp, err := swyftpayClient.fx.rate(ctx, data)
+	resp, err := client.Fx.rate(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())
