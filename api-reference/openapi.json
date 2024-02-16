@@ -261,7 +261,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/ResponseCardCreationResponse"
                                 }
                             }
                         }
@@ -1094,7 +1094,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/TypesExchangeRateResponse"
                                 }
                             }
                         }
@@ -1154,7 +1154,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/ResponseCreatePayoutResponse"
                                 }
                             }
                         }
@@ -1737,6 +1737,28 @@
                     }
                 }
             },
+            "ResponseCardCreationResponse": {
+                "type": "object",
+                "properties": {
+                    "card_id": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ResponseCreatePayoutResponse": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                }
+            },
             "ResponseSuccessResponse": {
                 "type": "object",
                 "properties": {
@@ -2129,10 +2151,19 @@
                     "amount": {
                         "type": "number"
                     },
+                    "currency": {
+                        "type": "string"
+                    },
                     "customer_id": {
                         "type": "string"
                     },
+                    "name_on_card": {
+                        "type": "string"
+                    },
                     "provider": {
+                        "type": "string"
+                    },
+                    "type": {
                         "type": "string"
                     }
                 }
@@ -2143,10 +2174,10 @@
                     "amount": {
                         "type": "number"
                     },
-                    "from_currency": {
+                    "from": {
                         "type": "string"
                     },
-                    "to_currency": {
+                    "to": {
                         "type": "string"
                     }
                 }
@@ -2171,6 +2202,31 @@
                     },
                     "reference": {
                         "type": "string"
+                    }
+                }
+            },
+            "TypesExchangeCurrencyResponse": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "currency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesExchangeRateResponse": {
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "$ref": "#/components/schemas/TypesExchangeCurrencyResponse"
+                    },
+                    "rate": {
+                        "type": "number"
+                    },
+                    "to": {
+                        "$ref": "#/components/schemas/TypesExchangeCurrencyResponse"
                     }
                 }
             },
