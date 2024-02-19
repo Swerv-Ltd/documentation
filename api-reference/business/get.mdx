@@ -49,13 +49,11 @@ import (
 )
 
 func main() {
-	secretKey := "<SECRET_KEY>"
-    businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
 	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
-        BusinessId: businessId
-        SecretKey: secretKey
+        BusinessId: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
     })
 
 	resp, err := client.Business.Get(ctx)
