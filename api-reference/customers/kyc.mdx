@@ -57,16 +57,30 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-    data := swervpay.CustomerKyc{
-        CustomerId: "user"
+    data := swervpay.CustomerKycBody{
+        Tier: "FULL",
+		Tier1: swervpay.Tier1KycInput{
+			Bvn: "12345678901",
+			State: "Lagos",
+			City: "Ikeja",
+			Country: "Nigeria",
+			Address: "No 1, Ikeja",
+			PostalCode: "100001",
+		},
+		Tier2: swervpay.Tier2KycInput{
+			DocumentType: "PASSPORT",
+			DocumentNumber: "A1234567",
+			Document: "https://example.com/document.jpg",
+			Passport: "https://example.com/passport.jpg",
+		},
     }
 
-	resp, err := client.Customer.kyc(ctx, "<CUSTOMER_ID>",  data)
+	resp, err := client.Customer.Kyc(ctx, "<CUSTOMER_ID>",  data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

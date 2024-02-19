@@ -62,17 +62,16 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-
-    data := swervpay.CardFund{
+    data := swervpay.FundOrWithdrawCardBody{
         Amount: 1000
     }
 
-	resp, err := client.Card.fund(ctx, '<CARD_ID>', data)
+	resp, err := client.Card.Fund(ctx, "<CARD_ID>", data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

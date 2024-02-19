@@ -63,19 +63,17 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-
-    data := swervpay.ResolveAccountNumber{
+    data := swervpay.ResolveAccountNumberBody{
         AccountNumber: "user",
         BankCode: "user"
     }
 
-
-	resp, err := client.Other.resolveAccountNumber(ctx, data)
+	resp, err := client.Other.ResolveAccountNumber(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

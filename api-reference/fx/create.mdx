@@ -62,18 +62,18 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-    data := swervpay.FxExchange{
+    data := swervpay.FxBody{
         Amount: 100,
         Currency: "NGN",
         To: "USD"
     }
 
-	resp, err := client.Fx.exchange(ctx, data)
+	resp, err := client.Fx.Exchange(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

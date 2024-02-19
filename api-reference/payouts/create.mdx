@@ -79,23 +79,21 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-
-    data := swervpay.PayoutCreate{
+    data := swervpay.CreatePayoutBody{
         BankCode: "user",
         AccountNumber: "user",
         Amount: "user",
         Currency: "NGN",
         Reference: "user",
-        Naration: "user",
-        Email: "user@mailinator.com"
+        Narration: "user"
     }
 
-	resp, err := client.Payout.create(ctx, data)
+	resp, err := client.Payout.Create(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

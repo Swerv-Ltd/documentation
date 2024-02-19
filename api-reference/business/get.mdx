@@ -53,13 +53,12 @@ func main() {
     businessId := "<BUSINESS_ID>"
 	ctx := context.Background()
 
-	client := swervpay.NewSwervpayClient(&swervpay.Config{
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
         BusinessId: businessId
         SecretKey: secretKey
     })
 
-
-	resp, err := client.Business.get(ctx)
+	resp, err := client.Business.Get(ctx)
 
 	if err != nil {
 		log.Fatal("error", err.Error())
