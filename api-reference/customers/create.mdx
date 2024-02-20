@@ -8,7 +8,7 @@ openapi: 'POST /customers'
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/customers \
+curl -X POST https://api.swervpay.co/api/v1/customers \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -28,9 +28,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.customer.create({
+await swervpay.customer.create({
     firstname: "user",
     lastname: "user",
     middlename: "user",

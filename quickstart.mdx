@@ -12,27 +12,35 @@ Make sure you have create a Swervpay business and have your API keys ready. Don'
 
 Install [swervpay-node](https://www.npmjs.com/package/@swervpaydev/sdk) sdk into your new or existing NodeJS application using any of your favorite package manager.
 
-```bash Shell
+<CodeGroup>
+```bash npm
 $ npm install @swervpaydev/sdk
+```
+```bash yarn
 $ yarn add @swervpaydev/sdk
+```
+```bash pnpm
 $ pnpm add @swervpaydev/sdk
+```
+```bash bun
 $ bun install @swervpaydev/sdk
 ```
+</CodeGroup>
 
 ### Usage
 
 ```javascript NodeJS
-const swervpay = require('@swervpaydev/sdk');
+import { SwervpayClient } from "@swervpaydev/sdk";
 
 const config = {
     secretKey: "<SECRET_KEY>",
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new swervpay.SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
 // Create a new customer
-await swyftpay.customer.create({
+await swervpay.customer.create({
     firstname: "user",
     lastname: "user",
     middlename: "user",
@@ -41,23 +49,22 @@ await swyftpay.customer.create({
 })
 
 // Create a new card
-await swyftpay.card.create({
+await swervpay.card.create({
     customer_id: "user",
-    lastname: "user",
-    middlename: "user",
-    country: "user",
-    email: "user@mailinator.com"
+    amount: 10,
+    currency: "USD",
+    provider: "MASTERCARD",
+    type: "DEFAULT"
 })
 
 // Create a new payout
-await swyftpay.payout.create({
+await swervpay.payout.create({
     bank_code: "user",
     account_number: "user",
     amount: "user",
     currency: "NGN",
     reference: "user",
-    naration: "user",
-    email: "user@mailinator.com"
+    narration: "user"
 })
 ```
 

@@ -3,12 +3,10 @@ title: 'Freeze Card'
 openapi: 'POST /cards/{id}/freeze'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
-
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards/{id}/freeze \
+curl -X POST https://api.swervpay.co/api/v1/cards/{id}/freeze \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -24,9 +22,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.freeze('<CARD_ID>')
+await swervpay.card.freeze('<CARD_ID>')
 ```
 
 ```php PHP

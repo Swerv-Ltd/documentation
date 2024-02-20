@@ -130,6 +130,18 @@
       ]
     },
     {
+      "group": "Cards",
+      "pages": [
+        "api-reference/cards/get-all-cards",
+        "api-reference/cards/get",
+        "api-reference/cards/create",
+        "api-reference/cards/fund-card",
+        "api-reference/cards/withdraw-from-card",
+        "api-reference/cards/freeze",
+        "api-reference/cards/terminate"
+      ]
+    },
+    {
       "group": "Customers",
       "pages": [
         "api-reference/customers/get-all-customers",
@@ -148,28 +160,10 @@
       ]
     },
     {
-      "group": "Cards",
+      "group": "Others",
       "pages": [
-        "api-reference/cards/get-all-cards",
-        "api-reference/cards/get",
-        "api-reference/cards/create",
-        "api-reference/cards/fund-card",
-        "api-reference/cards/withdraw-from-card",
-        "api-reference/cards/freeze",
-        "api-reference/cards/terminate"
-      ]
-    },
-    {
-      "group": "Wallets",
-      "pages": [
-        "api-reference/wallets/get-all-wallets"
-      ]
-    },
-    {
-      "group": "Transactions",
-      "pages": [
-        "api-reference/transactions/get-all-transactions",
-        "api-reference/transactions/get"
+        "api-reference/others/get-banks",
+        "api-reference/others/resolve-account-number"
       ]
     },
     {
@@ -180,10 +174,17 @@
       ]
     },
     {
-      "group": "Others",
+      "group": "Transactions",
       "pages": [
-        "api-reference/others/get-banks",
-        "api-reference/others/resolve-account-number"
+        "api-reference/transactions/get-all-transactions",
+        "api-reference/transactions/get"
+      ]
+    },
+    {
+      "group": "Wallets",
+      "pages": [
+        "api-reference/wallets/get-all-wallets",
+        "api-reference/wallets/get"
       ]
     },
     {

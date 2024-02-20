@@ -3,12 +3,10 @@ title: 'Fund Card'
 openapi: 'POST /cards/{id}/fund'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
-
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards/{id}/fund \
+curl -X POST https://api.swervpay.co/api/v1/cards/{id}/fund \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -24,9 +22,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.fund('<CARD_ID>', {
+await swervpay.card.fund('<CARD_ID>', {
     amount: "user"
 })
 ```

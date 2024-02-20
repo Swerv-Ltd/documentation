@@ -6,9 +6,11 @@ openapi: 'POST /customers/{id}/blacklist'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/customers/{id}/blacklist \
+curl -X POST https://api.swervpay.co/api/v1/customers/{id}/blacklist \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
+  -d '{
+  }'
 ```
 
 ```javascript Node.js
@@ -21,9 +23,7 @@ const config = {
 
 const swyftpay = new SwervpayClient(config);
 
-await swyftpay.customer.blacklist({
-    customerId: "user"
-})
+await swyftpay.customer.blacklist('<CUSTOMER_ID>');
 ```
 
 ```php PHP

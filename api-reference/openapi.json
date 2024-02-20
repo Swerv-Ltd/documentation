@@ -1843,9 +1843,6 @@
             "TypesBusinessCustomer": {
                 "type": "object",
                 "properties": {
-                    "business_id": {
-                        "type": "string"
-                    },
                     "country": {
                         "type": "string"
                     },
@@ -1886,13 +1883,6 @@
             "TypesBusinessToken": {
                 "type": "object",
                 "properties": {
-                    "business_id": {
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
                     "expires_at": {
                         "type": "integer",
                         "nullable": true
@@ -1902,10 +1892,6 @@
                     },
                     "type": {
                         "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
                     }
                 }
             },
@@ -1932,16 +1918,10 @@
                     "amount": {
                         "type": "number"
                     },
-                    "asset_id": {
-                        "type": "string"
-                    },
                     "bank_code": {
                         "type": "string"
                     },
                     "bank_name": {
-                        "type": "string"
-                    },
-                    "business_id": {
                         "type": "string"
                     },
                     "category": {
@@ -1953,9 +1933,6 @@
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "customer_id": {
-                        "type": "string"
                     },
                     "detail": {
                         "type": "string"
@@ -1981,18 +1958,12 @@
                     "status": {
                         "type": "string"
                     },
-                    "sub_wallet_id": {
-                        "type": "string"
-                    },
                     "type": {
                         "type": "string"
                     },
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
-                    },
-                    "wallet_id": {
-                        "type": "string"
                     }
                 }
             },
@@ -2017,9 +1988,6 @@
                     "balance": {
                         "type": "number"
                     },
-                    "business_id": {
-                        "type": "string"
-                    },
                     "card_number": {
                         "type": "string"
                     },
@@ -2028,9 +1996,6 @@
                         "format": "date-time"
                     },
                     "currency": {
-                        "type": "string"
-                    },
-                    "customer_id": {
                         "type": "string"
                     },
                     "cvv": {
@@ -2084,9 +2049,6 @@
                     "address": {
                         "type": "string"
                     },
-                    "asset_id": {
-                        "type": "string"
-                    },
                     "balance": {
                         "type": "number"
                     },
@@ -2099,32 +2061,14 @@
                     "bank_name": {
                         "type": "string"
                     },
-                    "business_id": {
-                        "type": "string"
-                    },
-                    "can_received": {
-                        "type": "boolean"
-                    },
-                    "can_send": {
-                        "type": "boolean"
-                    },
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
                     },
-                    "customer_id": {
-                        "type": "string"
-                    },
                     "id": {
                         "type": "string"
                     },
-                    "is_blocked": {
-                        "type": "boolean"
-                    },
                     "label": {
-                        "type": "string"
-                    },
-                    "parent_wallet_id": {
                         "type": "string"
                     },
                     "pending_balance": {

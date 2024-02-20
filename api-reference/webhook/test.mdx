@@ -6,7 +6,7 @@ openapi: 'POST /webhook/{id}/test'
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/webhook/{id}/test \
+curl -X POST https://api.swervpay.co/api/v1/webhook/{id}/test \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -19,9 +19,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.webhook.test('<WEBHOOK_ID>');
+await swervpay.webhook.test('<WEBHOOK_ID>');
 ```
 
 

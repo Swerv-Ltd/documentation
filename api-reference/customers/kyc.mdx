@@ -6,9 +6,26 @@ openapi: 'POST /customers/{id}/kyc'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/customers/{id}/blacklist \
+curl -X POST https://api.swervpay.co/api/v1/customers/{id}/kyc \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
+  -d '{
+	"tier": "FULL",
+	"information": {
+		"bvn": "12345678901",
+		"state": "Lagos",
+		"city": "Ikeja",
+		"country": "Nigeria",
+		"address": "No 1, Ikeja",
+		"postalCode": "100001"
+	},
+	"document": {
+		"documentType": "PASSPORT",
+		"documentNumber": "A1234567",
+		"document": "https://example.com/document.jpg",
+		"passport": "https://example.com/passport.jpg"
+	}
+}'
 ```
 
 ```javascript Node.js
@@ -19,11 +36,25 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.customer.blacklist({
-    customerId: "user"
-})
+await swervpay.customer.kyc("<CUSTOMER_ID>", {
+	tier: "FULL",
+	information: {
+		bvn: "12345678901",
+		state: "Lagos",
+		city: "Ikeja",
+		country: "Nigeria",
+		address: "No 1, Ikeja",
+		postalCode: "100001"
+	},
+	document: {
+		documentType: "PASSPORT",
+		documentNumber: "A1234567",
+		document: "https://example.com/document.jpg",
+		passport: "https://example.com/passport.jpg"
+	}
+});
 ```
 
 ```php PHP
@@ -37,8 +68,22 @@ $config = [
 $client = new Swervpay($config);
 
 $client->customer->kyc('<CUSTOMER_ID>', [
-    "bvn" => "user"
-])->toArray();
+	'tier' => 'FULL',
+	'information' => [
+		'bvn' => '12345678901',
+		'state' => 'Lagos',
+		'city' => 'Ikeja',
+		'country' => 'Nigeria',
+		'address' => 'No 1, Ikeja',
+		'postalCode' => '100001'
+	],
+	'document' => [
+		'documentType' => 'PASSPORT',
+		'documentNumber' => 'A1234567',
+		'document' => 'https://example.com/document.jpg',
+		'passport' => 'https://example.com/passport.jpg'
+	]
+]);
 ```
 
 

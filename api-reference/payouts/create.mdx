@@ -3,21 +3,19 @@ title: 'Create payout'
 openapi: 'POST /payouts'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
-
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/payouts \
+curl -X POST https://api.swervpay.co/api/v1/payouts \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
-    "bankCode": "user",
-    "accountNumber": "user",
+    "bank_code": "user",
+    "account_number": "user",
     "amount": "user",
     "currency": "NGN",
     "reference": "user",
-    "naration": "user",
+    "narration": "user",
   }'
 ```
 
@@ -29,16 +27,15 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.payout.create({
+await swervpay.payout.create({
     bank_code: "user",
     account_number: "user",
     amount: "user",
     currency: "NGN",
     reference: "user",
-    naration: "user",
-    email: "user@mailinator.com"
+    narration: "user"
 })
 ```
 
@@ -58,8 +55,7 @@ $client->payout->create([
     "amount" => "user",
     "currency" => "NGN",
     "reference" => "user",
-    "naration" => "user",
-    "email" => "user@mailinator.com"
+    "naration" => "user"
 ]);
 ```
 

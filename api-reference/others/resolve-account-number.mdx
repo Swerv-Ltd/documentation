@@ -6,7 +6,7 @@ openapi: 'POST /resolve-account-number'
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/resolve-account-number \
+curl -X POST https://api.swervpay.co/api/v1/resolve-account-number \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
     -d '{
@@ -23,11 +23,11 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.other.resolve_account_number({
-    'accountNumber': 'user',
-    'bankCode': 'user'
+await swervpay.other.resolve_account_number({
+    'account_number': 'user',
+    'bank_code': 'user'
 })
 ```
 

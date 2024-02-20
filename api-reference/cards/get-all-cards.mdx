@@ -3,11 +3,10 @@ title: 'Get All Cards'
 openapi: 'GET /cards'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards \
+curl -X GET https://api.swervpay.co/api/v1/cards \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -20,9 +19,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.gets()
+await swervpay.card.gets()
 ```
 
 ```php PHP

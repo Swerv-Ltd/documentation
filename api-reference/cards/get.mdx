@@ -6,7 +6,7 @@ openapi: 'GET /cards/{id}'
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards/{id} \
+curl -X GET https://api.swervpay.co/api/v1/cards/{id} \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -19,9 +19,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.get('<CARD_ID>')
+await swervpay.card.get('<CARD_ID>')
 ```
 
 ```php PHP

@@ -3,20 +3,18 @@ title: 'Create Card'
 openapi: 'POST /cards'
 ---
 
-{/* <Snippet file="authorization.mdx" /> */}
-
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swyftpay.io/api/v1/cards \
+curl -X POST https://api.swervpay.co/api/v1/cards \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
-    "customerId": "user",
-    "lastname": "user",
-    "middlename": "user",
-    "country": "user",
-    "email": "user@mailinator.com"
+    "customer_id": "user",
+    "currency": "USD",
+    "provider": "MASTERCARD",
+    "amount": 10,
+    "type": "DEFAULT"
   }'
 ```
 
@@ -28,14 +26,14 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.create({
+await swervpay.card.create({
     customer_id: "user",
-    lastname: "user",
-    middlename: "user",
-    country: "user",
-    email: "user@mailinator.com"
+    currency: "USD",
+    provider: "MASTERCARD",
+    amount: 10,
+    type: "DEFAULT"
 })
 ```
 
@@ -51,10 +49,10 @@ $client = new Swervpay($config);
 
 $client->card->create([
     "customer_id" => "user",
-    "lastname" => "user",
-    "middlename" => "user",
-    "country" => "user",
-    "email" => "user@mailinator.com"
+    "currency" => "USD",
+    "provider" => "MASTERCARD",
+    "amount" => 10,
+    "type" => "DEFAULT"
 ]);
 ```
 
@@ -79,7 +77,7 @@ func main() {
 
     data := swervpay.CreateCardBody{
         Type: "DEFAULT",
-        Currency: "NGN",
+        Currency: "USD",
         Provider: "MASTERCARD",
         CustomerId: "user",
         Amount: 10

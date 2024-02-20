@@ -6,7 +6,7 @@ openapi: 'POST /cards/{id}/terminate'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/cards/{id}/terminate \
+curl -X PUT https://api.swervpay.co/api/v1/cards/{id}/terminate \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -22,9 +22,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.card.terminate('<CARD_ID>')
+await swervpay.card.terminate('<CARD_ID>')
 ```
 
 ```php PHP

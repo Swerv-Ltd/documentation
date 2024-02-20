@@ -8,7 +8,7 @@ openapi: 'POST /fx/rate'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swyftpay.io/api/v1/fx/rate \
+curl -X POST https://api.swervpay.co/api/v1/fx/rate \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json"
 ```
@@ -21,9 +21,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.fx.rate({
+await swervpay.fx.rate({
     amount: 100,
     currency: 'NGN',
     to: 'USD'
