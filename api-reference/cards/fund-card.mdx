@@ -39,7 +39,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->card->fund('<CARD_ID>', [
+$client->card()->fund('<CARD_ID>', [
     "amount" => "user"
 ]);
 ```

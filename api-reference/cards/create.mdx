@@ -47,7 +47,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->card->create([
+$client->card()->create([
     "customer_id" => "user",
     "currency" => "USD",
     "provider" => "MASTERCARD",

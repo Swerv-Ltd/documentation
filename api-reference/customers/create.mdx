@@ -49,7 +49,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->customer->create([
+$client->customer()->create([
     "firstname" => "user",
     "lastname" => "user",
     "middlename" => "user",

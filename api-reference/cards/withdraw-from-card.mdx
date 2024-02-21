@@ -41,7 +41,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->card->withdraw('<CARD_ID>', [
+$client->card()->withdraw('<CARD_ID>', [
     "amount" => "user"
 ]);
 ```

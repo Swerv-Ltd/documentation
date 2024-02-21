@@ -67,7 +67,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->customer->kyc('<CUSTOMER_ID>', [
+$client->customer()->kyc('<CUSTOMER_ID>', [
 	'tier' => 'FULL',
 	'information' => [
 		'bvn' => '12345678901',

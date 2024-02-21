@@ -43,7 +43,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->customer->update("<CUSTOMER_ID>", [
+$client->customer()->update("<CUSTOMER_ID>", [
     "phone_number" => "user",
     "email" => "user@mailinator.com"
 ])->toArray();

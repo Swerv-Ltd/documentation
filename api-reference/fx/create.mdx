@@ -44,7 +44,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->fx->exchange([
+$client->fx()->exchange([
     'amount' => 100,
     'currency' => 'NGN',
     'to' => 'USD'

@@ -49,7 +49,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->payout->create([
+$client->payout()->create([
     "bank_code" => "user",
     "account_number" => "user",
     "amount" => "user",
