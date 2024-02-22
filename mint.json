@@ -138,7 +138,9 @@
         "api-reference/cards/fund-card",
         "api-reference/cards/withdraw-from-card",
         "api-reference/cards/freeze",
-        "api-reference/cards/terminate"
+        "api-reference/cards/terminate",
+        "api-reference/cards/transactions",
+        "api-reference/cards/get-transaction"
       ]
     },
     {

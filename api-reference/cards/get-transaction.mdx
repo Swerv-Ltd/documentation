@@ -1,0 +1,69 @@
+---
+title: 'Get Card Transaction'
+openapi: 'GET /cards/{id}/transactions/{transactionId}'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.swervpay.co/api/v1/cards/{id}/transactions/{transactionId} \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.card.transaction('<CARD_ID>', '<TRANSACTION_ID>');
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->card()->transaction('<CARD_ID>', '<TRANSACTION_ID>');
+```
+
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swervpay "github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessId: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+	resp, err := client.Card.Transaction(ctx, "<CARD_ID>", "<TRANSACTION_ID>")
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
