@@ -1,0 +1,68 @@
+---
+title: 'Get Collection Transactions'
+openapi: 'GET /collections/{id}/transactions'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.swervpay.co/api/v1/collections/{id}/transactions \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.collection.transactions('<COLLECTION_ID>')
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->collection()->transactions('<COLLECTION_ID>');
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swervpay "github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessId: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+	resp, err := client.Collection.Transactions(ctx, "<COLLECTION_ID>")
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>

@@ -1,0 +1,97 @@
+---
+title: 'Create Collection'
+openapi: 'POST /collections'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swervpay.co/api/v1/collections \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer_id": "user",
+    "currency": "NGN",
+    "merchant_name": "Swervpay",
+    "amount": 10,
+    "type": "ONE_TIME"
+  }'
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.collection.create({
+    customer_id: "user",
+    currency: "USD",
+    merchant_name: "Swervpay",
+    amount: 10,
+    type: "ONE_TIME"
+})
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->collection()->create([
+    "customer_id" => "user",
+    "currency" => "NGN",
+    "merchant_name" => "Swervpay",
+    "amount" => 10,
+    "type" => "ONE_TIME"
+]);
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swervpay "github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessId: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+    data := swervpay.CreateCardBody{
+        Type: "ONE_TIME",
+        Currency: "NGN",
+        // Optional for type ONE_TIME
+        MerchantName: "Swervpay",
+        CustomerId: "user",
+        Amount: 10
+    }
+
+	resp, err := client.Collection.Create(ctx, data)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
+

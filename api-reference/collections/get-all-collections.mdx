@@ -1,0 +1,73 @@
+---
+title: 'Get All Collections'
+openapi: 'GET /collections'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.swervpay.co/api/v1/collections \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.collection.gets()
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->card()->collection()->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	swervpay "github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+		BusinessId: businessId
+		SecretKey: secretKey
+  	})
+
+  	query := swervpay.PageAndLimitQuery{
+		Limit: 10,
+		Page: 1,
+	}
+
+	resp, err := client.Collection.Gets(ctx, query)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>

@@ -156,6 +156,15 @@
       ]
     },
     {
+      "group": "Collections",
+      "pages": [
+        "api-reference/collections/get-all-collections",
+        "api-reference/collections/get",
+        "api-reference/collections/create",
+        "api-reference/collections/transaction"
+      ]
+    },
+    {
       "group": "FX",
       "pages": [
         "api-reference/fx/get",
