@@ -46,7 +46,7 @@ package main
 import (
 	"context"
 	"fmt"
-	swervpay "github.com/swerv-ltd/swervpay-go"
+	"github.com/swerv-ltd/swervpay-go"
 	"log"
 )
 
@@ -54,7 +54,7 @@ func main() {
 	ctx := context.Background()
 
 	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
-        BusinessId: "<BUSINESS_ID>",
+        BusinessID: "<BUSINESS_ID>",
         SecretKey: "<SECRET_KEY>",
     })
 

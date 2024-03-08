@@ -1,12 +1,12 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Swyftpay Developer API Specification",
+        "title": "Swervpay Developer API Specification",
         "version": "0.0.0"
     },
     "servers": [
         {
-            "url": "https://api.swervpay.co/v1"
+            "url": "https://api.swervpay.co/api/v1"
         }
     ],
     "security": [
@@ -16,7 +16,7 @@
     ],
     "paths": {
         "/auth": {
-            "get": {
+            "post": {
                 "tags": [
                     "auth"
                 ],
@@ -453,7 +453,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/OpenapiResponseData"
                                 }
                             }
                         }
@@ -731,7 +731,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                    "$ref": "#/components/schemas/OpenapiResponseData"
                                 }
                             }
                         }
@@ -2137,6 +2137,17 @@
                 "properties": {
                     "amount": {
                         "type": "integer"
+                    }
+                }
+            },
+            "OpenapiResponseData": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "transaction": {
+                        "$ref": "#/components/schemas/TypesBusinessTransaction"
                     }
                 }
             },

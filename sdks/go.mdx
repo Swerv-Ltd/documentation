@@ -5,10 +5,10 @@ description: "Go Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-go](https://github.com/Swerv-Ltd/swervpay-go) sdk into your new or existing Go application.
+Install [swervpay-go](https://github.com/swerv-ltd/swervpay-go) sdk into your new or existing Go application.
 
 ```bash Shell
-$ go get github.com/swerv-Ltd/swervpay-go
+$ go get github.com/swerv-ltd/swervpay-go
 ```
 
 ### Usage
@@ -17,35 +17,106 @@ $ go get github.com/swerv-Ltd/swervpay-go
 package main
 
 import (
-    "fmt"
-    swervpay "github.com/swerv-ltd/swervpay-go"
+    "context"
+	"fmt"
+	"github.com/swerv-ltd/swervpay-go"
+	"os"
 )
 
 func main() {
 
 
-    // Set your secret key and business id: remember to change this to your live secret key in production
-    config := swervpay.SwervpayClientOption{
-        SecretKey: "sk_test_************",
-        BusinessId: "************",
-    }
-    // Create a new Swervpay client
-    client := swervpay.NewSwervpayClient(config)
+    ctx := context.Background()
 
-    // Create a new payout
-    payout, err := client.Payout.Create(&swervpay.CreatePayoutBody{
-        Amount:   1000,
-        Currency: "NGN",
-        Naration: "Sapa don't kill me",
-        BankCode: "044",
-        AccountNumber: "1234567890",
-        Reference: "ref_sapa_1234567",
-    })
+	businessId := os.Getenv("SWERVPAY_BUSINESS_ID")
+	secretKey := os.Getenv("SWERVPAY_SECRET_KEY")
 
-    if err != nil {
-        fmt.Println(err)
-    }
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+		BusinessID: businessId,
+		SecretKey:  secretKey,
+	})
 
-    fmt.Println(payout)
+	customers, err := client.Customer.Gets(ctx, &swervpay.PageAndLimitQuery{
+		Page:  1,
+		Limit: 10,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, customer := range *customers {
+		fmt.Printf("%v\n", customer)
+	}
+
+	customer, err := client.Customer.Get(ctx, "cus_123456")
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%v\n", customer)
+
+	newCustomer, err := client.Customer.Create(ctx, &swervpay.CreateCustomerBody{
+		Firstname:  "John",
+		Lastname:   "Doe",
+		Middlename: "Doe",
+		Email:      "johndoe@gmail.com",
+		Country:    "Nigeria",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Created Customer id: " + newCustomer.ID)
+	fmt.Printf("%v\n", newCustomer)
+
+
+    banks, err := client.Other.Banks(ctx)
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, bank := range *banks {
+		fmt.Printf("%v\n", bank)
+	}
+
+	resolveAccount, err := client.Other.ResolveAccountNumber(ctx, swervpay.ResolveAccountNumberBody{
+		BankCode:      "044",
+		AccountNumber: "0690000031",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%v\n", resolveAccount)
+
+
+    transactions, err := client.Transaction.Gets(ctx, &swervpay.PageAndLimitQuery{
+		Page:  1,
+		Limit: 10,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	for _, transaction := range *transactions {
+		fmt.Printf("%v\n", transaction)
+	}
+
+	transaction, err := client.Transaction.Get(ctx, "txn_123456")
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%v\n", transaction)
 }
 ```
+
+
+See more [examples](https://github.com/Swerv-Ltd/swervpay-go/tree/main/_examples)
