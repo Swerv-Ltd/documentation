@@ -96,6 +96,12 @@
       ]
     },
     {
+      "group": "Collection",
+      "pages": [
+        "collection/introduction"
+      ]
+    },
+    {
       "group": "FX",
       "pages": [
         "fx/introduction"
