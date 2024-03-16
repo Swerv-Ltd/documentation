@@ -13,13 +13,15 @@ Our wallet webhook events are fired based on the following triggers:
 
 This event is fired when a wallet is updated.
 
-```json
+```json wallet.updated
 {
   "event": "wallet.updated",
   "data": {
-    "id": "wt_ywLTBi1QWMi66v82JaX3",
-    "parent_id": null,
-    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "wallet_id": "wlt_Za3WgMTHsD5NSYMeqRJ7",
+    "business_id": "bsn_fAYcWSUXz3TogChv7BgH",
+    "type": "CREDIT",
+    "amount": 11000,
+    "balance": 402850
   }
 }
 ```

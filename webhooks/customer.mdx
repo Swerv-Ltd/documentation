@@ -17,7 +17,7 @@ Our customer webhook events are fired based on the following triggers:
 
 This event is fired when a customer is created.
 
-```json
+```json customer.created
 {
   "event": "customer.created",
   "data": {
@@ -31,7 +31,7 @@ This event is fired when a customer is created.
 
 This event is fired when a customer is updated.
 
-```json
+```json customer.updated
 {
   "event": "customer.updated",
   "data": {
@@ -45,12 +45,13 @@ This event is fired when a customer is updated.
 
 This event is fired when a customer's KYC status is updated.
 
-```json
+```json customer.kyc.updated
 {
   "event": "customer.kyc.updated",
   "data": {
       "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
       "id": "cus_BJ8ptMSAcm3n6qp6bFpc",
+      "tier": "ONE",
       "kyc_status": "APPROVED"
   }
 }

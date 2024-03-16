@@ -21,9 +21,9 @@ const config = {
     businessId: "<BUSINESS_ID>"
 }
 
-const swyftpay = new SwervpayClient(config);
+const swervpay = new SwervpayClient(config);
 
-await swyftpay.customer.blacklist('<CUSTOMER_ID>');
+await swervpay.customer.blacklist('<CUSTOMER_ID>');
 ```
 
 ```php PHP

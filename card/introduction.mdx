@@ -1,29 +1,42 @@
 ---
 title: 'Overview'
-description: 'Swyftpay Card API allows businesses to create card for their customer to pay anywhere global'
+description: 'Swervpay Card API allows businesses to create card for their customer to pay anywhere global'
 ---
 
 This API provides a powerful, secure, and easy-to-use set of endpoints for card management, including creation, retrieval, freezing, and termination of cards. This guide will cover essential operations to help you manage card transactions within your applications
 ###  📇 Create a Card
 
-Initiate the creation of a virtual or physical card by sending a request to the [create](/api-reference/cards/create) cards endpoint.
+Initiate the creation of a virtual or physical card by sending a request to the [create](/api-reference/cards/create) card endpoint.
 
 **Parameters**
 
-- `customerId`: string *(required)*
-  - The unique identifier for the customer to whom the card will be issued.
+<ParamField body="customer_id" type="string">
+  The unique identifier for the customer to whom the card will be issued.
+</ParamField>
 
-- `lastname`: string *(required)*
-  - The cardholder's last name as it will appear on the card.
+<ParamField body="currency" type="string" required>
+  The three-letter ISO currency code in uppercase.
+</ParamField>
 
-- `middlename`: string *(optional)*
-  - The cardholder's middle name or initial that may appear on the card.
+<ParamField body="name_on_card" type="string">
+ The cardholder name that may appear on the card.
+</ParamField>
 
-- `country`: string *(required)*
-  - The country code where the card will be used. Use ISO 3166-1 alpha-2 country codes.
+<ParamField body="provider" type="string" required>
+ card provider e.g MASTERCARD, VISA
+</ParamField>
 
-- `email`: string *(required)*
-  - The email address of the cardholder. This will be used for sending notifications related to card activities and transactions.
+<ParamField body="type" type="string" required>
+ card type e.g DEFAULT, LITE
+</ParamField>
+
+<ParamField body="amount" type="integer">
+ amount to pre-fund the card
+</ParamField>
+
+<Note>
+Note: `customer_id` is required for DEFAULT card type
+</Note>
 
 **Request Body**
 
@@ -31,11 +44,12 @@ Provide necessary details to set up a new card.
 
 ```json
 {
-    "customerId": "user",
-    "lastname": "user",
-    "middlename": "user",
-    "country": "user",
-    "email": "user@mailinator.com"
+    "customer_id": "user",
+    "currency": "USD",
+    "provider": "MASTERCARD",
+    "name_on_card": "Swerv",
+    "amount": 10,
+    "type": "DEFAULT"
 }
 ```
 
@@ -44,53 +58,57 @@ Add funds to an existing card using the [fund](/api-reference/cards/fund) endpoi
 
 **Parameters**
 
-- `id` string *(required)*: 
-  - The unique identifier of the card to retrieve.
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to fund.
+</ParamField>
 
 **Body**
-- `amount` integer :
-  - The amount to fund in the smallest currency unit.
+
+<ParamField body="amount" type="integer">
+ The amount to fund in the smallest currency unit.
+</ParamField>
 
 ###  🔍 Get a Card
 Retrieve information about a specific card with its unique identifier using the [get](/api-reference/cards/get) card endpoint.
 
 **Parameters**
 
-- `id` string *(required)*: 
-  - The unique identifier of the card to retrieve.
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to retrieve.
+</ParamField>
 
 ### ❄️ Freeze a Card
 Temporarily disable a card to prevent new transactions by using the [freeze](/api-reference/cards/freeze) card endpoint.
 
 **Path Parameters**
 
-- `id` string *(required)*: 
-  - The unique identifier of the card to retrieve.
-
-**Response**
-
-- `message' string:
-  - 'Card has been frozen successfully'
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to freeze/unfreeze.
+</ParamField>
 
 ### 🚫 Terminate a Card
 Permanently disable a card and remove it from your account with the [terminate](/api-reference/cards/terminate) card endpoint.
 
 **Path Parameters**
 
-- `id` string *(required)*: 
-  - The unique identifier of the card to retrieve.
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to terminate.
+</ParamField>
 
 ###  💸  Withdraw from Card
 Withdraw funds from the card back to your business account using the [withdraw-from-card](/api-reference/cards/withdraw-from-card) endpoint.
 
 **Path Parameters**
 
-- `id` string *(required)*: 
-  - The unique identifier of the card from which to withdraw funds.
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to withdraw from.
+</ParamField>
 
 **Body**
-- `amount` integer *(required)*: 
-  - The amount to withdraw in the smallest currency unit.
+
+<ParamField body="amount" type="integer">
+ The amount to fund in the smallest currency unit.
+</ParamField>
 
 ### 🗂️ Get All Cards
 
@@ -98,11 +116,14 @@ To retrieve a comprehensive list of all the cards, use the [get all](/api-refere
 
 **Query Parameters**
 
-- `page` integer *(Default: 1)*: 
-  - The page to return.
+<ParamField query="page" type="string" default={1} required>
+  The page to return.
+</ParamField>
 
-- `limit` integer *(Default: 30)*: 
-  - The maximum number of results to return.
+
+<ParamField query="limit" type="string" default={10} required>
+   The maximum number of results to return.
+</ParamField>
 
 **Response Example**
 
@@ -117,8 +138,6 @@ The response returns an array of card objects with their respective details.
     "expiry": "12/34",
     "cvv": "123",
     "name_on_card": "John Doe",
-    "business_id": "business_987654321",
-    "customer_id": "cust_123456789",
     "balance": 500000, // Balance in the smallest currency unit
     "total_funded": 1500000, // Total funded in the smallest currency unit
     "freeze": false,
@@ -135,8 +154,3 @@ The response returns an array of card objects with their respective details.
 ]
 
 ```
-
-<Tip>
-Use the card ID received from the create card response or from your card list.
-
-</Tip>

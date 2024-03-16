@@ -119,6 +119,7 @@
         "webhooks/introduction",
         "webhooks/card",
         "webhooks/customer",
+        "webhooks/collection",
         "webhooks/payout",
         "webhooks/wallet"
       ]
@@ -173,8 +174,8 @@
     {
       "group": "FX",
       "pages": [
-        "api-reference/fx/get",
-        "api-reference/fx/create"
+        "api-reference/fx/rate",
+        "api-reference/fx/exchange"
       ]
     },
     {

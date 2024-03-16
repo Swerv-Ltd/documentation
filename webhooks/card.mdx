@@ -25,11 +25,11 @@ Our card webhook events are fired based on the following triggers:
 
 This event is fired when a card is created.
 
-```json
+```json card.created
 {
   "event": "card.created",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "status": "STATUS",
     "created_at": "2024-02-06T02:49:18Z",
@@ -42,11 +42,11 @@ This event is fired when a card is created.
 
 This event is fired when a card is terminated.
 
-```json
+```json card.terminated
 {
   "event": "card.terminated",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "status": "STATUS",
     "created_at": "2024-02-06T02:49:18Z",
@@ -59,11 +59,11 @@ This event is fired when a card is terminated.
 
 This event is fired when a card is frozen.
 
-```json
+```json card.frozen
 {
   "event": "card.frozen",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "status": "STATUS",
     "created_at": "2024-02-06T02:49:18Z",
@@ -76,11 +76,11 @@ This event is fired when a card is frozen.
 
 This event is fired when a card is unfrozen.
 
-```json
+```json card.unfrozen
 {
   "event": "card.unfrozen",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "status": "STATUS",
     "created_at": "2024-02-06T02:49:18Z",
@@ -93,11 +93,11 @@ This event is fired when a card is unfrozen.
 
 This event is fired when a card is funded.
 
-```json
+```json card.funded
 {
   "event": "card.funded",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "balance": 1000,
     "created_at": "2024-02-06T02:49:18Z",
@@ -110,11 +110,11 @@ This event is fired when a card is funded.
 
 This event is fired when a card is withdrawn.
 
-```json
+```json card.withdrawn
 {
   "event": "card.withdrawn",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "balance": 1000,
     "created_at": "2024-02-06T02:49:18Z",
@@ -127,17 +127,26 @@ This event is fired when a card is withdrawn.
 
 This event is fired when a card transaction is made.
 
-```json
+```json card.transaction
 {
   "event": "card.transaction",
   "data": {
-    "id": "32004822-844f-4063-a836-84d0f40f0a1d",
+    "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+    "reference": "ref_mviuNSMKi74vTY8yvfP6nQ",
     "amount": 1000,
+    "charges": 1000,
     "status": "APPROVED",
     "type": "DEBIT",
-    "description": "Transaction description",
-    "merchant": "Google Inc",
+    "merchant_name": "Google Inc",
+    "merchant_city": "",
+    "merchant_country": "",
+    "merchant_postal_code": "",
+    "merchant_state": "",
+    "merchant_mcc": "",
+    "merchant_mid": "",
+    "currency": "",
+    "category": "",
     "created_at": "2024-02-06T02:49:18Z",
     "updated_at": "2024-02-06T02:49:18Z"
   }

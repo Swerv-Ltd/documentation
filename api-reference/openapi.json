@@ -1318,7 +1318,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TypesBusinessCustomer"
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
                                 }
                             }
                         }
@@ -2330,6 +2330,9 @@
                     "status": {
                         "type": "string"
                     },
+                    "tier": {
+                        "type": "string"
+                    },
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
@@ -2589,9 +2592,6 @@
                         "format": "date-time"
                     },
                     "id": {
-                        "type": "string"
-                    },
-                    "label": {
                         "type": "string"
                     },
                     "pending_balance": {

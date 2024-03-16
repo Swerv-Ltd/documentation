@@ -3,44 +3,41 @@ title: 'Overview'
 description: 'Retrieve a list of all wallets associated with an account. '
 ---
 
-This API allows businesses to view wallet balances and transaction histories.'
-### Get All wallets
+This API allows businesses to view wallet balances and transaction histories.
+
+### 🔍 Get All wallets
 
 Retrieve a list of all wallets by sending a request to the [get all](/api-reference/wallets/get-all-wallets) wallets endpoint. This enables businesses to monitor wallet statuses and balances in real-time.
 
 **Query Parameters**
 
-- `page` integer *(Default: 1)*: 
-  - The page to return.
+<ParamField query="page" type="string" default={1} required>
+  The page to return.
+</ParamField>
 
-- `limit` integer *(Default: 30)*: 
-  - The maximum number of results to return.
+
+<ParamField query="limit" type="string" default={10} required>
+   The maximum number of results to return.
+</ParamField>
+
 
 **Response Example**
 
-The response provides an array of wallet objects, each containing comprehensive details about the wallets associated with your SwyftPay account.
+The response provides an array of wallet objects, each containing comprehensive details about the wallets associated with your Swervpay account.
 
-```json
+```json Response
 [
   {
     "account_name": "string",
     "account_number": "string",
     "account_type": "string",
-    "address": "string",
-    "asset_id": "string",
     "balance": 100000, // Balance in the smallest currency unit
     "bank_address": "string",
     "bank_code": "string",
     "bank_name": "string",
-    "business_id": "string",
-    "can_received": true,
-    "can_send": true,
     "created_at": "2024-01-01T00:00:00Z",
-    "customer_id": "string",
-    "id": "wallet_123456789",
+    "id": "wlt_123456789",
     "is_blocked": false,
-    "label": "string",
-    "parent_wallet_id": "string",
     "pending_balance": 50000, // Pending balance in the smallest currency unit
     "reference": "string",
     "routing_number": "string",

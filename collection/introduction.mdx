@@ -1,4 +1,106 @@
 ---
 title: 'Overview'
-description: 'Swervpay Collection allows businesses to accept payments from their customers using virtual accounts.'
+description: 'Swervpay Collection allows businesses to accept payments from their customers using virtual accounts & payment link.'
 ---
+
+## Supported partners
+
+Below are the list of currently supported partners for virtual account issuing
+
+- VFD Microfinance Bank
+- Providus Bank (🚧 Coming soon)
+- Guaranty Trust Bank (🚧 Coming soon)
+- Globus (🚧 Coming soon)
+
+
+## Create Virtual Account
+
+To create a virtual account, use the [create](/api-reference/collections/create) collection endpoint.
+
+**Parameters**
+
+<ParamField body="customer_id" type="string">
+  The unique identifier for the customer to whom the card will be issued.
+</ParamField>
+
+<ParamField body="currency" type="string" required>
+  The three-letter ISO currency code in uppercase.
+</ParamField>
+
+<ParamField body="merchant_name" type="string">
+  merchant name that will be displayed on the virtual account. Required for ONE_TIME (Temporary) virtual account.
+</ParamField>
+
+<ParamField body="type" type="string" required>
+  virtual account type e.g DEFAULT (Permanent), ONE_TIME (Temporary)
+</ParamField>
+
+<ParamField body="amount" type="integer">
+  amount expected to be paid into the virtual account. Required for ONE_TIME (Temporary) virtual account.
+</ParamField>
+
+
+<Note>
+Note: `customer_id` is required for (DEFAULT) permanent virtual account
+</Note>
+
+```JSON Request Body
+{
+    "customer_id": "user",
+    "currency": "NGN",
+    "merchant_name": "Swervpay",
+    "amount": 10,
+    "type": "ONE_TIME"
+}
+```
+
+### 🔍 Get Collection Details
+Retrieve detailed information of a specific collection with their unique identifier using the [get](/api-reference/collections/get) collection endpoint.
+
+**Path Parameters**
+
+<ParamField path="id" type="string" required>
+ The unique identifier of the collection to retrieve.
+</ParamField>
+
+
+### 🔍 Get All collections
+
+Retrieve a list of all collections by sending a request to the [get all](/api-reference/collections/get-all-collections) collections endpoint.
+
+**Query Parameters**
+
+<ParamField query="page" type="string" default={1} required>
+  The page to return.
+</ParamField>
+
+
+<ParamField query="limit" type="string" default={10} required>
+   The maximum number of results to return.
+</ParamField>
+
+**Response Example**
+
+The response provides an array of wallet objects, each containing comprehensive details about the wallets associated with your Swervpay account.
+
+```json Response
+[
+  {
+    "account_name": "string",
+    "account_number": "string",
+    "account_type": "string",
+    "balance": 100000, // Balance in the smallest currency unit
+    "bank_address": "string",
+    "bank_code": "string",
+    "bank_name": "string",
+    "created_at": "2024-01-01T00:00:00Z",
+    "id": "wlt_123456789",
+    "is_blocked": false,
+    "pending_balance": 50000, // Pending balance in the smallest currency unit
+    "reference": "string",
+    "routing_number": "string",
+    "total_received": 1500000, // Total amount received in the smallest currency unit
+    "updated_at": "2024-01-02T00:00:00Z"
+  }
+  // ...other wallets
+]

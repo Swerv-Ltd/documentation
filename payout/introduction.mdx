@@ -1,58 +1,92 @@
 ---
 title: 'Overview'
-description: 'The SwyftPay Payouts API allows businesses to automate and manage payout processes efficiently, ensuring fast, secure, and reliable transactions. This guide covers how to create a payout and retrieve payout details using our API'
+description: 'Swervpay Payouts API allows businesses to automate and manage payout processes efficiently, ensuring fast, secure, and reliable transactions. This guide covers how to create a payout and retrieve payout details using our API'
 ---
+
+### Supported Currencies
+
+The Swervpay Payouts API currently supports the following currencies:
+
+• **Nigerian Naira (NGN)**
+
+• **United States Dollar (USD) (🚧 Coming Soon)**
+
+• **Euro (EUR) (🚧 Coming Soon)**
+
+• **British Pound (GBP) (🚧 Coming Soon)**
+
+### Supported Banks for Naira Bank Transfer
+
+The Swervpay Payouts API currently supports the following banks for Naira Bank Transfer:
+
+| Bank Name | Bank Code |
+| --- | --- |
+| Access Bank | 044 |
+| Citibank | 023 |
+| Diamond Bank | 063 |
+| Ecobank Nigeria | 050 |
+| Fidelity Bank Nigeria | 070 |
+| First Bank of Nigeria | 011 |
+| First City Monument Bank | 214 |
+| Guaranty Trust Bank | 058 |
+
+Retrieve the full list of supported banks using the [list](/api-reference/others/get-banks) banks endpoint.
 
 
 ### Create a Payout
-To initiate a payout, use the [create](/api-reference/payouts/create) payouts endpoint. This method allows you to send funds to a specified bank account or debit card. We currently support:
+To initiate a payout, use the [create](/api-reference/payouts/create) payout endpoint. This method allows you to send funds to a specified bank account. We currently support:
 
 • **Naira Bank Transfer**
 
 **Parameters**
 
-- `bankCode` string *(required)*
-  - A unique bank code.
+<ParamField body="bank_code" type="string" required>
+ A unique bank code.
+</ParamField>
 
-- `accountNumber` string *(required)*
-  - The recipient's bank account number.
+<ParamField body="account_number" type="string" required>
+ The recipient's bank account number.
+</ParamField>
 
-- `amount` integer *(required)*
-  - The total payout amount in the smallest currency unit (e.g., cents, kobo).
+<ParamField body="amount" type="integer" required>
+ The total payout amount in the smallest currency unit (e.g., cents, kobo).
+</ParamField>
 
-- `currency` enum *(required)*
-  - The three-letter ISO currency code in uppercase.
+<ParamField body="currency" type="string" required>
+ The three-letter ISO currency code in uppercase.
+</ParamField>
 
-- `reference` string *(optional)*
-  - A unique identifier for the transaction.
+<ParamField body="reference" type="string">
+ A unique identifier for the transaction.
+</ParamField>
 
-- `naration` string *(optional)*
-- A description for the transaction, to appear on the recipient's statement.
+<ParamField body="narration" type="string">
+ A description for the transaction, to appear on the recipient’s statement.
+</ParamField>
 
 ___
 
 **Request Body**
 
 Provide details of the payout, including the recipient's bank information, amount, and currency
-```json
+```json Request Body
 {
-  "bankCode": "059",
-  "accountNumber": "0690000000",
-  "amount": "8500",
+  "bank_code": "059",
+  "account_number": "0690000000",
+  "amount": 8500,
   "currency": "NGN",
   "reference": "reference",
   "naration": "narration",
 }
 ```
 ### Get a Payout
-Retrieve details of a specific payout using its unique ID with the [get](/api-reference/payouts/get) payouts endpoint.
+Retrieve details of a specific payout using its unique ID with the [get](/api-reference/payouts/get) payout endpoint.
 
+**Path Parameters**
 
-<Tip>
-
-The ID is gotten from......
-
-</Tip>
+<ParamField path="id" type="string" required>
+ The unique identifier of the payout to retrieve.
+</ParamField>
 
 
 

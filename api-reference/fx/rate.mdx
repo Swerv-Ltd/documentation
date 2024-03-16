@@ -1,18 +1,18 @@
 ---
-title: 'Create FX'
-openapi: 'POST /fx/exchange'
+title: 'Get FX Rates'
+openapi: 'POST /fx/rate'
 ---
 
 <RequestExample>
 
 ```bash cURL
-curl -X POST https://api.swervpay.co/api/v1/fx/exchange \
+curl -X POST https://api.swervpay.co/api/v1/fx/rate \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
     "from": "NGN",
     "to": "USD",
-    "amount": "user"
+    "amount": 1
   }'
 ```
 
@@ -26,7 +26,7 @@ const config = {
 
 const swervpay = new SwervpayClient(config);
 
-await swervpay.fx.exchange({
+await swervpay.fx.rate({
     amount: 100,
     currency: 'NGN',
     to: 'USD'
@@ -44,7 +44,7 @@ $config = [
 
 $client = new Swervpay($config);
 
-$client->fx()->exchange([
+$client->fx()->rate([
     'amount' => 100,
     'currency' => 'NGN',
     'to' => 'USD'
@@ -76,7 +76,7 @@ func main() {
         To: "USD"
     }
 
-	resp, err := client.Fx.Exchange(ctx, data)
+	resp, err := client.Fx.Rate(ctx, data)
 
 	if err != nil {
 		log.Fatal("error", err.Error())

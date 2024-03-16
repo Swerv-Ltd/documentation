@@ -17,7 +17,7 @@ curl -X POST https://api.swervpay.co/api/v1/customers/{id}/kyc \
 		"city": "Ikeja",
 		"country": "Nigeria",
 		"address": "No 1, Ikeja",
-		"postalCode": "100001"
+		"postal_code": "100001"
 	},
 	"document": {
 		"documentType": "PASSPORT",
@@ -46,11 +46,11 @@ await swervpay.customer.kyc("<CUSTOMER_ID>", {
 		city: "Ikeja",
 		country: "Nigeria",
 		address: "No 1, Ikeja",
-		postalCode: "100001"
+		postal_code: "100001"
 	},
 	document: {
-		documentType: "PASSPORT",
-		documentNumber: "A1234567",
+		document_type: "PASSPORT",
+		document_number: "A1234567",
 		document: "https://example.com/document.jpg",
 		passport: "https://example.com/passport.jpg"
 	}
@@ -75,11 +75,11 @@ $client->customer()->kyc('<CUSTOMER_ID>', [
 		'city' => 'Ikeja',
 		'country' => 'Nigeria',
 		'address' => 'No 1, Ikeja',
-		'postalCode' => '100001'
+		'postal_code' => '100001'
 	],
 	'document' => [
-		'documentType' => 'PASSPORT',
-		'documentNumber' => 'A1234567',
+		'document_type' => 'PASSPORT',
+		'document_number' => 'A1234567',
 		'document' => 'https://example.com/document.jpg',
 		'passport' => 'https://example.com/passport.jpg'
 	]

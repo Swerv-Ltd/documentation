@@ -1,0 +1,30 @@
+---
+title: 'Collection'
+description: 'Overview of Collection Webhook Events'
+---
+
+## Overview
+
+Our collection webhook events are fired based on the following triggers:
+
+- Completed webhook event
+
+## Completed webhook event
+
+```json collection.completed
+{
+  "event": "collection.completed",
+  "data": {
+    "id": "txn_zRo4J1WQU6bvvh2umYwA",
+    "reference": "ref_zWkNkNFhbK3igZ8bDtEu",
+    "business_id": "bsn_fAYcWSUXz3TogChv7BgH",
+    "status": "COMPLETED",
+    "amount": 500000,
+    "charges": 1000,
+    "type": "CREDIT",
+    "detail": "Fund wallet",
+    "created_at": "2024-03-13T21:00:28Z",
+    "updated_at": "2024-03-13T21:00:28Z"
+  }
+}
+```

@@ -28,7 +28,7 @@ const config = {
 const swervpay = new SwervpayClient(config);
 
 await swervpay.customer.update("<CUSTOMER_ID>", {
-    phoneNumber: "user",
+    phone_number: "user",
     email: "user@mailinator.com"
 })
 ```
