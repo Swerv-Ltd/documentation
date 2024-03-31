@@ -6,7 +6,12 @@
     },
     "servers": [
         {
-            "url": "https://api.swervpay.co/api/v1"
+            "url": "https://api.swervpay.co/api/v1",
+            "description": "Production API"
+        },
+        {
+            "url": "https://sandbox.swervpay.co/api/v1",
+            "description": "Sandbox API"
         }
     ],
     "security": [
@@ -63,7 +68,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
             }
         },
         "/banks": {
@@ -769,6 +779,76 @@
                 }
             }
         },
+        "/checkouts/{accountNo}/credit": {
+            "post": {
+                "tags": [
+                    "checkout.credit"
+                ],
+                "description": "Simulate credit transaction (Sandbox Only)",
+                "operationId": "creditCheckout",
+                "parameters": [
+                    {
+                        "name": "accountNo",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiAccountNoPathRequestWithCreditWalletInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCreatePayoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/collections": {
             "get": {
                 "tags": [
@@ -921,6 +1001,76 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/TypesBusinessWallet"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/collections/{id}/credit": {
+            "post": {
+                "tags": [
+                    "collection.credit"
+                ],
+                "description": "Simulate credit transaction (Sandbox Only)",
+                "operationId": "creditCollection",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiIdPathRequestWithCreditWalletInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCreatePayoutResponse"
                                 }
                             }
                         }
@@ -1973,6 +2123,76 @@
                 }
             }
         },
+        "/wallets/{id}/credit": {
+            "post": {
+                "tags": [
+                    "wallet.credit"
+                ],
+                "description": "Simulate credit transaction (Sandbox Only)",
+                "operationId": "creditWallet",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiIdPathRequestWithCreditWalletInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseCreatePayoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/webhook/log/{id}/retry": {
             "post": {
                 "tags": [
@@ -2118,6 +2338,17 @@
                     }
                 }
             },
+            "OpenapiAccountNoPathRequestWithCreditWalletInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "sender": {
+                        "$ref": "#/components/schemas/TypesCreditWalletSenderInput"
+                    }
+                }
+            },
             "OpenapiCustomerKycRequest": {
                 "type": "object",
                 "properties": {
@@ -2137,6 +2368,17 @@
                 "properties": {
                     "amount": {
                         "type": "integer"
+                    }
+                }
+            },
+            "OpenapiIdPathRequestWithCreditWalletInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "sender": {
+                        "$ref": "#/components/schemas/TypesCreditWalletSenderInput"
                     }
                 }
             },
@@ -2176,6 +2418,9 @@
             "ResponseCreatePayoutResponse": {
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string"
+                    },
                     "message": {
                         "type": "string"
                     },
@@ -2253,7 +2498,13 @@
                     "logo": {
                         "type": "string"
                     },
+                    "name": {
+                        "type": "string"
+                    },
                     "slug": {
+                        "type": "string"
+                    },
+                    "status": {
                         "type": "string"
                     },
                     "type": {
@@ -2692,6 +2943,29 @@
                     }
                 }
             },
+            "TypesCreditWalletSenderInput": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "narration": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                }
+            },
             "TypesExchangeCurrencyResponse": {
                 "type": "object",
                 "properties": {
@@ -2771,9 +3045,14 @@
             }
         },
         "securitySchemes": {
+            "basicAuth": {
+                "type": "http",
+                "scheme": "basic"
+            },
             "bearerAuth": {
                 "type": "http",
-                "scheme": "bearer"
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
