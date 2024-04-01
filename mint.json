@@ -43,14 +43,13 @@
     {
       "name": "SDKs",
       "url": "sdks"
+    },
+    {
+      "name": "Changelog",
+      "url": "changelog"
     }
   ],
   "anchors": [
-    {
-      "name": "Changelog",
-      "icon": "timer",
-      "url": "https://docs.swervpay.co/changelog"
-    },
     {
       "name": "Community",
       "icon": "slack",
@@ -236,6 +235,12 @@
         "sdks/php",
         "sdks/laravel",
         "sdks/dart"
+      ]
+    },
+    {
+      "group": "Changelog",
+      "pages": [
+        "changelog/introduction"
       ]
     }
   ],
