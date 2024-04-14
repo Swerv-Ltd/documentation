@@ -13,14 +13,14 @@ You can create a webhook from the [dashboard](https://app.swervpay.co/-/develope
 
 ## Authentication
 
-All webhook requests include a ``SWERVPAY-SECRET`` header for verification. It should match the secret generated when creating the webhook.
+All webhook requests include a ``X-SWERV-SECRET`` header for verification. It should match the secret generated when creating the webhook.
 
 <CodeGroup>
 ```js NodeJS
 const secret = process.env.SWERVPAY_SECRET;
 
 function verifyWebhook(req, res, next) {
-  if (req.headers['SWERVPAY-SECRET'] !== secret) {
+  if (req.headers['X-SWERV-SECRET'] !== secret) {
     return res.status(401).json({
       message: "Unauthorized request."
     });
@@ -87,7 +87,7 @@ class VerifyWebhook
     public function handle(Request $request, Closure $next)
     {
         $secret = env('SWERVPAY_SECRET');
-        if ($request->header('SWERVPAY-SECRET') !== $secret) {
+        if ($request->header('X-SWERV-SECRET') !== $secret) {
             return response('Unauthorized request', 401);
         }
 
@@ -135,7 +135,7 @@ var secret = os.Getenv("SWERVPAY_SECRET")
 
 func verifyWebhook(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        if r.Header.Get("SWERVPAY-SECRET") != secret {
+        if r.Header.Get("X-SWERV-SECRET") != secret {
             http.Error(w, "Unauthorized request", http.StatusUnauthorized)
             return
         }
