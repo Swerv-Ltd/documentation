@@ -2875,7 +2875,13 @@
                     "customer_id": {
                         "type": "string"
                     },
+                    "expiry_date": {
+                        "type": "string"
+                    },
                     "name_on_card": {
+                        "type": "string"
+                    },
+                    "phone_number": {
                         "type": "string"
                     },
                     "provider": {
@@ -3004,6 +3010,9 @@
                         "type": "string"
                     },
                     "country": {
+                        "type": "string"
+                    },
+                    "phone_number": {
                         "type": "string"
                     },
                     "postal_code": {
