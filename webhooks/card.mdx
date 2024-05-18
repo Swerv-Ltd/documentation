@@ -15,9 +15,7 @@ Our card webhook events are fired based on the following triggers:
 
 - Unfreeze webhook event
 
-- Fund webhook event
-
-- Withdraw webhook event
+- Updated webhook event
 
 - Transaction webhook event
 
@@ -89,30 +87,13 @@ This event is fired when a card is unfrozen.
 }
 ```
 
-## Fund webhook event
+## Updated webhook event
 
 This event is fired when a card is funded.
 
-```json card.funded
+```json card.updated
 {
-  "event": "card.funded",
-  "data": {
-    "id": "card_123456789",
-    "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
-    "balance": 1000,
-    "created_at": "2024-02-06T02:49:18Z",
-    "updated_at": "2024-02-06T02:49:18Z"
-  }
-}
-```
-
-## Withdraw webhook event
-
-This event is fired when a card is withdrawn.
-
-```json card.withdrawn
-{
-  "event": "card.withdrawn",
+  "event": "card.updated",
   "data": {
     "id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
@@ -127,11 +108,31 @@ This event is fired when a card is withdrawn.
 
 This event is fired when a card transaction is made.
 
+### Transaction Categories
+
+- FUNDING
+- WITHDRAW
+- Transaction
+
+### Transaction Types
+
+- DEBIT
+- CREDIT
+
+### Transaction Status
+
+- APPROVED
+- DECLINED
+- COMPLETED
+- FAILED
+- REVERSE
+
 ```json card.transaction
 {
   "event": "card.transaction",
   "data": {
     "id": "card_123456789",
+    "card_id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "reference": "ref_mviuNSMKi74vTY8yvfP6nQ",
     "amount": 1000,
@@ -145,8 +146,8 @@ This event is fired when a card transaction is made.
     "merchant_state": "",
     "merchant_mcc": "",
     "merchant_mid": "",
-    "currency": "",
-    "category": "",
+    "currency": "USD",
+    "category": "FUNDING",
     "created_at": "2024-02-06T02:49:18Z",
     "updated_at": "2024-02-06T02:49:18Z"
   }
