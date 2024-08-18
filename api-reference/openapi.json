@@ -1696,6 +1696,66 @@
                 }
             }
         },
+        "/identity/bvn": {
+            "post": {
+                "tags": [
+                    "bvn"
+                ],
+                "description": "BVN Verification",
+                "operationId": "identityBvn",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessIdentitiesBvnInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BusinessIdentitiesBVNResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/payouts": {
             "post": {
                 "tags": [
@@ -2318,6 +2378,76 @@
     },
     "components": {
         "schemas": {
+            "BusinessIdentitiesBVNResponse": {
+                "type": "object",
+                "properties": {
+                    "bvn": {
+                        "type": "string"
+                    },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "enrollment_bank": {
+                        "type": "string"
+                    },
+                    "enrollment_branch": {
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "lga_of_Origin": {
+                        "type": "string"
+                    },
+                    "lga_of_residence": {
+                        "type": "string"
+                    },
+                    "marital_status": {
+                        "type": "string"
+                    },
+                    "middle_name": {
+                        "type": "string"
+                    },
+                    "nationality": {
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "type": "string"
+                    },
+                    "registration_date": {
+                        "type": "string"
+                    },
+                    "residential_address": {
+                        "type": "string"
+                    },
+                    "state_of_origin": {
+                        "type": "string"
+                    },
+                    "state_of_residence": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessIdentitiesBvnInput": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "string"
+                    }
+                }
+            },
             "CustomerCreateInput": {
                 "type": "object",
                 "properties": {
@@ -2437,6 +2567,46 @@
                     }
                 }
             },
+            "TypesAdditionalInformation": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "$ref": "#/components/schemas/TypesAddress"
+                    },
+                    "bank_statement": {
+                        "type": "string"
+                    },
+                    "document": {
+                        "$ref": "#/components/schemas/TypesDocument"
+                    },
+                    "tax_number": {
+                        "type": "string"
+                    },
+                    "utility_bill": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesAddress": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "street": {
+                        "type": "string"
+                    },
+                    "zip_code": {
+                        "type": "string"
+                    }
+                }
+            },
             "TypesBank": {
                 "type": "object",
                 "properties": {
@@ -2479,6 +2649,9 @@
             "TypesBusiness": {
                 "type": "object",
                 "properties": {
+                    "activity_status": {
+                        "type": "string"
+                    },
                     "address": {
                         "type": "string"
                     },
@@ -2732,6 +2905,9 @@
                     "name_on_card": {
                         "type": "string"
                     },
+                    "pending_balance": {
+                        "type": "number"
+                    },
                     "status": {
                         "type": "string"
                     },
@@ -2764,6 +2940,9 @@
                         "format": "date-time"
                     },
                     "currency": {
+                        "type": "string"
+                    },
+                    "description": {
                         "type": "string"
                     },
                     "id": {
@@ -2878,13 +3057,13 @@
                     "expiry_date": {
                         "type": "string"
                     },
+                    "issuer": {
+                        "type": "string"
+                    },
                     "name_on_card": {
                         "type": "string"
                     },
                     "phone_number": {
-                        "type": "string"
-                    },
-                    "provider": {
                         "type": "string"
                     },
                     "type": {
@@ -2895,6 +3074,9 @@
             "TypesCreateCollectionInput": {
                 "type": "object",
                 "properties": {
+                    "additional_information": {
+                        "$ref": "#/components/schemas/TypesAdditionalInformation"
+                    },
                     "amount": {
                         "type": "number"
                     },
@@ -2969,6 +3151,30 @@
                     },
                     "reference": {
                         "type": "string"
+                    }
+                }
+            },
+            "TypesDocument": {
+                "type": "object",
+                "properties": {
+                    "expiry_date": {
+                        "type": "string"
+                    },
+                    "issue_date": {
+                        "type": "string"
+                    },
+                    "number": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
                     }
                 }
             },

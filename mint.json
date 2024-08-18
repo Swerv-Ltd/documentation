@@ -227,6 +227,12 @@
       ]
     },
     {
+      "group": "Identity",
+      "pages": [
+        "api-reference/identity/bvn"
+      ]
+    },
+    {
       "group": "SDKs",
       "pages": [
         "sdks/introduction",

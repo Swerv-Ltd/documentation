@@ -1,0 +1,71 @@
+---
+title: 'BVN Verification'
+openapi: 'POST /identity/bvn'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X POST https://api.swervpay.co/api/v1/identity/bvn \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+  -d '{
+  "number": "12345678901"
+  }'
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.identity.bvn("<NUMBER>")
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->identity()->bvn("<NUMBER>")->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessID: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+	resp, err := client.Identity.Bvn("<NUMBER>")
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
