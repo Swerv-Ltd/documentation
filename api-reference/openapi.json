@@ -709,12 +709,73 @@
                 }
             }
         },
+        "/cards/{id}/unfreeze": {
+            "post": {
+                "tags": [
+                    "card.unfreeze"
+                ],
+                "description": "Unfreeze card",
+                "operationId": "unFreezeCard",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/cards/{id}/withdraw": {
             "post": {
                 "tags": [
                     "card.withdrawal"
                 ],
-                "description": "Freeze card",
+                "description": "Card withdrawal",
                 "operationId": "cardWithdrawal",
                 "parameters": [
                     {
@@ -2570,6 +2631,9 @@
             "TypesAdditionalInformation": {
                 "type": "object",
                 "properties": {
+                    "account_type": {
+                        "type": "string"
+                    },
                     "address": {
                         "$ref": "#/components/schemas/TypesAddress"
                     },
@@ -3089,6 +3153,9 @@
                     "merchant_name": {
                         "type": "string"
                     },
+                    "reference": {
+                        "type": "string"
+                    },
                     "type": {
                         "type": "string"
                     }
@@ -3169,7 +3236,7 @@
                     "type": {
                         "type": "string"
                     },
-                    "url": {
+                    "urls": {
                         "type": "array",
                         "items": {
                             "type": "string"
