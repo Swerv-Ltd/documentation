@@ -158,6 +158,12 @@
       ]
     },
     {
+      "group": "Checkout",
+      "pages": [
+        "api-reference/checkouts/credit"
+      ]
+    },
+    {
       "group": "Customers",
       "pages": [
         "api-reference/customers/get-all-customers",
@@ -183,6 +189,19 @@
       "pages": [
         "api-reference/fx/rate",
         "api-reference/fx/exchange"
+      ]
+    },
+    {
+      "group": "Identity",
+      "pages": [
+        "api-reference/identity/bvn"
+      ]
+    },
+    {
+      "group": "Invoices",
+      "pages": [
+        "api-reference/invoices/get-all-invoices",
+        "api-reference/invoices/get"
       ]
     },
     {
@@ -219,18 +238,6 @@
       "pages": [
         "api-reference/webhook/test",
         "api-reference/webhook/retry"
-      ]
-    },
-    {
-      "group": "Checkout",
-      "pages": [
-        "api-reference/checkouts/credit"
-      ]
-    },
-    {
-      "group": "Identity",
-      "pages": [
-        "api-reference/identity/bvn"
       ]
     },
     {

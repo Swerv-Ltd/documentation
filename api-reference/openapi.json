@@ -1817,6 +1817,137 @@
                 }
             }
         },
+        "/invoices": {
+            "get": {
+                "tags": [
+                    "invoices"
+                ],
+                "description": "Get list of invoices",
+                "operationId": "invoiceList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypesBusinessInvoice"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/invoices/{id}": {
+            "get": {
+                "tags": [
+                    "invoice"
+                ],
+                "description": "Get invoice",
+                "operationId": "getInvoice",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessInvoice"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/payouts": {
             "post": {
                 "tags": [
@@ -2827,6 +2958,116 @@
                     }
                 }
             },
+            "TypesBusinessInvoice": {
+                "type": "object",
+                "properties": {
+                    "attachments": {
+                        "type": "string"
+                    },
+                    "categories": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "due_date": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "invoice_number": {
+                        "type": "string"
+                    },
+                    "is_recurring": {
+                        "type": "boolean"
+                    },
+                    "issued_date": {
+                        "type": "string"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TypesBusinessInvoiceItem"
+                        }
+                    },
+                    "memo": {
+                        "type": "string"
+                    },
+                    "recurring_end_date": {
+                        "type": "string"
+                    },
+                    "recurring_frequency": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "total_amount": {
+                        "type": "number"
+                    },
+                    "total_discount_amount": {
+                        "type": "number"
+                    },
+                    "total_tax_fee": {
+                        "type": "number"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "TypesBusinessInvoiceItem": {
+                "type": "object",
+                "properties": {
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "discount_amount": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "tax": {
+                        "type": "string"
+                    },
+                    "tax_fee": {
+                        "type": "number"
+                    },
+                    "total_price": {
+                        "type": "number"
+                    },
+                    "unit_price": {
+                        "type": "number"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
             "TypesBusinessToken": {
                 "type": "object",
                 "properties": {
@@ -2890,6 +3131,12 @@
                     "id": {
                         "type": "string"
                     },
+                    "imad": {
+                        "type": "string"
+                    },
+                    "payment_method": {
+                        "type": "string"
+                    },
                     "reference": {
                         "type": "string"
                     },
@@ -2903,6 +3150,9 @@
                         "type": "string"
                     },
                     "status": {
+                        "type": "string"
+                    },
+                    "trace_number": {
                         "type": "string"
                     },
                     "type": {
@@ -3095,6 +3345,9 @@
                         "type": "string"
                     },
                     "routing_number": {
+                        "type": "string"
+                    },
+                    "status": {
                         "type": "string"
                     },
                     "total_received": {
