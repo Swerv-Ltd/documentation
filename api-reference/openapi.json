@@ -1885,6 +1885,64 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "invoice"
+                ],
+                "description": "Create invoice",
+                "operationId": "createInvoice",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TypesCreateInvoiceInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessInvoice"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/invoices/{id}": {
@@ -1904,6 +1962,74 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TypesBusinessInvoice"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "invoice"
+                ],
+                "description": "Update invoice",
+                "operationId": "updateInvoice",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiUpdateInvoiceRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2715,6 +2841,74 @@
                     }
                 }
             },
+            "OpenapiUpdateInvoiceRequest": {
+                "type": "object",
+                "properties": {
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "cc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "customer_billing_address_id": {
+                        "type": "string"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "is_recurring": {
+                        "type": "boolean"
+                    },
+                    "issue_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TypesCreateInvoiceItemInput"
+                        },
+                        "nullable": true
+                    },
+                    "memo": {
+                        "type": "string"
+                    },
+                    "recurring": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
             "OpenapiUpdatecustomerRequest": {
                 "type": "object",
                 "properties": {
@@ -2762,6 +2956,9 @@
             "TypesAdditionalInformation": {
                 "type": "object",
                 "properties": {
+                    "account_designation": {
+                        "type": "string"
+                    },
                     "account_type": {
                         "type": "string"
                     },
@@ -2771,8 +2968,23 @@
                     "bank_statement": {
                         "type": "string"
                     },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
                     "document": {
                         "$ref": "#/components/schemas/TypesDocument"
+                    },
+                    "employment_status": {
+                        "type": "string"
+                    },
+                    "income_band": {
+                        "type": "string"
+                    },
+                    "nin": {
+                        "type": "string"
+                    },
+                    "source_of_income": {
+                        "type": "string"
                     },
                     "tax_number": {
                         "type": "string"
@@ -2981,6 +3193,9 @@
                         "type": "string"
                     },
                     "id": {
+                        "type": "string"
+                    },
+                    "invoice_link": {
                         "type": "string"
                     },
                     "invoice_number": {
@@ -3428,6 +3643,100 @@
                     }
                 }
             },
+            "TypesCreateInvoiceInput": {
+                "type": "object",
+                "properties": {
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "cc": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "customer_billing_address_id": {
+                        "type": "string"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "is_recurring": {
+                        "type": "boolean"
+                    },
+                    "issue_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TypesCreateInvoiceItemInput"
+                        },
+                        "nullable": true
+                    },
+                    "memo": {
+                        "type": "string"
+                    },
+                    "recurring": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesCreateInvoiceItemInput": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "discount": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "tax": {
+                        "type": "string"
+                    },
+                    "tax_fee": {
+                        "type": "number"
+                    },
+                    "unit_price": {
+                        "type": "number"
+                    }
+                }
+            },
             "TypesCreatePayoutInput": {
                 "type": "object",
                 "properties": {
@@ -3538,10 +3847,16 @@
                     "country": {
                         "type": "string"
                     },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
                     "phone_number": {
                         "type": "string"
                     },
                     "postal_code": {
+                        "type": "string"
+                    },
+                    "ssnit": {
                         "type": "string"
                     },
                     "state": {

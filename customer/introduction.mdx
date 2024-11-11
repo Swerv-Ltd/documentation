@@ -81,12 +81,14 @@ Conduct Know Your Customer (KYC) checks to verify the identity of your customers
 - `tier` enum (ONE, TWO, FULL) :
   - The amount to fund in the smallest currency unit.
 - `information` object :
-  - `bvn` string : customer bvn
+  - `bvn` string : customer bvn (Nigeria)
+  - `ssnit` string : customer ssnit (Ghana)
   - `state` string : customer state
   - `city` string : customer city
   - `country` string : customer country
   - `address` string : customer address
   - `postal_code` string : customer address postal code
+  - `date_of_birth` string : customer date of birth
 - `document` object :
   - `document_type` enum (NIN, PASSPORT, DRIVERS_LICENSE)
   - `document_number` number : customer document number
