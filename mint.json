@@ -143,6 +143,17 @@
       ]
     },
     {
+      "group": "Bills",
+      "pages": [
+        "api-reference/bills/items",
+        "api-reference/bills/lists",
+        "api-reference/bills/categories",
+        "api-reference/bills/validate",
+        "api-reference/bills/create",
+        "api-reference/bills/get"
+      ]
+    },
+    {
       "group": "Cards",
       "pages": [
         "api-reference/cards/get-all-cards",

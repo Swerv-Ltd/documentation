@@ -1,0 +1,101 @@
+---
+title: 'Create bill'
+openapi: 'POST /bills'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.swervpay.co/api/v1/bills \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+  -d '{
+  "customer_id": "<CUSTOMER_ID>",
+  "amount": "<AMOUNT>",
+  "reference": "<REFERENCE>",
+  "biller_id": "<BILLER_ID>",
+  "item_id": "<ITEM_ID>",
+  "category": "<CATEGORY>",
+  }'
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.bill.create({
+	"amount": "<AMOUNT>",
+	"customer_id": "<CUSTOMER_ID>",
+	"reference": "<REFERENCE>",
+	"biller_id": "<BILLER_ID>",
+	"item_id": "<ITEM_ID>",
+	"category": "<CATEGORY>",
+});
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$payload = array(
+    "customer_id" => "<CUSTOMER_ID>",
+	"amount" => "<AMOUNT>",
+	"reference" => "<REFERENCE>",
+	"biller_id" => "<BILLER_ID>",
+	"item_id" => "<ITEM_ID>",
+	"category" => "<CATEGORY>",
+)
+
+$client->bill()->create($payload)->toArray();
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessID: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+    payload := swervpay.BillCreateRequest{
+		CustomerID: "<CUSTOMER_ID>",
+		Amount: "<AMOUNT>",
+		Reference: "<REFERENCE>",
+		BillerID: "<BILLER_ID>",
+		ItemID: "<ITEM_ID>",
+		Category: "<CATEGORY>",
+	}
+
+	resp, err := client.Bill.Create(ctx, payload)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>

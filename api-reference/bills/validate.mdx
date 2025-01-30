@@ -1,0 +1,87 @@
+---
+title: 'Validate customer'
+openapi: 'POST /bills/validate'
+---
+
+<RequestExample>
+
+```bash cURL
+curl -X GET https://api.swervpay.co/api/v1/bills/validate \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json"
+  -d '{
+  "biller_id": "<BILLER_ID>",
+  "customer_id": "<CUSTOMER_ID>",
+  "category": "<CATEGORY>"
+}'
+```
+
+```javascript Node.js
+import { SwervpayClient } from '@swervpaydev/sdk';
+
+const config = {
+    secretKey: "<SECRET_KEY>",
+    businessId: "<BUSINESS_ID>"
+}
+
+const swervpay = new SwervpayClient(config);
+
+await swervpay.bill.validate({
+	"biller_id": "<BILLER_ID>",
+	"customer_id": "<CUSTOMER_ID>",
+	"category": "<CATEGORY>"
+});
+```
+
+```php PHP
+use Swervpaydev\SDK\Swervpay;
+
+$config = [
+	'business_id' => '<BUSINESS_ID>',
+	'secret_key' => '<SECRET_KEY>'
+];
+
+$client = new Swervpay($config);
+
+$client->bill()->validate(array(
+	"biller_id" => "<BILLER_ID>",
+	"customer_id" => "<CUSTOMER_ID>",
+	"category" => "<CATEGORY>"
+));
+```
+
+
+```go Go
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/swerv-ltd/swervpay-go"
+	"log"
+)
+
+func main() {
+	ctx := context.Background()
+
+	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
+        BusinessID: "<BUSINESS_ID>",
+        SecretKey: "<SECRET_KEY>",
+    })
+
+	payload := swervpay.BillValidateRequest{
+		BillerID: "<BILLER_ID>",
+		CustomerID: "<CUSTOMER_ID>",
+		Category: "<CATEGORY>",
+	}
+
+	resp, err := client.Bill.Validate(ctx, payload)
+
+	if err != nil {
+		log.Fatal("error", err.Error())
+		return
+	}
+}
+```
+
+</RequestExample>
