@@ -130,6 +130,386 @@
                 }
             }
         },
+        "/bills": {
+            "post": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Create bill",
+                "operationId": "createBill",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessBillCreateBillInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BusinessBillBill"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bills/categories": {
+            "get": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Get list of bill categories",
+                "operationId": "billCategories",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BusinessBillBillCategories"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bills/categories/{id}": {
+            "get": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Get list of bill category list",
+                "operationId": "billCategoryLists",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BusinessBillBillerList"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bills/categories/{id}/items/{itemId}": {
+            "get": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Get list of bill category list items",
+                "operationId": "billCategoryListItems",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/BusinessBillBillerItem"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bills/validate": {
+            "post": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Validate bill with customer",
+                "operationId": "validateBill",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BusinessBillBillValidateCustomerInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bills/{id}": {
+            "get": {
+                "tags": [
+                    "bills"
+                ],
+                "description": "Get bill",
+                "operationId": "getBill",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BusinessBillBill"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/business": {
             "get": {
                 "tags": [
@@ -501,12 +881,73 @@
                 }
             }
         },
+        "/cards/{id}/regularize": {
+            "post": {
+                "tags": [
+                    "card.regularize"
+                ],
+                "description": "Regularize card",
+                "operationId": "regularizeCard",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/cards/{id}/terminate": {
             "post": {
                 "tags": [
                     "card.terminate"
                 ],
-                "description": "Get card",
+                "description": "Terminate card",
                 "operationId": "terminateCard",
                 "parameters": [
                     {
@@ -2703,6 +3144,175 @@
     },
     "components": {
         "schemas": {
+            "BusinessBillBill": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "bill": {
+                        "$ref": "#/components/schemas/BusinessBillBillDetail"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "charges": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "fiat_rate": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "imad": {
+                        "type": "string"
+                    },
+                    "payment_method": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "report": {
+                        "type": "boolean"
+                    },
+                    "report_message": {
+                        "type": "string"
+                    },
+                    "session_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "trace_number": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "BusinessBillBillCategories": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessBillBillDetail": {
+                "type": "object",
+                "properties": {
+                    "bill_code": {
+                        "type": "string"
+                    },
+                    "bill_name": {
+                        "type": "string"
+                    },
+                    "item_code": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessBillBillValidateCustomerInput": {
+                "type": "object",
+                "properties": {
+                    "biller_id": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessBillBillerItem": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "string"
+                    },
+                    "fee": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessBillBillerList": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BusinessBillCreateBillInput": {
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "type": "number"
+                    },
+                    "biller_id": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "customer_id": {
+                        "type": "string"
+                    },
+                    "item_id": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    }
+                }
+            },
             "BusinessIdentitiesBVNResponse": {
                 "type": "object",
                 "properties": {
