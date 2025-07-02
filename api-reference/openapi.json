@@ -152,7 +152,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/BusinessBillBill"
+                                    "$ref": "#/components/schemas/TypesBillTransaction"
                                 }
                             }
                         }
@@ -472,7 +472,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/BusinessBillBill"
+                                    "$ref": "#/components/schemas/TypesBillTransaction"
                                 }
                             }
                         }
@@ -3144,103 +3144,13 @@
     },
     "components": {
         "schemas": {
-            "BusinessBillBill": {
-                "type": "object",
-                "properties": {
-                    "account_name": {
-                        "type": "string"
-                    },
-                    "account_number": {
-                        "type": "string"
-                    },
-                    "amount": {
-                        "type": "number"
-                    },
-                    "bank_code": {
-                        "type": "string"
-                    },
-                    "bank_name": {
-                        "type": "string"
-                    },
-                    "bill": {
-                        "$ref": "#/components/schemas/BusinessBillBillDetail"
-                    },
-                    "category": {
-                        "type": "string"
-                    },
-                    "charges": {
-                        "type": "number"
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "detail": {
-                        "type": "string"
-                    },
-                    "fiat_rate": {
-                        "type": "number"
-                    },
-                    "id": {
-                        "type": "string"
-                    },
-                    "imad": {
-                        "type": "string"
-                    },
-                    "payment_method": {
-                        "type": "string"
-                    },
-                    "reference": {
-                        "type": "string"
-                    },
-                    "report": {
-                        "type": "boolean"
-                    },
-                    "report_message": {
-                        "type": "string"
-                    },
-                    "session_id": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "trace_number": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                }
-            },
             "BusinessBillBillCategories": {
                 "type": "object",
                 "properties": {
-                    "name": {
-                        "type": "string"
-                    }
-                }
-            },
-            "BusinessBillBillDetail": {
-                "type": "object",
-                "properties": {
-                    "bill_code": {
-                        "type": "string"
-                    },
-                    "bill_name": {
-                        "type": "string"
-                    },
-                    "item_code": {
+                    "id": {
                         "type": "string"
                     },
                     "name": {
-                        "type": "string"
-                    },
-                    "token": {
                         "type": "string"
                     }
                 }
@@ -3255,6 +3165,9 @@
                         "type": "string"
                     },
                     "customer_id": {
+                        "type": "string"
+                    },
+                    "item_id": {
                         "type": "string"
                     }
                 }
@@ -3275,6 +3188,9 @@
                         "type": "number"
                     },
                     "id": {
+                        "type": "string"
+                    },
+                    "name": {
                         "type": "string"
                     }
                 }
@@ -3670,6 +3586,99 @@
                     },
                     "bank_name": {
                         "type": "string"
+                    }
+                }
+            },
+            "TypesBillDetail": {
+                "type": "object",
+                "properties": {
+                    "bill_code": {
+                        "type": "string"
+                    },
+                    "bill_name": {
+                        "type": "string"
+                    },
+                    "item_code": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "token": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TypesBillTransaction": {
+                "type": "object",
+                "properties": {
+                    "account_name": {
+                        "type": "string"
+                    },
+                    "account_number": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "number"
+                    },
+                    "bank_code": {
+                        "type": "string"
+                    },
+                    "bank_name": {
+                        "type": "string"
+                    },
+                    "bill": {
+                        "$ref": "#/components/schemas/TypesBillDetail"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "charges": {
+                        "type": "number"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "fiat_rate": {
+                        "type": "number"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "imad": {
+                        "type": "string"
+                    },
+                    "payment_method": {
+                        "type": "string"
+                    },
+                    "reference": {
+                        "type": "string"
+                    },
+                    "report": {
+                        "type": "boolean"
+                    },
+                    "report_message": {
+                        "type": "string"
+                    },
+                    "session_id": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "trace_number": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -4078,6 +4087,12 @@
                     "amount": {
                         "type": "number"
                     },
+                    "balance_after": {
+                        "type": "string"
+                    },
+                    "balance_before": {
+                        "type": "string"
+                    },
                     "category": {
                         "type": "string"
                     },
@@ -4194,17 +4209,37 @@
                     }
                 }
             },
+            "TypesCreateCardDocumentInput": {
+                "type": "object",
+                "properties": {
+                    "document_number": {
+                        "type": "string"
+                    },
+                    "document_type": {
+                        "type": "string"
+                    }
+                }
+            },
             "TypesCreateCardInput": {
                 "type": "object",
                 "properties": {
                     "amount": {
                         "type": "number"
                     },
+                    "business_email": {
+                        "type": "string"
+                    },
                     "currency": {
                         "type": "string"
                     },
                     "customer_id": {
                         "type": "string"
+                    },
+                    "director_bvn": {
+                        "type": "string"
+                    },
+                    "document": {
+                        "$ref": "#/components/schemas/TypesCreateCardDocumentInput"
                     },
                     "expiry_date": {
                         "type": "string"
@@ -4216,6 +4251,9 @@
                         "type": "string"
                     },
                     "phone_number": {
+                        "type": "string"
+                    },
+                    "rc_number": {
                         "type": "string"
                     },
                     "type": {
