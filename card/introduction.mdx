@@ -27,12 +27,41 @@ Initiate the creation of a virtual or physical card by sending a request to the 
 </ParamField>
 
 <ParamField body="type" type="string" required>
- card type e.g DEFAULT, LITE
+ card type e.g DEFAULT, LITE or COOPERATE
 </ParamField>
 
 <ParamField body="amount" type="integer">
  amount to pre-fund the card
 </ParamField>
+
+<ParamField body="expiry_date" type="string">
+ The expiry date of the card in the format YYYY-MM-DD.
+</ParamField>
+
+<ParamField body="phone_number" type="string">
+Phone number of the cardholder (for cooperate & lite card type only)
+</ParamField>
+
+<ParamField body="rc_number" type="string">
+ RC Number of the company (for cooperate card type only)
+</ParamField>
+
+<ParamField body="director_bvn" type="string">
+ BVN of the director of the company (for cooperate card type only)
+</ParamField>
+
+<ParamField body="business_email" type="string">
+Business email of the company (for cooperate card type only)
+</ParamField>
+
+<ParamField body="document.document_number" type="string">
+Document number of the company (for lite card type only)
+</ParamField>
+
+<ParamField body="document.document_type" type="string">
+Document type of the company (for lite card type only)
+</ParamField>
+
 
 <Note>
 Note: `customer_id` is required for DEFAULT card type
@@ -46,8 +75,9 @@ Provide necessary details to set up a new card.
 {
     "customer_id": "user",
     "currency": "USD",
-    "provider": "MASTERCARD",
+    "issuer": "MASTERCARD",
     "name_on_card": "Swerv",
+    "expiry_date": "2025-01-01",
     "amount": 10,
     "type": "DEFAULT"
 }
