@@ -4,6 +4,113 @@ description: 'Swerv Card API allows businesses to create card for their customer
 ---
 
 This API provides a powerful, secure, and easy-to-use set of endpoints for card management, including creation, retrieval, freezing, and termination of cards. This guide will cover essential operations to help you manage card transactions within your applications
+
+## Card Details Encryption
+
+All card details are encrypted follows the AES standard with the following parameters:
+
+- Algorithm: AES (RijndaelManaged)
+
+- Mode: CBC (Cipher Block Chaining)
+
+- Padding: PKCS7
+
+- Block Size: 128-bit
+
+- Key & IV: Derived from your registered Business ID:
+
+- Key: The first 16 characters of your Business ID
+
+- IV (Initialization Vector): The last 16 characters of your Business ID
+
+```json Encrypted Card Details Payload
+{
+    "card_number": "1234567890123456",
+    "cvv": "123",
+    "expiry": "12/34",
+    "masked_pan": "424242******4242"
+}
+```
+
+
+<CodeGroup>
+
+```javascript NodeJS
+const crypto = require('crypto');
+
+function decryptStringAES(cipherText, clientId) {
+    const iv = Buffer.from(clientId.slice(0, 16), 'utf8');
+    const key = Buffer.from(clientId.slice(-16), 'utf8');
+    const encrypted = Buffer.from(cipherText, 'base64');
+    try {
+        const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
+        let decrypted = decipher.update(encrypted);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        return JSON.parse(decrypted.toString());
+    } catch (err) {
+        return "keyError";
+    }
+}
+```
+
+```go Go
+type CardInformation struct {
+	CardNumber string `json:"card_number"`
+	CardCvv    string `json:"cvv"`
+	CardExpiry string `json:"expiry"`
+	MaskedPan  string `json:"masked_pan"`
+}
+
+
+func decryptCardInformation(clientId, cipherText string) CardInformation {
+
+	iv := []byte(clientId[:16])
+	key := []byte(clientId[len(clientId)-16:])
+	encrypted, _ := base64.StdEncoding.DecodeString(cipherText)
+
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(encrypted)%aes.BlockSize != 0 {
+		panic("ciphertext not a multiple of block size")
+	}
+
+	mode := cipher.NewCBCDecrypter(block, iv)
+	decrypted := make([]byte, len(encrypted))
+	mode.CryptBlocks(decrypted, encrypted)
+
+	// remove PKCS7 padding
+	padLen := int(decrypted[len(decrypted)-1])
+	decrypted = decrypted[:len(decrypted)-padLen]
+
+	var details CardInformation
+	err = json.Unmarshal([]byte(decrypted), &details)
+	if err != nil {
+		panic(err)
+	}
+
+	return details
+}
+```
+
+```php PHP
+function decryptStringAES($cipherText, $clientId) {
+    $iv = substr($clientId, 0, 16);
+    $key = substr($clientId, -16);
+    $cipherBytes = base64_decode($cipherText);
+    $decrypted = openssl_decrypt($cipherBytes, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    if ($decrypted === false) {
+        return "keyError";
+    }
+    return json_decode($decrypted, true);
+}
+```
+</CodeGroup>
+
+
+
 ###  📇 Create a Card
 
 Initiate the creation of a virtual or physical card by sending a request to the [create](/api-reference/cards/create) card endpoint.

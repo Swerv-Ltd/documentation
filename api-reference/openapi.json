@@ -4042,6 +4042,9 @@
                     "cvv": {
                         "type": "string"
                     },
+                    "encrypted_details": {
+                        "type": "string"
+                    },
                     "expiry": {
                         "type": "string"
                     },
@@ -4086,12 +4089,6 @@
                 "properties": {
                     "amount": {
                         "type": "number"
-                    },
-                    "balance_after": {
-                        "type": "string"
-                    },
-                    "balance_before": {
-                        "type": "string"
                     },
                     "category": {
                         "type": "string"
