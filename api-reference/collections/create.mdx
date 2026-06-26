@@ -3,9 +3,30 @@ title: 'Create Collection'
 openapi: 'POST /collections'
 ---
 
-<RequestExample>
+Create a collection account for receiving payments. Collections support existing `NGN` virtual account flows and `USD` collection accounts.
 
-```bash cURL
+## NGN collection
+
+Use `NGN` collections for Naira virtual accounts. `ONE_TIME` collections require an `amount`. `DEFAULT` permanent collections require a `customer_id`.
+
+```bash
+curl -X POST https://api.swervpay.co/api/v1/collections \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer_id": "cus_123456789",
+    "currency": "NGN",
+    "merchant_name": "Swervpay",
+    "amount": 10000,
+    "type": "ONE_TIME"
+  }'
+```
+
+## USD collection account
+
+Use `USD` collections to issue a permanent USD collection account for an approved customer. USD collections must use `type` set to `DEFAULT` and must include `additional_information`.
+
+```bash
 curl -X POST https://api.swervpay.co/api/v1/collections \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
@@ -43,160 +64,6 @@ curl -X POST https://api.swervpay.co/api/v1/collections \
     }
   }'
 ```
-
-```javascript Node.js
-import { SwervpayClient } from '@swervpaydev/sdk';
-
-const config = {
-    secretKey: "<SECRET_KEY>",
-    businessId: "<BUSINESS_ID>"
-}
-
-const swervpay = new SwervpayClient(config);
-
-await swervpay.collection.create({
-    customer_id: "cus_123456789",
-    currency: "USD",
-    merchant_name: "Ada Okafor",
-    amount: 0,
-    type: "DEFAULT",
-    additional_information: {
-        account_type: "INDIVIDUAL",
-        nin: "12345678901",
-        tax_number: "12345678901",
-        date_of_birth: "1994-04-12",
-        employment_status: "EMPLOYED",
-        account_designation: "PERSONAL",
-        income_band: "UNDER_10000",
-        source_of_income: "SALARY",
-        address: {
-            street: "12 Admiralty Way",
-            city: "Lagos",
-            state: "Lagos",
-            country: "Nigeria",
-            zip_code: "100001"
-        },
-        document: {
-            type: "NIN",
-            number: "12345678901",
-            issue_date: "2020-01-01",
-            expiry_date: "2030-01-01",
-            urls: ["https://example.com/document-front.jpg"]
-        },
-        utility_bill: "https://example.com/utility-bill.pdf",
-        bank_statement: "https://example.com/bank-statement.pdf"
-    }
-})
-```
-
-```php PHP
-use Swervpaydev\SDK\Swervpay;
-
-$config = [
-	'business_id' => '<BUSINESS_ID>',
-	'secret_key' => '<SECRET_KEY>'
-];
-
-$client = new Swervpay($config);
-
-$client->collection()->create([
-    "customer_id" => "cus_123456789",
-    "currency" => "USD",
-    "merchant_name" => "Ada Okafor",
-    "amount" => 0,
-    "type" => "DEFAULT",
-    "additional_information" => [
-        "account_type" => "INDIVIDUAL",
-        "nin" => "12345678901",
-        "tax_number" => "12345678901",
-        "date_of_birth" => "1994-04-12",
-        "employment_status" => "EMPLOYED",
-        "account_designation" => "PERSONAL",
-        "income_band" => "UNDER_10000",
-        "source_of_income" => "SALARY",
-        "address" => [
-            "street" => "12 Admiralty Way",
-            "city" => "Lagos",
-            "state" => "Lagos",
-            "country" => "Nigeria",
-            "zip_code" => "100001"
-        ],
-        "document" => [
-            "type" => "NIN",
-            "number" => "12345678901",
-            "issue_date" => "2020-01-01",
-            "expiry_date" => "2030-01-01",
-            "urls" => ["https://example.com/document-front.jpg"]
-        ],
-        "utility_bill" => "https://example.com/utility-bill.pdf",
-        "bank_statement" => "https://example.com/bank-statement.pdf"
-    ]
-]);
-```
-
-
-```go Go
-package main
-
-import (
-	"context"
-	"fmt"
-	"github.com/swerv-ltd/swervpay-go"
-	"log"
-)
-
-func main() {
-	ctx := context.Background()
-
-	client := swervpay.NewSwervpayClient(&swervpay.SwervpayClientOption{
-        BusinessID: "<BUSINESS_ID>",
-        SecretKey: "<SECRET_KEY>",
-    })
-
-    data := &swervpay.CreateCollectionBody{
-        Type: "DEFAULT",
-        Currency: "USD",
-        MerchantName: "Ada Okafor",
-        CustomerID: "cus_123456789",
-        Amount: 0,
-        AdditionalInformation: &swervpay.AdditionalInformationBody{
-            AccountType: "INDIVIDUAL",
-            Nin: "12345678901",
-            TaxNumber: "12345678901",
-            DateOfBirth: "1994-04-12",
-            EmploymentStatus: "EMPLOYED",
-            AccountDesignation: "PERSONAL",
-            IncomeBand: "UNDER_10000",
-            SourceOfIncome: "SALARY",
-            Address: &swervpay.AdditionalInformationAddr{
-                Street: "12 Admiralty Way",
-                City: "Lagos",
-                State: "Lagos",
-                Country: "Nigeria",
-                ZipCode: "100001",
-            },
-            Document: &swervpay.AdditionalInformationDoc{
-                Type: "NIN",
-                Number: "12345678901",
-                IssueDate: "2020-01-01",
-                ExpiryDate: "2030-01-01",
-                URLs: []string{"https://example.com/document-front.jpg"},
-            },
-            UtilityBill: "https://example.com/utility-bill.pdf",
-            BankStatement: "https://example.com/bank-statement.pdf",
-        },
-    }
-
-	resp, err := client.Collection.Create(ctx, data)
-
-	if err != nil {
-		log.Fatal("error", err.Error())
-		return
-	}
-}
-```
-
-</RequestExample>
 
 <Note>
 For USD collections, `type` must be `DEFAULT`, `customer_id` is required, and `additional_information` must include the customer's identity, address, source-of-funds, document, utility bill, and bank statement information.
