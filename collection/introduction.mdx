@@ -8,6 +8,7 @@ description: 'Swerv Collection allows businesses to accept payments from their c
 Below are the list of currently supported partners for virtual account issuing
 
 - VFD Microfinance Bank
+- Bridge for USD collection accounts
 
 
 ## Create Virtual Account
@@ -21,7 +22,7 @@ To create a virtual account, use the [create](/api-reference/collections/create)
 </ParamField>
 
 <ParamField body="currency" type="string" required>
-  The three-letter ISO currency code in uppercase.
+  The three-letter ISO currency code in uppercase. Use `NGN` for Naira accounts and `USD` for USD collection accounts.
 </ParamField>
 
 <ParamField body="merchant_name" type="string">
@@ -36,9 +37,13 @@ To create a virtual account, use the [create](/api-reference/collections/create)
   amount expected to be paid into the virtual account. Required for ONE_TIME (Temporary) virtual account.
 </ParamField>
 
+<ParamField body="additional_information" type="object">
+  Required when `currency` is `USD`. This contains the customer identity, address, document, source of funds, and supporting document details required for USD account issuance.
+</ParamField>
+
 
 <Note>
-Note: `customer_id` is required for (DEFAULT) permanent virtual account
+Note: `customer_id` is required for `DEFAULT` permanent virtual accounts.
 </Note>
 
 ```JSON Request Body
@@ -50,6 +55,50 @@ Note: `customer_id` is required for (DEFAULT) permanent virtual account
     "type": "ONE_TIME"
 }
 ```
+
+### USD collection accounts
+
+USD collection accounts are issued through Swervpay's Bridge-backed collection flow. Before creating a USD collection account, create the customer and submit customer KYC. Then create a `DEFAULT` collection with `currency` set to `USD` and include the required `additional_information` payload.
+
+USD account issuance can be asynchronous. If the customer is already approved, the account details may be available shortly after creation. If additional review is required, listen for the `collection.created` or `collection.created.failed` webhook event.
+
+```json USD Request Body
+{
+  "customer_id": "cus_123456789",
+  "currency": "USD",
+  "merchant_name": "Ada Okafor",
+  "amount": 0,
+  "type": "DEFAULT",
+  "additional_information": {
+    "account_type": "INDIVIDUAL",
+    "nin": "12345678901",
+    "tax_number": "12345678901",
+    "date_of_birth": "1994-04-12",
+    "employment_status": "EMPLOYED",
+    "account_designation": "PERSONAL",
+    "income_band": "UNDER_10000",
+    "source_of_income": "SALARY",
+    "address": {
+      "street": "12 Admiralty Way",
+      "city": "Lagos",
+      "state": "Lagos",
+      "country": "Nigeria",
+      "zip_code": "100001"
+    },
+    "document": {
+      "type": "NIN",
+      "number": "12345678901",
+      "issue_date": "2020-01-01",
+      "expiry_date": "2030-01-01",
+      "urls": ["https://example.com/document-front.jpg"]
+    },
+    "utility_bill": "https://example.com/utility-bill.pdf",
+    "bank_statement": "https://example.com/bank-statement.pdf"
+  }
+}
+```
+
+Swervpay securely submits the required customer data to Bridge, creates or reuses the Bridge customer profile, and issues the USD deposit account when the customer is approved.
 
 ### 🔍 Get Collection Details
 Retrieve detailed information of a specific collection with their unique identifier using the [get](/api-reference/collections/get) collection endpoint.

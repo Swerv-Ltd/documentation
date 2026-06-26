@@ -11,6 +11,8 @@ Our collection webhook events are fired based on the following triggers:
 - Collection created event
 - Collection created failed event
 
+For USD collection accounts, `collection.created` confirms that the customer's USD account has been issued and contains the final account details. `collection.created.failed` is sent when the account request is rejected or cannot be completed.
+
 ## Completed webhook event
 
 ```json collection.completed
@@ -32,7 +34,7 @@ Our collection webhook events are fired based on the following triggers:
 ```
 
 
-## Completed created event
+## Collection created event
 
 ```json collection.created
 {
@@ -52,7 +54,7 @@ Our collection webhook events are fired based on the following triggers:
 ```
 
 
-## Completed created failed event
+## Collection created failed event
 
 ```json collection.created.failed
 {
