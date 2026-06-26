@@ -57,6 +57,41 @@ await swervpay.card.create({
     type: "DEFAULT"
 })
 
+// Create a USD collection account for a customer
+await swervpay.collection.create({
+    customer_id: "user",
+    currency: "USD",
+    merchant_name: "Ada Okafor",
+    amount: 0,
+    type: "DEFAULT",
+    additional_information: {
+        account_type: "INDIVIDUAL",
+        nin: "12345678901",
+        tax_number: "12345678901",
+        date_of_birth: "1994-04-12",
+        employment_status: "EMPLOYED",
+        account_designation: "PERSONAL",
+        income_band: "UNDER_10000",
+        source_of_income: "SALARY",
+        address: {
+            street: "12 Admiralty Way",
+            city: "Lagos",
+            state: "Lagos",
+            country: "Nigeria",
+            zip_code: "100001"
+        },
+        document: {
+            type: "NIN",
+            number: "12345678901",
+            issue_date: "2020-01-01",
+            expiry_date: "2030-01-01",
+            urls: ["https://example.com/document-front.jpg"]
+        },
+        utility_bill: "https://example.com/utility-bill.pdf",
+        bank_statement: "https://example.com/bank-statement.pdf"
+    }
+})
+
 // Create a new payout
 await swervpay.payout.create({
     bank_code: "user",
@@ -68,7 +103,7 @@ await swervpay.payout.create({
 })
 ```
 
-Here, we initialize the Swervpay client with our secret key and business id. Then we create a new customer, card and payout.
+Here, we initialize the Swervpay client with our secret key and business id. Then we create a new customer, card, USD collection account, and payout.
 
 ### Next Steps
 

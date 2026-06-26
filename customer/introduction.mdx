@@ -70,6 +70,10 @@ Retrieve a comprehensive list of all customers in your system using the [get](/a
 ## Perform KYC for a Customer
 Conduct Know Your Customer (KYC) checks to verify the identity of your customers using the [customer KYC](/api-reference/customers/kyc) endpoint.
 
+<Note>
+Customer KYC is required before issuing a `DEFAULT` USD collection account for a customer. After KYC is submitted, create a USD collection with `currency` set to `USD` and include the required `additional_information` payload.
+</Note>
+
 **Parameters**
 
 <ParamField path="id" type="string" required>
@@ -104,7 +108,9 @@ Conduct Know Your Customer (KYC) checks to verify the identity of your customers
 		"city": "Ikeja",
 		"country": "Nigeria",
 		"address": "No 1, Ikeja",
-		"postal_code": "100001"
+		"postal_code": "100001",
+		"date_of_birth": "1990-01-01",
+		"phone_number": "08012345678"
 	},
 	"document": {
 		"document_type": "PASSPORT",
