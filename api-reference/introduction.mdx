@@ -15,7 +15,9 @@ title: 'Introduction'
 />
 </Frame>
 
-Swervpay provides a robust REST API that allows developers to securely process transactions, create card, manage customers, manage wallets, and more. 
+Swervpay provides a REST API for businesses building payment and embedded finance products. You can create collections, issue customer USD collection accounts, manage wallets, create and manage virtual cards, perform payouts, verify customer identity, retrieve transactions, and subscribe to real-time webhooks.
+
+The API uses bearer authentication and is available in sandbox and production environments. Use sandbox while integrating, then complete the go-live checklist before moving production traffic.
 
 <Note>
   Version: 1.0
@@ -25,5 +27,14 @@ Swervpay provides a robust REST API that allows developers to securely process t
 
 <Note>Sandbox Base URL: `https://sandbox.swervpay.co/api/v1`</Note>
 
+## Core resources
 
+- [Authentication](/api-reference/authentication) - authenticate API requests.
+- [Customers](/api-reference/customers/create) - create customers and submit KYC information.
+- [Collections](/api-reference/collections/create) - create NGN and USD collection accounts.
+- [Wallets](/api-reference/wallets/get-all-wallets) - view wallet balances and wallet activity.
+- [Cards](/api-reference/cards/create) - create, fund, freeze, unfreeze, terminate, and withdraw from virtual cards.
+- [Payouts](/api-reference/payouts/create) - send payouts to supported bank accounts.
+- [Identity](/api-reference/identity/bvn) - verify BVN information.
+- [Webhooks](/webhooks/introduction) - receive event updates for collections, payouts, cards, wallets, customers, and more.
 
