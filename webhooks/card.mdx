@@ -19,6 +19,10 @@ Our card webhook events are fired based on the following triggers:
 
 - Transaction webhook event
 
+- Charges webhook event
+
+- Contactless activation webhook event
+
 ## Created webhook event
 
 This event is fired when a card is created.
@@ -157,3 +161,96 @@ This event is fired when a card transaction is made.
 }
 ```
 
+## Charges webhook event
+
+The `card.charges` event is fired when a card-related fee is debited from the business USD wallet. It is not emitted when the fee is successfully taken directly from the card.
+
+Use `charge_type` to identify the fee:
+
+- `CARD_DECLINE_FEE`: a declined-card fee that could not be collected from the card.
+- `CROSS_BORDER_FEE`: a pending cross-border fee passed to the business wallet.
+
+`funding_source` is `BUSINESS_WALLET` for this event.
+
+```json card.charges
+{
+  "event": "card.charges",
+  "id": "evt_123456789",
+  "data": {
+    "id": "txn_123456789",
+    "reference": "ref_mviuNSMKi74vTY8yvfP6nQ",
+    "amount": 0.3,
+    "charges": 0,
+    "fiat_rate": 0,
+    "detail": "Card transaction charges",
+    "category": "CARD",
+    "type": "DEBIT",
+    "status": "COMPLETED",
+    "created_at": "2026-07-20T15:30:00Z",
+    "updated_at": "2026-07-20T15:30:00Z",
+    "card": {
+      "id": "card_123456789",
+      "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
+      "status": "ACTIVE",
+      "balance": 10,
+      "created_at": "2026-07-01T09:00:00Z",
+      "updated_at": "2026-07-20T15:30:00Z"
+    },
+    "charge_type": "CARD_DECLINE_FEE",
+    "funding_source": "BUSINESS_WALLET"
+  }
+}
+```
+
+## Contactless activation webhook event
+
+The `card.contactless.activation` event contains the one-time code needed to add a contactless card to a supported wallet. This confidential event is delivered only after the business [explicitly subscribes an eligible webhook](/webhooks/introduction#contactless-activation-subscriptions).
+
+```json card.contactless.activation
+{
+  "event": "card.contactless.activation",
+  "id": "3ca42ad1-1eb9-4ee7-828b-e00fbd2234c0",
+  "data": {
+    "customer_id": "cus_123456789",
+    "email": "customer@example.com",
+    "activation_code": "328893"
+  }
+}
+```
+
+Swervpay includes these headers:
+
+| Header | Description |
+| --- | --- |
+| `X-SWERV-Event` | `card.contactless.activation` |
+| `X-SWERV-Event-Id` | Stable identifier for the activation event |
+| `X-SWERV-Timestamp` | Unix timestamp used to sign the request |
+| `X-SWERV-Signature` | `t=<timestamp>,v1=<hex HMAC-SHA256>` |
+
+Verify the signature against the raw request body using the webhook signing key returned when the webhook was created. The signed message is:
+
+```text
+<timestamp>.<raw-request-body>
+```
+
+```js NodeJS
+import crypto from "node:crypto";
+
+function verifyContactlessActivation(rawBody, headers, signingKey) {
+  const timestamp = headers["x-swerv-timestamp"];
+  const supplied = headers["x-swerv-signature"];
+  const message = `${timestamp}.${rawBody}`;
+  const digest = crypto
+    .createHmac("sha256", signingKey)
+    .update(message)
+    .digest("hex");
+  const expected = `t=${timestamp},v1=${digest}`;
+
+  const expectedBuffer = Buffer.from(expected);
+  const suppliedBuffer = Buffer.from(supplied || "");
+  return expectedBuffer.length === suppliedBuffer.length &&
+    crypto.timingSafeEqual(expectedBuffer, suppliedBuffer);
+}
+```
+
+Validate that the timestamp is recent, verify the signature before parsing the body, store the event ID for idempotency, and return `2xx` promptly. Swervpay attempts confidential delivery up to three times. Activation payloads are redacted from webhook logs and cannot be manually retried through the webhook retry endpoint.

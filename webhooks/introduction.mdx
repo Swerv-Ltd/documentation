@@ -11,9 +11,55 @@ Webhooks are a way for Swervpay to provide real-time data to your application. T
 
 You can create a webhook from the [dashboard](https://app.swervpay.co/-/developers/webhooks).
 
+## Contactless activation subscriptions
+
+Contactless activation codes are confidential and are not sent to a webhook by default. To receive them, explicitly subscribe one enabled HTTPS webhook to `card.contactless.activation`.
+
+Create a subscribed webhook:
+
+```bash
+curl --request POST \
+  --url https://api.swervpay.co/api/v1/webhook \
+  --header 'Authorization: Bearer <TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "url": "https://example.com/webhooks/swervpay",
+    "description": "Contactless activation webhook",
+    "events": ["card.contactless.activation"]
+  }'
+```
+
+Or update an existing webhook:
+
+```bash
+curl --request PUT \
+  --url https://api.swervpay.co/api/v1/webhook/<WEBHOOK_ID> \
+  --header 'Authorization: Bearer <TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "url": "https://example.com/webhooks/swervpay",
+    "description": "Contactless activation webhook",
+    "events": ["card.contactless.activation"]
+  }'
+```
+
+The endpoint must:
+
+- Use HTTPS.
+- Return a `2xx` response.
+- Be the only enabled webhook subscribed to `card.contactless.activation` for the business.
+
+When no unique eligible subscription can be resolved, or delivery fails, Swervpay sends the activation code using the standard Swervpay email instead.
+
+<Note>
+  Supplying `events` when editing replaces the webhook's stored event list. Include every event that should remain explicitly registered. Omitting `events` preserves the existing list.
+</Note>
+
 ## Authentication
 
 All webhook requests include a ``X-SWERV-SECRET`` header for verification. It should match the secret generated when creating the webhook.
+
+The confidential `card.contactless.activation` event uses an HMAC signature instead of `X-SWERV-SECRET`. See the [card webhook documentation](/webhooks/card#contactless-activation-webhook-event) for its headers and verification procedure.
 
 <CodeGroup>
 ```js NodeJS
@@ -180,5 +226,4 @@ If a webhook fails, you have two main options to retry the failed delivery:
 - Retry from developer section of the [dashboard](https://app.swervpay.co/-/developers/webhooks)
 
 - Using [webhook Retry API](/api-reference/webhook/retry)
-
 
