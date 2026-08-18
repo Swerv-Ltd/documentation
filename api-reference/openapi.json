@@ -881,6 +881,76 @@
                 }
             }
         },
+        "/cards/{id}/pin": {
+            "patch": {
+                "description": "Set or update the PIN for an NGN Verve card",
+                "operationId": "setCardPin",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OpenapiSetCardPinRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseSuccessResponse"
+                                }
+                            }
+                        },
+                        "description": "OK"
+                    },
+                    "401": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        },
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        },
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UsererrorError"
+                                }
+                            }
+                        },
+                        "description": "Internal Server Error"
+                    }
+                },
+                "tags": [
+                    "card.pin"
+                ]
+            }
+        },
         "/cards/{id}/regularize": {
             "post": {
                 "tags": [
@@ -3376,6 +3446,14 @@
                         "$ref": "#/components/schemas/TypesBusinessTransaction"
                     }
                 }
+            },
+            "OpenapiSetCardPinRequest": {
+                "properties": {
+                    "pin": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             },
             "OpenapiUpdateInvoiceRequest": {
                 "type": "object",

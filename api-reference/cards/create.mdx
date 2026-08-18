@@ -3,6 +3,16 @@ title: 'Create Card'
 openapi: 'POST /cards'
 ---
 
+Create a virtual card for an approved customer. Card currency and issuer must use one of these supported combinations:
+
+| Currency | Issuer | Supported type |
+| --- | --- | --- |
+| USD | `VISA` | `DEFAULT`, `LITE`, or `COOPERATE` |
+| USD | `MASTERCARD` | `LITE` |
+| NGN | `VERVE` | `DEFAULT` |
+
+NGN Verve cards are charged an issuance fee of NGN 1,000 in addition to the initial card balance. The declined transaction fee is NGN 500. Card funding, withdrawal, and termination fees are currently zero. After issuance succeeds, set the card PIN using the [Set Card PIN](/api-reference/cards/set-pin) endpoint.
+
 <RequestExample>
 
 ```bash cURL
@@ -11,9 +21,9 @@ curl -X POST https://api.swervpay.co/api/v1/cards \
   -H "Content-Type: application/json" \
   -d '{
     "customer_id": "user",
-    "currency": "USD",
-    "provider": "MASTERCARD",
-    "amount": 10,
+    "currency": "NGN",
+    "issuer": "VERVE",
+    "amount": 1000,
     "type": "DEFAULT"
   }'
 ```
@@ -30,9 +40,9 @@ const swervpay = new SwervpayClient(config);
 
 await swervpay.card.create({
     customer_id: "user",
-    currency: "USD",
-    provider: "MASTERCARD",
-    amount: 10,
+    currency: "NGN",
+    issuer: "VERVE",
+    amount: 1000,
     type: "DEFAULT"
 })
 ```
@@ -49,9 +59,9 @@ $client = new Swervpay($config);
 
 $client->card()->create([
     "customer_id" => "user",
-    "currency" => "USD",
-    "provider" => "MASTERCARD",
-    "amount" => 10,
+    "currency" => "NGN",
+    "issuer" => "VERVE",
+    "amount" => 1000,
     "type" => "DEFAULT"
 ]);
 ```
@@ -77,10 +87,10 @@ func main() {
 
     data := swervpay.CreateCardBody{
         Type: "DEFAULT",
-        Currency: "USD",
-        Provider: "MASTERCARD",
+        Currency: "NGN",
+        Issuer: "VERVE",
         CustomerId: "user",
-        Amount: 10
+        Amount: 1000
     }
 
 	resp, err := client.Card.Create(ctx, data)
@@ -94,3 +104,4 @@ func main() {
 
 </RequestExample>
 
+`amount` is expressed in the currency's major unit. For example, `1000` means NGN 1,000, not 1,000 kobo.

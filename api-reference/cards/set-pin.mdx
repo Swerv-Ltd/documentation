@@ -1,0 +1,23 @@
+---
+title: 'Set Card PIN'
+openapi: 'PATCH /cards/{id}/pin'
+---
+
+Set or update the four-digit PIN for an active NGN Verve card. Call this endpoint after the `card.created` webhook confirms that issuance completed successfully.
+
+<RequestExample>
+
+```bash cURL
+curl -X PATCH https://api.swervpay.co/api/v1/cards/card_123/pin \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pin": "1234"
+  }'
+```
+
+</RequestExample>
+
+<Note>
+The PIN must contain exactly four digits. Swerv does not return the PIN in API responses or card webhooks.
+</Note>
