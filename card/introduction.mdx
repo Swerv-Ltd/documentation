@@ -129,8 +129,8 @@ Initiate the creation of a virtual or physical card by sending a request to the 
  The cardholder name that may appear on the card.
 </ParamField>
 
-<ParamField body="provider" type="string" required>
- card provider e.g MASTERCARD, VISA
+<ParamField body="issuer" type="string" required>
+ Card issuer. Use `VISA` or `MASTERCARD` for USD cards and `VERVE` for NGN cards.
 </ParamField>
 
 <ParamField body="type" type="string" required>
@@ -138,7 +138,7 @@ Initiate the creation of a virtual or physical card by sending a request to the 
 </ParamField>
 
 <ParamField body="amount" type="integer">
- amount to pre-fund the card
+ Amount to pre-fund the card, expressed in the currency's major unit.
 </ParamField>
 
 <ParamField body="expiry_date" type="string">
@@ -173,6 +173,12 @@ Document type of the company (for lite card type only)
 <Note>
 Note: `customer_id` is required for DEFAULT card type
 </Note>
+
+<Note>
+NGN cards use `currency: "NGN"`, `issuer: "VERVE"`, and `type: "DEFAULT"`. Set the four-digit PIN after issuance using the [Set Card PIN](/api-reference/cards/set-pin) endpoint.
+</Note>
+
+NGN Verve card pricing currently includes an NGN 1,000 issuance fee and an NGN 500 declined transaction fee. Funding, withdrawal, and termination fees are zero until further notice.
 
 **Request Body**
 
