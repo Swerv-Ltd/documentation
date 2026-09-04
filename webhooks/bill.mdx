@@ -1,0 +1,16 @@
+---
+title: 'Bill'
+description: 'Overview of Bill Webhook Events'
+---
+
+## Overview
+
+Bill webhooks notify your application as a bill payment moves through processing. The current bill event types are:
+
+- `bill.completed`
+- `bill.failed`
+- `bill.processed`
+
+Use the bill reference and event status to update your payment record. Treat repeated deliveries as safe retries by storing the event ID or another stable identifier before applying the business action.
+
+For the request and validation flow, see the [bill API reference](/api-reference/bills/create).

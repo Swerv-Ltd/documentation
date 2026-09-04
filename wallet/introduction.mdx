@@ -1,29 +1,17 @@
 ---
 title: 'Overview'
-description: 'Retrieve a list of all wallets associated with an account. '
+description: 'View wallet balances, account details, and wallet activity.'
 ---
 
-This API allows businesses to view wallet balances and transaction histories.
+The Wallets API lets businesses view balances, account details, pending funds, and wallet status. Use wallet details together with transaction and webhook records when reconciling funds.
 
-### 🔍 Get All wallets
+### 🔍 Get All Wallets
 
 Retrieve a list of all wallets by sending a request to the [get all](/api-reference/wallets/get-all-wallets) wallets endpoint. This enables businesses to monitor wallet statuses and balances in real-time.
 
-**Query Parameters**
-
-<ParamField query="page" type="string" default={1} required>
-  The page to return.
-</ParamField>
-
-
-<ParamField query="limit" type="string" default={10} required>
-   The maximum number of results to return.
-</ParamField>
-
-
 **Response Example**
 
-The response provides an array of wallet objects, each containing comprehensive details about the wallets associated with your Swervpay account.
+The response provides an array of wallet objects. Use the balances, account details, status, and timestamps to display wallet state and reconcile incoming funds.
 
 ```json Response
 [
@@ -46,3 +34,19 @@ The response provides an array of wallet objects, each containing comprehensive 
   }
   // ...other wallets
 ]
+
+### 🔍 Get Wallet Details
+
+Retrieve a specific wallet with the [get wallet](/api-reference/wallets/get) endpoint.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the wallet to retrieve.
+</ParamField>
+
+### 🧪 Simulate a Wallet Credit
+
+In sandbox only, simulate a wallet credit with the [wallet credit](/api-reference/wallets/credit) endpoint. Use this to exercise balance updates and wallet webhook handling during integration testing.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the wallet to credit.
+</ParamField>

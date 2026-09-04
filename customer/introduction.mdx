@@ -1,7 +1,9 @@
 ---
 title: 'Overview'
-description: 'Manage your customers efficiently with the Swerv Customers API.'
+description: 'Create, verify, update, blacklist, and delete customer profiles.'
 ---
+
+The Customers API stores the customer identity used by cards, collections, and KYC workflows. Create the customer first, keep the returned ID, and use that ID for later product and verification requests.
 
 ### 🤖 Create a Customer
 
@@ -21,7 +23,7 @@ To add a new customer to your system, use the [create](/api-reference/customers/
   The customer's middle name or initial. This can be used for additional verification and should match the customer's government-issued identification if provided.
 </ParamField>
 
-<ParamField body="country" type="string" default="NG" required>
+<ParamField body="country" type="string" required>
   The country of the customer's residence or operation. Use ISO 3166-1 alpha-2 country codes.
 </ParamField>
 
@@ -32,20 +34,20 @@ To add a new customer to your system, use the [create](/api-reference/customers/
 
 **Request Body**
 
-Provide necessary details to set up a new card.
+Provide the customer's identity details. Use the returned customer ID in later card, collection, and KYC requests.
 
 ```json Request Body
 {
-  "firstname": "user",
-  "lastname": "user",
-  "middlename": "user",
-  "country": "user",
-  "email": "user@mailinator.com"
+  "firstname": "Ada",
+  "lastname": "Okafor",
+  "middlename": "Ifeoma",
+  "country": "NG",
+  "email": "ada@example.com"
 }
 ```
 
 ### 🔍 Get Customer Details
-Retrieve detailed information of a specific customer with their unique identifier using the [get](/api-reference/customers/get) customer endpoint.
+Retrieve detailed information about a specific customer with their unique identifier using the [get](/api-reference/customers/get) customer endpoint.
 
 **Path Parameters**
 <ParamField path="id" type="string" required>
@@ -53,16 +55,16 @@ Retrieve detailed information of a specific customer with their unique identifie
 </ParamField>
 
 ### 🔍 Get All Customers
-Retrieve a comprehensive list of all customers in your system using the [get](/api-reference/customers/get-all-customers) all customers endpoint.
+Retrieve a paginated list of customers in your system using the [get all](/api-reference/customers/get-all-customers) customers endpoint.
 
 **Query Parameters**
 
-<ParamField query="page" type="string" default={1} required>
+<ParamField query="page" type="integer">
   The page to return.
 </ParamField>
 
 
-<ParamField query="limit" type="string" default={10} required>
+<ParamField query="limit" type="integer">
    The maximum number of results to return.
 </ParamField>
 
@@ -77,13 +79,13 @@ Customer KYC is required before issuing a `DEFAULT` USD collection account for a
 **Parameters**
 
 <ParamField path="id" type="string" required>
- The unique identifier of the customer to retrieve.
+ The unique identifier of the customer whose KYC you are submitting.
 </ParamField>
 
 
 **Body**
 - `tier` enum (ONE, TWO, FULL) :
-  - The amount to fund in the smallest currency unit.
+  - The KYC tier to request.
 - `information` object :
   - `bvn` string : customer bvn (Nigeria)
   - `ssnit` string : customer ssnit (Ghana)
@@ -123,10 +125,34 @@ Customer KYC is required before issuing a `DEFAULT` USD collection account for a
 
 
 ## Blacklist Customer
-Blacklist customer from performing any action using the [post](/api-reference/customers/blacklist).
+Blacklist a customer from performing actions using the [blacklist customer](/api-reference/customers/blacklist) endpoint.
 
 **Parameters**
 
 <ParamField path="id" type="string" required>
  The unique identifier of the customer to blacklist.
+</ParamField>
+
+## Update Customer
+
+Update a customer's email address or phone number with the [update customer](/api-reference/customers/update) endpoint.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the customer to update.
+</ParamField>
+
+<ParamField body="email" type="string">
+  The customer's updated email address.
+</ParamField>
+
+<ParamField body="phone_number" type="string">
+  The customer's updated phone number.
+</ParamField>
+
+## Delete Customer
+
+Delete a customer with the [delete customer](/api-reference/customers/delete) endpoint when the customer should no longer remain in the business account.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the customer to delete.
 </ParamField>

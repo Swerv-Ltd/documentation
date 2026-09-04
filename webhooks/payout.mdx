@@ -5,11 +5,15 @@ description: 'Overview of Payout Webhook Events'
 
 ## Overview
 
-Our payout webhook events are fired based on the following triggers:
+Payout webhooks provide lifecycle updates for bank transfers. The current payout event types are:
 
-- Completed webhook event
+- `payout.completed`
+- `payout.failed`
+- `payout.processed`
+- `payout.processing`
+- `payout.reversed`
 
-- Failed webhook event
+Use the payout reference and transaction status to reconcile the transfer. Do not treat the initial payout request as final settlement.
 
 ## Completed webhook event
 
@@ -35,7 +39,7 @@ This event is fired when a payout is completed.
 
 ## Failed webhook event
 
-This event is fired when a payout is failed.
+This event is fired when a payout fails.
 
 ```json payout.failed
 {
@@ -54,4 +58,3 @@ This event is fired when a payout is failed.
   }
 }
 ```
-

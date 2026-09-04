@@ -5,7 +5,7 @@ description: "NodeJS Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-node](https://www.npmjs.com/package/@swervpaydev/sdk) sdk into your new or existing NodeJS application using any of your favorite package manager.
+Install the [swervpay-node](https://www.npmjs.com/package/@swervpaydev/sdk) SDK in your Node.js application using your preferred package manager.
 
 ```bash Shell
 $ npm install @swervpaydev/sdk
@@ -16,15 +16,14 @@ $ bun install @swervpaydev/sdk
 
 ### Usage
 
-Create swervpay instance with your Business ID and secret.
+Create the client with your business ID and secret key. Load both values from your server's environment or secret manager; do not commit them to source control or expose them in browser code.
 
 ```javascript NodeJS
 import { SwervpayClient } from "@swervpaydev/sdk";
 
 const swervpay = new SwervpayClient({
-  businessId: process.env.SWERVPAY_API_KEY!,
-  secretKey: process.env.SWERVPAY_API_SECRET!,
-  logLevel: "debug",
+  businessId: process.env.SWERVPAY_BUSINESS_ID!,
+  secretKey: process.env.SWERVPAY_SECRET_KEY!,
 });
 ```
 
@@ -38,8 +37,7 @@ const payout = await swervpay.payout.create({
     currency: req.body.currency,
     bank_code: req.body.bank_code,
     account_number: req.body.account_number,
-    naration: req.body.narration,
-    email: req.body.email,
+    narration: req.body.narration,
     reference: req.body.reference,
 });
 ```
@@ -49,7 +47,7 @@ const payout = await swervpay.payout.create({
 Get a payout
 
 ```javascript NodeJS
-const payout = await swervpay.payout.get(req.param.id);
+const payout = await swervpay.payout.get(req.params.id);
 ```
 
 ### Get transactions
@@ -68,7 +66,7 @@ const transactions = await swervpay.transaction.gets({
 Get a transaction
 
 ```javascript NodeJS
-const transaction = await swervpay.transaction.get(req.param.id);
+const transaction = await swervpay.transaction.get(req.params.id);
 ```
 
 ### Create a customer
@@ -136,7 +134,7 @@ const customers = await swervpay.customer.gets({
 Get a customer
 
 ```javascript NodeJS
-const customer = await swervpay.customer.get(req.param.id);
+const customer = await swervpay.customer.get(req.params.id);
 ```
 
 ### Create a card
@@ -149,7 +147,7 @@ const card = await swervpay.card.create({
     currency: req.body.currency,
     customer_id: req.body.customer_id,
     type: req.body.type as "LITE" | "DEFAULT" | "COOPERATE",
-    issuer: req.body.issuer as "MASTERCARD" | "VISA",
+    issuer: req.body.issuer as "MASTERCARD" | "VISA" | "VERVE",
     name_on_card: req.body.name_on_card,
 });
 ```
@@ -170,7 +168,7 @@ const cards = await swervpay.card.gets({
 Get a card
 
 ```javascript NodeJS
-const card = await swervpay.card.get(req.param.id);
+const card = await swervpay.card.get(req.params.id);
 ```
 
 ### Webhook test
@@ -214,20 +212,20 @@ Get the current exchange rate
 
 ```javascript NodeJS
 const result = await swervpay.fx.rate({
-    from: req.body.bank_code as string,
-    to: req.body.account_number as string,
+    from: req.body.from as string,
+    to: req.body.to as string,
     amount: req.body.amount as number,
 });
 ```
 
-### FX Exchnage
+### FX Exchange
 
 Create a swap transaction
 
 ```javascript NodeJS
-const result = await swervpay.fx.rate({
-    from: req.body.bank_code as string,
-    to: req.body.account_number as string,
+const result = await swervpay.fx.exchange({
+    from: req.body.from as string,
+    to: req.body.to as string,
     amount: req.body.amount as number,
 });
 ```

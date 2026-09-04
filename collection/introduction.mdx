@@ -1,11 +1,13 @@
 ---
 title: 'Overview'
-description: 'Swerv Collection allows businesses to accept payments from their customers using virtual accounts & payment link.'
+description: 'Create virtual collection accounts and receive payments into customer-specific accounts.'
 ---
+
+The Collections API creates virtual accounts that businesses can use to receive payments and match incoming funds to customers. Use `NGN` for Naira virtual-account flows and `USD` for the Bridge-backed collection flow.
 
 ## Supported partners
 
-Below are the list of currently supported partners for virtual account issuing
+The currently supported account-issuing partners are:
 
 - VFD Microfinance Bank
 - Bridge for USD collection accounts
@@ -18,7 +20,7 @@ To create a virtual account, use the [create](/api-reference/collections/create)
 **Parameters**
 
 <ParamField body="customer_id" type="string">
-  The unique identifier for the customer to whom the card will be issued.
+  The unique identifier for the customer who will own the collection account.
 </ParamField>
 
 <ParamField body="currency" type="string" required>
@@ -33,7 +35,7 @@ To create a virtual account, use the [create](/api-reference/collections/create)
   virtual account type e.g DEFAULT (Permanent), ONE_TIME (Temporary)
 </ParamField>
 
-<ParamField body="amount" type="integer">
+<ParamField body="amount" type="number">
   amount expected to be paid into the virtual account. Required for ONE_TIME (Temporary) virtual account.
 </ParamField>
 
@@ -101,7 +103,7 @@ USD account issuance can be asynchronous. If the customer is already approved, t
 Swervpay securely submits the required customer data to Bridge, creates or reuses the Bridge customer profile, and issues the USD deposit account when the customer is approved.
 
 ### 🔍 Get Collection Details
-Retrieve detailed information of a specific collection with their unique identifier using the [get](/api-reference/collections/get) collection endpoint.
+Retrieve detailed information about a collection with its unique identifier using the [get](/api-reference/collections/get) collection endpoint.
 
 **Path Parameters**
 
@@ -110,24 +112,24 @@ Retrieve detailed information of a specific collection with their unique identif
 </ParamField>
 
 
-### 🔍 Get All collections
+### 🔍 Get All Collections
 
 Retrieve a list of all collections by sending a request to the [get all](/api-reference/collections/get-all-collections) collections endpoint.
 
 **Query Parameters**
 
-<ParamField query="page" type="string" default={1} required>
+<ParamField query="page" type="integer">
   The page to return.
 </ParamField>
 
 
-<ParamField query="limit" type="string" default={10} required>
+<ParamField query="limit" type="integer">
    The maximum number of results to return.
 </ParamField>
 
 **Response Example**
 
-The response provides an array of wallet objects, each containing comprehensive details about the wallets associated with your Swerv account.
+The collection endpoints return account objects with wallet-style fields such as account number, bank details, currency, balance, and status. Store the collection ID and account details returned by the API so you can match incoming payments to the correct customer.
 
 ```json Response
 [
@@ -148,5 +150,22 @@ The response provides an array of wallet objects, each containing comprehensive 
     "total_received": 1500000, // Total amount received in the smallest currency unit
     "updated_at": "2024-01-02T00:00:00Z"
   }
-  // ...other wallets
+  // ...other collections
 ]
+```
+
+### 🧾 Get Collection Transactions
+
+Review payments received into a collection account with the [collection transactions](/api-reference/collections/transaction) endpoint.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the collection whose transactions you want to retrieve.
+</ParamField>
+
+### 🧪 Simulate a Collection Credit
+
+In sandbox only, simulate an incoming credit with the [collection credit](/api-reference/collections/credit) endpoint. Use this to test collection webhooks and reconciliation flows without moving real funds.
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the collection to credit.
+</ParamField>

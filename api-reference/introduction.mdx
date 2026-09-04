@@ -1,5 +1,6 @@
 ---
 title: 'Introduction'
+description: 'Explore Swervpay API endpoints for payments, cards, customers, wallets, and webhooks.'
 ---
 
 <Frame>
@@ -15,7 +16,7 @@ title: 'Introduction'
 />
 </Frame>
 
-Swervpay provides a REST API for businesses building payment and embedded finance products. You can create collections, issue customer USD collection accounts, manage wallets, create and manage virtual cards, perform payouts, verify customer identity, retrieve transactions, and subscribe to real-time webhooks.
+Swervpay provides a REST API for businesses building payment and embedded finance products. You can create collections, issue customer USD collection accounts, manage wallets, create and manage virtual cards, perform payouts, create invoices and bills, verify customer identity, retrieve transactions, and subscribe to real-time webhooks.
 
 The API uses bearer authentication and is available in sandbox and production environments. Use sandbox while integrating, then complete the go-live checklist before moving production traffic.
 
@@ -30,11 +31,12 @@ The API uses bearer authentication and is available in sandbox and production en
 ## Core resources
 
 - [Authentication](/api-reference/authentication) - authenticate API requests.
-- [Customers](/api-reference/customers/create) - create customers and submit KYC information.
+- [Customers](/api-reference/customers/create) - create, update, blacklist, delete, and submit KYC information for customers.
 - [Collections](/api-reference/collections/create) - create NGN and USD collection accounts.
 - [Wallets](/api-reference/wallets/get-all-wallets) - view wallet balances and wallet activity.
-- [Cards](/api-reference/cards/create) - create, fund, freeze, unfreeze, terminate, and withdraw from virtual cards.
+- [Cards](/api-reference/cards/create) - create, fund, regularize, freeze, unfreeze, terminate, and withdraw from virtual cards.
+- [Bills](/api-reference/bills/create) - validate customers and create bill payments.
+- [Invoices](/api-reference/invoices/create) - create, retrieve, and update invoices.
 - [Payouts](/api-reference/payouts/create) - send payouts to supported bank accounts.
 - [Identity](/api-reference/identity/bvn) - verify BVN information.
-- [Webhooks](/webhooks/introduction) - receive event updates for collections, payouts, cards, wallets, customers, and more.
-
+- [Webhooks](/webhooks/introduction) - create and manage webhook subscriptions, inspect delivery logs, retry failed deliveries, and receive event updates.

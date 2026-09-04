@@ -5,13 +5,15 @@ description: "Go Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-go](https://github.com/swerv-ltd/swervpay-go) sdk into your new or existing Go application.
+Install the [swervpay-go](https://github.com/swerv-ltd/swervpay-go) SDK in your Go application.
 
 ```bash Shell
 $ go get github.com/swerv-ltd/swervpay-go
 ```
 
 ### Usage
+
+The client uses your business ID and secret key to authenticate requests. Read these values from environment variables or a secret manager and keep them on the server. The example below lists customers, retrieves a customer, creates a customer, lists banks, resolves an account number, and retrieves transactions.
 
 ```go Go
 package main

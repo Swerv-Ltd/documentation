@@ -5,7 +5,7 @@ description: "Laravel Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-laravel](https://packagist.org/packages/swervpaydev/laravel) sdk into your new or existing Laravel application using composer.
+Install the [swervpay-laravel](https://packagist.org/packages/swervpaydev/laravel) SDK in your Laravel application with Composer.
 
 ```bash Shell
 $ composer require swervpaydev/laravel
@@ -19,10 +19,13 @@ You can publish the configuration file using this command:
 $ php artisan vendor:publish --tag="swervpaydev-laravel-config"
 ```
 
-Set `SWERVPAYDEV_SECRET_KEY` & `SWERVPAYDEV_BUSINESS_ID` value in your environmental variable file
+Set `SWERVPAYDEV_SECRET_KEY` and `SWERVPAYDEV_BUSINESS_ID` in your `.env` file. Keep this file out of source control and never expose these values to browser code.
 
 ### Usage
 
 ```php Laravel
+// Use the configured client from your application service or controller.
 use Swervpaydev\SDK\Swervpay;
 ```
+
+After configuration, use the SDK from your controllers or jobs for server-side API calls. See the [API Reference](/api-reference/introduction) for the fields, response shapes, and lifecycle behavior of each operation.

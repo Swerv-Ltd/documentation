@@ -5,11 +5,14 @@ description: 'Overview of Collection Webhook Events'
 
 ## Overview
 
-Our collection webhook events are fired based on the following triggers:
+Collection webhooks notify your application when a collection payment is completed or when a collection account changes state. The current collection event types are:
 
-- Completed webhook event
-- Collection created event
-- Collection created failed event
+- `collection.completed`
+- `collection.created`
+- `collection.created.failed`
+- `collection.failed`
+- `collection.notification`
+- `collection.updated`
 
 For USD collection accounts, `collection.created` confirms that the customer's USD account has been issued and contains the final account details. `collection.created.failed` is sent when the account request is rejected or cannot be completed.
 
@@ -48,7 +51,7 @@ For USD collection accounts, `collection.created` confirms that the customer's U
     "account_name": "string",
     "routing_number": "string",
     "account_type": "string",
-    "bank_address": "string",
+    "bank_address": "string"
   }
 }
 ```
@@ -69,7 +72,7 @@ For USD collection accounts, `collection.created` confirms that the customer's U
       "account_name": "string",
       "routing_number": "string",
       "account_type": "string",
-      "bank_address": "string",
+      "bank_address": "string"
     },
     "reasons": [
       {
