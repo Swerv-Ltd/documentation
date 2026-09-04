@@ -1,0 +1,307 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Swervpay Docs",
+  "colors": {
+    "primary": "#654FF0",
+    "light": "#654FF0",
+    "dark": "#654FF0"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "go-live-checklist",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Wallet",
+            "pages": [
+              "wallet/introduction"
+            ]
+          },
+          {
+            "group": "Transaction",
+            "pages": [
+              "transaction/introduction"
+            ]
+          },
+          {
+            "group": "Customer",
+            "pages": [
+              "customer/introduction"
+            ]
+          },
+          {
+            "group": "Card",
+            "pages": [
+              "card/introduction"
+            ]
+          },
+          {
+            "group": "Collection",
+            "pages": [
+              "collection/introduction"
+            ]
+          },
+          {
+            "group": "FX",
+            "pages": [
+              "fx/introduction"
+            ]
+          },
+          {
+            "group": "Payout",
+            "pages": [
+              "payout/introduction"
+            ]
+          },
+          {
+            "group": "Webhook Events",
+            "pages": [
+              "webhooks/introduction",
+              "webhooks/card",
+              "webhooks/customer",
+              "webhooks/collection",
+              "webhooks/payout",
+              "webhooks/wallet",
+              "webhooks/bill"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "API Documentation",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "api-reference/authentication/auth"
+            ]
+          },
+          {
+            "group": "Business",
+            "pages": [
+              "api-reference/business/get"
+            ]
+          },
+          {
+            "group": "Bills",
+            "pages": [
+              "api-reference/bills/items",
+              "api-reference/bills/lists",
+              "api-reference/bills/categories",
+              "api-reference/bills/validate",
+              "api-reference/bills/create",
+              "api-reference/bills/get"
+            ]
+          },
+          {
+            "group": "Cards",
+            "pages": [
+              "api-reference/cards/get-all-cards",
+              "api-reference/cards/get",
+              "api-reference/cards/create",
+              "api-reference/cards/set-pin",
+              "api-reference/cards/fund-card",
+              "api-reference/cards/withdraw-from-card",
+              "api-reference/cards/regularize",
+              "api-reference/cards/freeze",
+              "api-reference/cards/unfreeze",
+              "api-reference/cards/terminate",
+              "api-reference/cards/transactions",
+              "api-reference/cards/get-transaction"
+            ]
+          },
+          {
+            "group": "Checkout",
+            "pages": [
+              "api-reference/checkouts/credit"
+            ]
+          },
+          {
+            "group": "Customers",
+            "pages": [
+              "api-reference/customers/get-all-customers",
+              "api-reference/customers/get",
+              "api-reference/customers/create",
+              "api-reference/customers/update",
+              "api-reference/customers/kyc",
+              "api-reference/customers/blacklist",
+              "api-reference/customers/delete"
+            ]
+          },
+          {
+            "group": "Collections",
+            "pages": [
+              "api-reference/collections/get-all-collections",
+              "api-reference/collections/get",
+              "api-reference/collections/create",
+              "api-reference/collections/transaction",
+              "api-reference/collections/credit"
+            ]
+          },
+          {
+            "group": "FX",
+            "pages": [
+              "api-reference/fx/rate",
+              "api-reference/fx/exchange"
+            ]
+          },
+          {
+            "group": "Identity",
+            "pages": [
+              "api-reference/identity/bvn"
+            ]
+          },
+          {
+            "group": "Invoices",
+            "pages": [
+              "api-reference/invoices/create",
+              "api-reference/invoices/get-all-invoices",
+              "api-reference/invoices/get",
+              "api-reference/invoices/update"
+            ]
+          },
+          {
+            "group": "Others",
+            "pages": [
+              "api-reference/others/get-banks",
+              "api-reference/others/resolve-account-number"
+            ]
+          },
+          {
+            "group": "Payouts",
+            "pages": [
+              "api-reference/payouts/create",
+              "api-reference/payouts/get"
+            ]
+          },
+          {
+            "group": "Transactions",
+            "pages": [
+              "api-reference/transactions/get-all-transactions",
+              "api-reference/transactions/get"
+            ]
+          },
+          {
+            "group": "Wallets",
+            "pages": [
+              "api-reference/wallets/get-all-wallets",
+              "api-reference/wallets/get",
+              "api-reference/wallets/credit"
+            ]
+          },
+          {
+            "group": "Webhook",
+            "pages": [
+              "api-reference/webhook/create",
+              "api-reference/webhook/update",
+              "api-reference/webhook/get-logs",
+              "api-reference/webhook/test",
+              "api-reference/webhook/retry"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SDKs",
+        "groups": [
+          {
+            "group": "SDKs",
+            "pages": [
+              "sdks/introduction",
+              "sdks/nodejs",
+              "sdks/go",
+              "sdks/php",
+              "sdks/laravel",
+              "sdks/dart"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "groups": [
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog/introduction"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Community",
+          "icon": "slack",
+          "href": "https://swervpay.co/slack"
+        },
+        {
+          "anchor": "Blog",
+          "icon": "newspaper",
+          "href": "https://swervpay.co/blog"
+        }
+      ]
+    }
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude"],
+    "display": "header"
+  },
+  "interaction": {
+    "drilldown": true
+  },
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "background": {
+    "image": "/background.png",
+    "color": {
+      "dark": "#000000",
+      "light": "#ffffff"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:office@swyftpay.io"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://app.swervpay.co"
+    }
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/swyftpay_io",
+      "github": "https://github.com/Swerv-Ltd",
+      "linkedin": "https://www.linkedin.com/company/swervltd/"
+    }
+  },
+  "integrations": {
+    "ga4": {
+      "measurementId": "G-T8NH65LW4C"
+    }
+  }
+}
