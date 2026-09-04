@@ -6,9 +6,9 @@ openapi: 'POST /bills/validate'
 <RequestExample>
 
 ```bash cURL
-curl -X GET https://api.swervpay.co/api/v1/bills/validate \
+curl -X POST https://api.swervpay.co/api/v1/bills/validate \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
   -d '{
   "biller_id": "<BILLER_ID>",
   "customer_id": "<CUSTOMER_ID>",

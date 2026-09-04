@@ -1,5 +1,6 @@
 ---
 title: Introduction
+description: 'Build payment and embedded finance products with the Swervpay API.'
 ---
 
 <Frame>
@@ -17,7 +18,7 @@ title: Introduction
 
 Welcome to the Swervpay developer documentation. Swervpay gives businesses one API layer for building financial products across collections, payouts, cards, wallets, customers, identity verification, FX, and webhooks.
 
-Use Swervpay to create NGN collection accounts, issue USD collection accounts for verified customers, manage customer profiles and KYC, create and fund virtual cards, move money to bank accounts, verify BVNs, and receive real-time event updates through webhooks. The API is designed for teams building payment, treasury, marketplace, remittance, and embedded finance workflows.
+Use Swervpay to create NGN collection accounts, issue USD collection accounts for verified customers, manage customer profiles and KYC, create and fund virtual cards, pay bills and invoices, move money to bank accounts, verify BVNs, and receive real-time event updates through webhooks. The API is designed for teams building payment, treasury, marketplace, remittance, and embedded finance workflows.
 
 Start with the [Quickstart](/quickstart) if you want to make your first API call, or go directly to the [API Reference](/api-reference/introduction) for endpoint-level documentation.
 
@@ -36,7 +37,7 @@ Start with the [Quickstart](/quickstart) if you want to make your first API call
     icon="code"
     href="/api-reference/introduction"
   >
-    Explore endpoints for collections, payouts, cards, customers, wallets, FX, identity, and webhooks
+    Explore endpoints for collections, payouts, cards, customers, wallets, FX, identity, bills, invoices, and webhooks
   </Card>
   <Card
     title="Changelog"
@@ -53,3 +54,11 @@ Start with the [Quickstart](/quickstart) if you want to make your first API call
    Having trouble? Reach out to our support team
   </Card>
 </CardGroup>
+
+## Typical integration flow
+
+1. Create a customer and keep the returned customer ID in your database.
+2. Complete the customer's KYC when the selected product requires verification.
+3. Create a collection account or virtual card for that customer.
+4. Configure webhooks and make your handlers idempotent so repeated deliveries do not duplicate business actions.
+5. Reconcile final transaction, collection, payout, and webhook states before enabling production traffic.

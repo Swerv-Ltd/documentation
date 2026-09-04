@@ -31,21 +31,21 @@ Make swift payments in any currency with multiple payment options. Gain financia
 
 ### 👩‍💻 Docs Contribution
 
-First, install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) locally. To install, use the following command
+First, install the [Mintlify CLI](https://www.npmjs.com/package/mint) locally. To install, use the following command
 
 ```
-npm i -g mintlify
+npm i -g mint
 ```
 
-**Note**: Please install Node.js (version 18 or higher) before proceeding.
+**Note**: Please install Node.js v20.17.0 or higher before proceeding.
 
-Run the following command at the root of the documentation (where mint.json is) to preview the documentation changes
+Run the following command at the root of the documentation (where `docs.json` is) to preview documentation changes
 
 ```
-mintlify dev
+mint dev
 ```
 
 #### Troubleshooting
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+- Mint isn't running - Run `mint update` to update the CLI to the latest version.
+- Page loads as a 404 - Make sure you are running in a folder with `docs.json`.

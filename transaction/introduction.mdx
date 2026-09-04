@@ -1,21 +1,23 @@
 ---
 title: 'Overview'
-description: 'The Transaction API facilitates the retrieval, and management of financial transaction records.'
+description: 'Retrieve and inspect financial transaction records.'
 ---
 
 
+The Transactions API provides a paginated view of financial activity, including amounts, fees, references, account details, types, and processing status.
+
 ### 🔍 Get All Transactions
-'Retrieve a list of all transactions processed through Swervpay using the [get](/api-reference/transactions/get-all-transactions) all transaction endpoint which includes details such as transaction amount, status, and associated customer.
+Retrieve a list of all transactions processed through Swervpay using the [get all](/api-reference/transactions/get-all-transactions) transactions endpoint. Each record includes details such as amount, status, reference, and account information.
 
 
 **Query Parameters**
 
-<ParamField query="page" type="string" default={1} required>
+<ParamField query="page" type="integer">
   The page to return.
 </ParamField>
 
 
-<ParamField query="limit" type="string" default={10} required>
+<ParamField query="limit" type="integer">
    The maximum number of results to return.
 </ParamField>
 
@@ -43,13 +45,13 @@ Returns an array of transaction objects, each containing details about individua
     "session_id": "session_213",
     "status": "completed",
     "type": "debit",
-    "updated_at": "2024-01-02T12:00:00Z",
+    "updated_at": "2024-01-02T12:00:00Z"
   }
 ]
 ```
 
-### 🔍 Get Transactions
-Retrieve details of a specific transaction using its unique ID with the [get](/api-reference/transactions/get) transaction endpoint.
+### 🔍 Get a Transaction
+Retrieve details of a specific transaction using its unique ID with the [get transaction](/api-reference/transactions/get) endpoint.
 
 **Path Parameters**
 
@@ -59,7 +61,7 @@ Retrieve details of a specific transaction using its unique ID with the [get](/a
 
 **Response Example**
 
-Retunrs a transaction object containing details about the transaction
+Returns a transaction object containing details about the transaction.
 
 ```json Response
   {
@@ -81,6 +83,6 @@ Retunrs a transaction object containing details about the transaction
     "session_id": "session_213",
     "status": "completed",
     "type": "debit",
-    "updated_at": "2024-01-02T12:00:00Z",
+    "updated_at": "2024-01-02T12:00:00Z"
   }
 ```

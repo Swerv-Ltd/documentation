@@ -3,22 +3,31 @@ title: Go live checklist
 description: 'A checklist of things to do before going live (production) with Swervpay.'
 ---
 
-## List
+Use this checklist before sending production traffic. Complete the steps in order so credentials, customer verification, webhooks, and failure handling are tested before you enable live mode.
 
 <AccordionGroup>
-  <Accordion title="Create Business">
-   After create account, you will be redirected to the dashboard. Click on the [Create Business](https://app.swervpay.co/businesses/new) button to create a business.
+  <Accordion title="1. Create and verify your business">
+    Create a business from the [Swervpay dashboard](https://app.swervpay.co/businesses/new) and complete business KYC. Production access is enabled for verified businesses.
   </Accordion>
-  <Accordion title="Complete Business KYC">
-    After creating a business, you will be redirected to the business dashboard. On the business homepage click continue kyc button to complete the business KYC.
+  <Accordion title="2. Protect your API credentials">
+    Store the business ID and secret key in server-side environment variables or a secrets manager. Do not commit them to source control or expose them in frontend or mobile-app code.
   </Accordion>
-  <Accordion title="Invite team member">
-    If you have a team member you want to invite to the business, you can do so by clicking on the [Invite Team Member](https://app.swervpay.co/~/settings/teams) button on the business dashboard.
+  <Accordion title="3. Configure production IP whitelisting">
+    In the Swervpay dashboard, open the **Developer** page and select **IP Addresses**. Add the static outbound IP address or addresses used by your production servers. Make sure all services that call the production API use an approved IP, and update the allowlist before changing hosting providers or network infrastructure.
   </Accordion>
-  <Accordion title="Setup webhook">
-    It is recommended to setup a webhook to receive event notification from Swervpay. You can do this by going to the developer section of the dashboard and clicking on the [Create Webhook](https://app.swervpay.co/~/developers/webhooks) button and make sure to run send test so as to conduct proper test for event communication.
+  <Accordion title="4. Test in the sandbox">
+    Use `https://sandbox.swervpay.co/api/v1` to test authentication, customer creation, KYC, collections, cards, payouts, and error handling. Keep production credentials and data separate from sandbox data.
   </Accordion>
-  <Accordion title="Toggle live button in developer">
-  Toggle the live button in the developer section of the dashboard to go live.
+  <Accordion title="5. Verify customers before USD collections">
+    Create the customer and submit the required KYC information before requesting a `DEFAULT` USD collection account. USD account issuance can be asynchronous, so handle both `collection.created` and `collection.created.failed` events.
+  </Accordion>
+  <Accordion title="6. Configure and test webhooks">
+    Create a webhook from the [dashboard](https://app.swervpay.co/-/developers/webhooks) or with the [create webhook API](/api-reference/webhook/create). Subscribe only to the events you need, verify the `X-SWERV-SECRET` header, return a `2xx` response promptly, and make handlers idempotent. Send a test event before going live.
+  </Accordion>
+  <Accordion title="7. Prepare failure handling">
+    Monitor delivery logs with the [webhook logs API](/api-reference/webhook/get-logs) and retry failed deliveries with the [retry API](/api-reference/webhook/retry). Record transaction references and reconcile terminal states instead of treating an accepted request as a completed payment.
+  </Accordion>
+  <Accordion title="8. Enable production mode">
+    After sandbox testing and IP allowlisting are complete, enable live mode in the developer section of the dashboard. Switch to `https://api.swervpay.co/api/v1`, use production credentials, and verify the first production request and webhook delivery before increasing traffic.
   </Accordion>
 </AccordionGroup>

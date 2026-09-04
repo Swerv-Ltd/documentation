@@ -5,23 +5,20 @@ description: 'Overview of Card Webhook Events'
 
 ## Overview
 
-Our card webhook events are fired based on the following triggers:
+Card webhooks notify your application when a card changes state or a card transaction occurs. The current card event types are:
 
-- Created webhook event
+- `card.authorization`
+- `card.charges`
+- `card.contactless.activation`
+- `card.created`
+- `card.created.failed`
+- `card.freezed`
+- `card.terminated`
+- `card.transaction`
+- `card.unfreezed`
+- `card.updated`
 
-- Terminated webhook event
-
-- Freeze webhook event
-
-- Unfreeze webhook event
-
-- Updated webhook event
-
-- Transaction webhook event
-
-- Charges webhook event
-
-- Contactless activation webhook event
+The sections below document the payloads currently covered by this guide. Treat event IDs as idempotency keys and return `2xx` after the event has been accepted for processing.
 
 ## Created webhook event
 
@@ -59,7 +56,7 @@ This event is fired when a card is terminated.
 
 ## Freeze webhook event
 
-This event is fired when a card is freezed.
+This event is fired when a card is frozen.
 
 ```json card.freezed
 {
@@ -77,7 +74,7 @@ This event is fired when a card is freezed.
 
 ## Unfreeze webhook event
 
-This event is fired when a card is unfreezed.
+This event is fired when a card is unfrozen.
 
 ```json card.unfreezed
 {

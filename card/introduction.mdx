@@ -1,9 +1,9 @@
 ---
 title: 'Overview'
-description: 'Swerv Card API allows businesses to create card for their customer to pay anywhere global'
+description: 'Create and manage virtual cards for customers, including funding, controls, transactions, and withdrawals.'
 ---
 
-This API provides a powerful, secure, and easy-to-use set of endpoints for card management, including creation, retrieval, freezing, and termination of cards. This guide will cover essential operations to help you manage card transactions within your applications
+The Cards API lets you create and manage virtual cards for your customers. Use it to issue cards, fund balances, set PINs for NGN Verve cards, freeze or unfreeze cards, regularize or terminate cards, retrieve transactions, and withdraw funds.
 
 ## Card Details Encryption
 
@@ -137,7 +137,7 @@ Initiate the creation of a virtual or physical card by sending a request to the 
  card type e.g DEFAULT, LITE or COOPERATE
 </ParamField>
 
-<ParamField body="amount" type="integer">
+<ParamField body="amount" type="number">
  Amount to pre-fund the card, expressed in the currency's major unit.
 </ParamField>
 
@@ -197,7 +197,7 @@ Provide necessary details to set up a new card.
 ```
 
 ### 💳➕ Fund Card
-Add funds to an existing card using the [fund](/api-reference/cards/fund) endpoint. This operation is essential for increasing the card's available balance for use.
+Add funds to an existing card using the [fund](/api-reference/cards/fund-card) endpoint. This operation is essential for increasing the card's available balance for use.
 
 **Parameters**
 
@@ -218,6 +218,22 @@ Retrieve information about a specific card with its unique identifier using the 
 
 <ParamField path="id" type="string" required>
  The unique identifier of the card to retrieve.
+</ParamField>
+
+### 🧾 Get Card Transactions
+
+List transactions for a card with the [card transactions](/api-reference/cards/transactions) endpoint. Use the card ID to review transaction amounts, statuses, fees, and merchant details.
+
+<ParamField path="id" type="string" required>
+ The unique identifier of the card whose transactions you want to retrieve.
+</ParamField>
+
+### 🛠️ Regularize a Card
+
+Use the [regularize card](/api-reference/cards/regularize) endpoint when Swervpay instructs you to regularize a card. The endpoint accepts the card ID in the path and returns the operation result.
+
+<ParamField path="id" type="string" required>
+ The unique identifier of the card to regularize.
 </ParamField>
 
 ### ❄️ Freeze a Card
@@ -259,12 +275,12 @@ To retrieve a comprehensive list of all the cards, use the [get all](/api-refere
 
 **Query Parameters**
 
-<ParamField query="page" type="string" default={1} required>
+<ParamField query="page" type="integer">
   The page to return.
 </ParamField>
 
 
-<ParamField query="limit" type="string" default={10} required>
+<ParamField query="limit" type="integer">
    The maximum number of results to return.
 </ParamField>
 

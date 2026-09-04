@@ -5,7 +5,7 @@ description: "Dart Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-dart](https://pub.dev/packages/swervpay_dart) sdk into your new or existing Flutter/Dart application.
+Install the [swervpay-dart](https://pub.dev/packages/swervpay_dart) SDK in your Flutter or Dart application.
 
 ```bash Shell
 $ flutter pub add swervpay_dart
@@ -17,14 +17,15 @@ $ dart pub add swervpay_dart
 
 ### Usage
 
+Initialize the client with the API credential supplied by your deployment configuration. Do not hard-code credentials in the application or commit them to source control.
+
 ```dart Dart/Flutter
 import 'package:swervpay_dart/swervpay_dart.dart';
 
 void main() async {
-
-    final swervpay = Swervpay(
-        apiKey
-    );
-
+  const apiKey = String.fromEnvironment('SWERVPAY_API_KEY');
+  final swervpay = Swervpay(apiKey);
 }
 ```
+
+Use the [API Reference](/api-reference/introduction) alongside the SDK for operation-specific request fields and responses.

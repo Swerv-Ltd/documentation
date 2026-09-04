@@ -5,9 +5,12 @@ description: 'Overview of Wallet Webhook Events'
 
 ## Overview
 
-Our wallet webhook events are fired based on the following triggers:
+Wallet webhooks notify your application when a wallet is created or updated. The current wallet event types are:
 
-- Updated webhook event
+- `wallet.created`
+- `wallet.updated`
+
+Use the wallet ID to update the corresponding wallet record and reconcile the reported balance and amount.
 
 ## Updated webhook event
 

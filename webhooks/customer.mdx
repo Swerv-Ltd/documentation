@@ -5,13 +5,13 @@ description: 'Overview of Customer Webhook Events'
 
 ## Overview
 
-Our customer webhook events are fired based on the following triggers:
+Customer webhooks notify your application when a customer is created, updated, or has a KYC status change. The current customer event types are:
 
-- Created webhook event
+- `customer.created`
+- `customer.kyc.updated`
+- `customer.updated`
 
-- Updated webhook event
-
-- KYC webhook event
+Use the customer ID in each payload to update the matching customer record in your system.
 
 ## Created webhook event
 
@@ -56,4 +56,3 @@ This event is fired when a customer's KYC status is updated.
   }
 }
 ```
-

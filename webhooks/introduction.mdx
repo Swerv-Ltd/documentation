@@ -1,15 +1,17 @@
 ---
 title: 'Introduction'
-description: 'Introduction to Webhooks'
+description: 'Subscribe to event notifications, verify deliveries, and handle retries safely.'
 ---
 
 ## Introduction
 
-Webhooks are a way for Swervpay to provide real-time data to your application. They are HTTP callbacks that receive notification messages for events. When an event occurs, Swervpay sends an HTTP POST request to the webhook's configured URL. Your endpoint should respond with a ``2xx`` status code to indicate that the event has been successfully received.
+Webhooks are HTTP callbacks that deliver Swervpay event notifications to your application. When an event occurs, Swervpay sends an HTTP `POST` request to the configured URL. Your endpoint should verify the delivery, enqueue or process it idempotently, and respond with a `2xx` status code promptly.
+
+You can subscribe to card, collection, customer, payout, wallet, and bill events. See the resource-specific pages for payload examples and event behavior.
 
 ## Creating a Webhook
 
-You can create a webhook from the [dashboard](https://app.swervpay.co/-/developers/webhooks).
+You can create a webhook from the [dashboard](https://app.swervpay.co/-/developers/webhooks) or with the [create webhook API](/api-reference/webhook/create). Use the [edit webhook API](/api-reference/webhook/update) to change its URL, description, or subscribed events.
 
 ## Contactless activation subscriptions
 
@@ -225,5 +227,4 @@ If a webhook fails, you have two main options to retry the failed delivery:
 
 - Retry from developer section of the [dashboard](https://app.swervpay.co/-/developers/webhooks)
 
-- Using [webhook Retry API](/api-reference/webhook/retry)
-
+- Using [webhook Retry API](/api-reference/webhook/retry). You can inspect delivery status and response details with the [webhook logs API](/api-reference/webhook/get-logs).

@@ -1,23 +1,18 @@
 ---
 title: 'Overview'
-description: 'Swerv Payouts API allows businesses to automate and manage payout processes efficiently, ensuring fast, secure, and reliable transactions. This guide covers how to create a payout and retrieve payout details using our API'
+description: 'Send bank payouts, retrieve payout status, and reconcile completed or failed transfers.'
 ---
 
 ### Supported Currencies
 
-The Swerv Payouts API currently supports the following currencies:
+The examples in this guide use Nigerian Naira (NGN) bank transfers. Confirm the currencies enabled for your business before creating a payout.
 
 • **Nigerian Naira (NGN)**
 
-• **United States Dollar (USD) (🚧 Coming Soon)**
 
-• **Euro (EUR) (🚧 Coming Soon)**
+### Example bank codes for Naira transfers
 
-• **British Pound (GBP) (🚧 Coming Soon)**
-
-### Supported Banks for Naira Bank Transfer
-
-The Swerv Payouts API currently supports the following banks for Naira Bank Transfer:
+These are example Nigerian bank codes. Bank codes can change, so use the [list banks](/api-reference/others/get-banks) endpoint for the complete, current list before presenting a bank selector to your users:
 
 | Bank Name | Bank Code |
 | --- | --- |
@@ -30,11 +25,11 @@ The Swerv Payouts API currently supports the following banks for Naira Bank Tran
 | First City Monument Bank | 214 |
 | Guaranty Trust Bank | 058 |
 
-Retrieve the full list of supported banks using the [list](/api-reference/others/get-banks) banks endpoint.
+Retrieve the full list of supported banks and their current codes using the [list banks](/api-reference/others/get-banks) endpoint instead of maintaining a hard-coded list in your integration.
 
 
 ### Create a Payout
-To initiate a payout, use the [create](/api-reference/payouts/create) payout endpoint. This method allows you to send funds to a specified bank account. We currently support:
+To initiate a payout, use the [create payout](/api-reference/payouts/create) endpoint. This sends funds to a specified bank account. The example below covers a Naira bank transfer:
 
 • **Naira Bank Transfer**
 
@@ -48,7 +43,7 @@ To initiate a payout, use the [create](/api-reference/payouts/create) payout end
  The recipient's bank account number.
 </ParamField>
 
-<ParamField body="amount" type="integer" required>
+<ParamField body="amount" type="number" required>
  The total payout amount in the smallest currency unit (e.g., cents, kobo).
 </ParamField>
 
@@ -68,7 +63,7 @@ ___
 
 **Request Body**
 
-Provide details of the payout, including the recipient's bank information, amount, and currency
+Provide the recipient's bank information, amount, currency, and an optional reference or narration.
 ```json Request Body
 {
   "bank_code": "059",
@@ -76,17 +71,14 @@ Provide details of the payout, including the recipient's bank information, amoun
   "amount": 8500,
   "currency": "NGN",
   "reference": "reference",
-  "naration": "narration",
+  "narration": "narration"
 }
 ```
 ### Get a Payout
-Retrieve details of a specific payout using its unique ID with the [get](/api-reference/payouts/get) payout endpoint.
+Retrieve the current status and details of a specific payout using its unique ID with the [get payout](/api-reference/payouts/get) endpoint.
 
 **Path Parameters**
 
 <ParamField path="id" type="string" required>
  The unique identifier of the payout to retrieve.
 </ParamField>
-
-
-

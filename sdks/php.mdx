@@ -5,7 +5,7 @@ description: "PHP Client for Swervpay"
 
 ### Installation
 
-Install [swervpay-php](https://packagist.org/packages/swervpaydev/sdk) sdk into your new or existing PHP application using composer.
+Install the [swervpay-php](https://packagist.org/packages/swervpaydev/sdk) SDK in your PHP application with Composer.
 
 ```bash Shell
 $ composer require swervpaydev/sdk
@@ -13,6 +13,24 @@ $ composer require swervpaydev/sdk
 
 ### Usage
 
+Load Composer's autoloader and initialize the client with your business ID and secret key. Keep these credentials in environment variables or a server-side secret manager.
+
 ```php PHP
+require __DIR__ . '/vendor/autoload.php';
+
 use Swervpaydev\SDK\Swervpay;
+
+$client = new Swervpay([
+    'business_id' => getenv('SWERVPAY_BUSINESS_ID'),
+    'secret_key' => getenv('SWERVPAY_SECRET_KEY'),
+]);
+
+$customer = $client->customer()->create([
+    'firstname' => 'Ada',
+    'lastname' => 'Okafor',
+    'email' => 'ada@example.com',
+    'country' => 'Nigeria',
+]);
 ```
+
+Use the [API Reference](/api-reference/introduction) for the request fields and endpoint behavior for each resource.

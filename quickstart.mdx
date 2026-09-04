@@ -2,11 +2,11 @@
 title: 'Quickstart'
 ---
 
-This guides demonstrate how to use Swervpay NodeJS SDK to integrate Swervpay into your NodeJS application.
+This guide demonstrates how to use the Swervpay Node.js SDK to create a customer, issue a card, create a collection account, and initiate a payout.
 
 ### Setup
 
-Make sure you have create a Swervpay business and have your API keys ready. Don't forget to check our recommended [go live checklist](/go-live-checklist).
+Create a Swervpay business and copy its business ID and secret key from the dashboard. Keep these credentials on your server and never expose them in browser or mobile-app code. Before using production traffic, complete the [go-live checklist](/go-live-checklist).
 
 ### Install the SDK
 
@@ -33,14 +33,14 @@ $ bun install @swervpaydev/sdk
 import { SwervpayClient } from "@swervpaydev/sdk";
 
 const config = {
-    secretKey: "<SECRET_KEY>",
-    businessId: "<BUSINESS_ID>"
-}
+    secretKey: process.env.SWERVPAY_SECRET_KEY,
+    businessId: process.env.SWERVPAY_BUSINESS_ID,
+};
 
 const swervpay = new SwervpayClient(config);
 
 // Create a new customer
-await swervpay.customer.create({
+const customer = await swervpay.customer.create({
     firstname: "user",
     lastname: "user",
     middlename: "user",
@@ -50,16 +50,16 @@ await swervpay.customer.create({
 
 // Create a new card
 await swervpay.card.create({
-    customer_id: "user",
+    customer_id: customer.id,
     amount: 10,
     currency: "USD",
-    provider: "MASTERCARD",
+    issuer: "MASTERCARD",
     type: "DEFAULT"
 })
 
 // Create a USD collection account for a customer
-await swervpay.collection.create({
-    customer_id: "user",
+const collection = await swervpay.collection.create({
+    customer_id: customer.id,
     currency: "USD",
     merchant_name: "Ada Okafor",
     amount: 0,
@@ -94,22 +94,22 @@ await swervpay.collection.create({
 
 // Create a new payout
 await swervpay.payout.create({
-    bank_code: "user",
-    account_number: "user",
-    amount: "user",
+    bank_code: "044",
+    account_number: "0690000000",
+    amount: 8500,
     currency: "NGN",
-    reference: "user",
-    narration: "user"
+    reference: "payout_reference",
+    narration: "Customer payout"
 })
 ```
 
-Here, we initialize the Swervpay client with our secret key and business id. Then we create a new customer, card, USD collection account, and payout.
+Here, the client is initialized with server-side credentials. The customer ID returned from customer creation is then reused when issuing the card and creating the USD collection account. Each operation returns a response that you should persist or inspect before starting the next dependent operation. Persist the customer and collection IDs so you can retrieve their status later and reconcile webhook events.
 
 ### Next Steps
 
 - [Go Live Checklist](/go-live-checklist)
 
-- [API Reference](/api-reference)
+- [API Reference](/api-reference/introduction)
 
 ### Other SDKs
 

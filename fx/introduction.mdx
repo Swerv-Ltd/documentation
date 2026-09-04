@@ -1,7 +1,9 @@
 ---
 title: 'Overview'
-description: 'Converting from one currency to another get easier with Swerv'
+description: 'Retrieve exchange rates and exchange supported currencies.'
 ---
+
+The FX API supports rate lookup and currency exchange. Provide three-letter uppercase currency codes and an integer amount in the smallest currency unit used by the request.
 
 ### Supported Conversion
 
@@ -10,7 +12,7 @@ description: 'Converting from one currency to another get easier with Swerv'
 
 ### 💵 Get Rate
 
-To get current rate for convertion, use the [rate](/api-reference/fx/rate) endpoint.
+To get the current conversion rate, use the [rate](/api-reference/fx/rate) endpoint.
 
 **Body**
 
@@ -24,7 +26,7 @@ The three-letter ISO currency code in uppercase.
 </ParamField>
 
 
-<ParamField body="amount" type="integer">
+<ParamField body="amount" type="number">
  amount to convert in the smallest currency unit (e.g., cents, kobo).
 </ParamField>
 
@@ -37,7 +39,7 @@ The three-letter ISO currency code in uppercase.
 ```
 
 
-### 💵 Exchnage
+### 💵 Exchange
 
 To convert from one currency to another, use the [exchange](/api-reference/fx/exchange) endpoint.
 
@@ -53,7 +55,7 @@ The three-letter ISO currency code in uppercase.
 </ParamField>
 
 
-<ParamField body="amount" type="integer">
+<ParamField body="amount" type="number">
  amount to convert in the smallest currency unit (e.g., cents, kobo).
 </ParamField>
 
@@ -65,4 +67,3 @@ The three-letter ISO currency code in uppercase.
     "amount": 1
 }
 ```
-
