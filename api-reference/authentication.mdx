@@ -3,9 +3,9 @@ title: 'Authentication'
 description: 'Authenticate with Swerv API'
 ---
 
-Swervpay employs OAuth 2.0 as its fundamental security protocol. Access to Swerv endpoints necessitates obtaining an access token, granting entry to restricted endpoints.
+Swervpay uses short-lived bearer access tokens to authorize API requests. Keep your business ID and secret key on your server, exchange them for an access token, and send that token with subsequent requests.
 
-To get an access token, you must first authenticate with the Swerv API. This is done by sending a POST request to the `/auth` endpoint with your business ID and secret key encoded in base64 as Basic Authorization in the request header.
+To get an access token, send a `POST` request to `/auth` with your business ID and secret key encoded as Base64 in the `Basic` authorization header. The request body is empty.
 
 <Info>Authentication URL: `POST` `https://api.swervpay.co/api/v1/auth`</Info>
 
@@ -113,4 +113,4 @@ func main() {
 }
 ```
 
-<Warning>The access token gotten from the auth API expires after 1 hour.</Warning>
+<Warning>Access tokens expire after one hour. Request a new token when it expires instead of storing the secret key in the bearer-token field.</Warning>

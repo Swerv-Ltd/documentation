@@ -12,10 +12,10 @@ curl -X POST https://api.swervpay.co/api/v1/payouts \
   -d '{
     "bank_code": "user",
     "account_number": "user",
-    "amount": "user",
+    "amount": 8500,
     "currency": "NGN",
     "reference": "user",
-    "narration": "user",
+    "narration": "Customer payout"
   }'
 ```
 
@@ -32,10 +32,10 @@ const swervpay = new SwervpayClient(config);
 await swervpay.payout.create({
     bank_code: "user",
     account_number: "user",
-    amount: "user",
+    amount: 8500,
     currency: "NGN",
     reference: "user",
-    narration: "user"
+    narration: "Customer payout"
 })
 ```
 
@@ -52,10 +52,10 @@ $client = new Swervpay($config);
 $client->payout()->create([
     "bank_code" => "user",
     "account_number" => "user",
-    "amount" => "user",
+    "amount" => 8500,
     "currency" => "NGN",
     "reference" => "user",
-    "naration" => "user"
+    "narration" => "Customer payout"
 ]);
 ```
 
@@ -81,10 +81,10 @@ func main() {
     data := swervpay.CreatePayoutBody{
         BankCode: "user",
         AccountNumber: "user",
-        Amount: "user",
+        Amount: 8500,
         Currency: "NGN",
         Reference: "user",
-        Narration: "user"
+        Narration: "Customer payout"
     }
 
 	resp, err := client.Payout.Create(ctx, data)
@@ -97,5 +97,3 @@ func main() {
 ```
 
 </RequestExample>
-
-

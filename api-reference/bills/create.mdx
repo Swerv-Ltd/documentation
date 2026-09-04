@@ -6,16 +6,16 @@ openapi: 'POST /bills'
 <RequestExample>
 
 ```bash cURL
-curl -X GET https://api.swervpay.co/api/v1/bills \
+curl -X POST https://api.swervpay.co/api/v1/bills \
   -H "Authorization: Bearer <TOKEN>" \
-  -H "Content-Type: application/json"
+  -H "Content-Type: application/json" \
   -d '{
   "customer_id": "<CUSTOMER_ID>",
   "amount": "<AMOUNT>",
   "reference": "<REFERENCE>",
   "biller_id": "<BILLER_ID>",
   "item_id": "<ITEM_ID>",
-  "category": "<CATEGORY>",
+  "category": "<CATEGORY>"
   }'
 ```
 

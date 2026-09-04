@@ -6,7 +6,7 @@ openapi: 'POST /cards/{id}/terminate'
 <RequestExample>
 
 ```bash cURL
-curl -X PUT https://api.swervpay.co/api/v1/cards/{id}/terminate \
+curl -X POST https://api.swervpay.co/api/v1/cards/{id}/terminate \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -69,4 +69,3 @@ func main() {
 ```
 
 </RequestExample>
-
