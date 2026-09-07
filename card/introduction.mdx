@@ -207,8 +207,8 @@ Add funds to an existing card using the [fund](/api-reference/cards/fund-card) e
 
 **Body**
 
-<ParamField body="amount" type="integer">
- The amount to fund in the smallest currency unit.
+<ParamField body="amount" type="number">
+ The amount to fund in the currency's major unit. Decimals are supported; for example, `2.5` means USD 2.50.
 </ParamField>
 
 ###  🔍 Get a Card
@@ -265,8 +265,8 @@ Withdraw funds from the card back to your business account using the [withdraw-f
 
 **Body**
 
-<ParamField body="amount" type="integer">
- The amount to fund in the smallest currency unit.
+<ParamField body="amount" type="number">
+ The amount to withdraw in the currency's major unit. Decimals are supported; for example, `2.5` means USD 2.50.
 </ParamField>
 
 ### 🗂️ Get All Cards
@@ -297,8 +297,8 @@ The response returns an array of card objects with their respective details.
     "expiry": "12/34",
     "cvv": "123",
     "name_on_card": "John Doe",
-    "balance": 500000, // Balance in the smallest currency unit
-    "total_funded": 1500000, // Total funded in the smallest currency unit
+    "balance": 5000.25,
+    "total_funded": 15000.75,
     "freeze": false,
     "address_street": "123 Swyft Street",
     "address_city": "Paytown",

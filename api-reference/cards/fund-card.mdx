@@ -10,7 +10,7 @@ curl -X POST https://api.swervpay.co/api/v1/cards/{id}/fund \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
-    "amount": 1000
+    "amount": 2.5
   }'
 ```
 
@@ -25,7 +25,7 @@ const config = {
 const swervpay = new SwervpayClient(config);
 
 await swervpay.card.fund('<CARD_ID>', {
-    amount: "user"
+    amount: 2.5
 })
 ```
 
@@ -40,7 +40,7 @@ $config = [
 $client = new Swervpay($config);
 
 $client->card()->fund('<CARD_ID>', [
-    "amount" => "user"
+    "amount" => 2.5
 ]);
 ```
 
@@ -64,7 +64,7 @@ func main() {
     })
 
     data := swervpay.FundOrWithdrawCardBody{
-        Amount: 1000
+        Amount: 2.5
     }
 
 	resp, err := client.Card.Fund(ctx, "<CARD_ID>", data)
@@ -77,6 +77,8 @@ func main() {
 ```
 
 </RequestExample>
+
+`amount` is expressed in the card currency's major unit and supports decimals. For example, `2.5` means USD 2.50, not 2.5 cents.
 
 {/* <ResponseExample>
 
