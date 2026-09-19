@@ -6,7 +6,7 @@ description: 'Country eligibility for USD collection account issuance.'
 USD collection account eligibility is based on the account holder's primary residential or operating address. Approval remains subject to KYC or KYB review, document checks, sanctions screening, and product availability.
 
 <Note>
-The current Swerv public API flow for individual USD collection accounts is enabled for customers resident in Nigeria (`NG`). Contact Swerv support before building issuance for another country. The broader eligibility below describes the underlying USD ACH/FedWire program and does not by itself enable a country in your Swerv account.
+Swerv accepts the customer's country as an ISO 3166-1 alpha-2 code during customer creation and KYC. For USD account issuance, Swerv converts the approved KYC profile to the provider's alpha-3 country, address, subdivision, phone, and identifying-information structure.
 </Note>
 
 ## USD ACH/FedWire availability
@@ -18,7 +18,7 @@ The underlying program supports individuals and businesses in most countries. It
 | Prohibited | Afghanistan (`AF`), Belarus (`BY`), Democratic Republic of the Congo (`CD`), Cuba (`CU`), Iran (`IR`), Iraq (`IQ`), Lebanon (`LB`), Libya (`LY`), Myanmar (`MM`), North Korea (`KP`), Russia (`RU`), Somalia (`SO`), South Sudan (`SS`), Sudan (`SD`), Syria (`SY`), Venezuela (`VE`), Yemen (`YE`), Gaza and the West Bank (`PS`), and the Ukrainian territories of Crimea, Sevastopol, Donetsk, Kherson, Luhansk, and Zaporizhzhia |
 | USD ACH/FedWire unavailable | Algeria (`DZ`), Bangladesh (`BD`), Bhutan (`BT`), Burundi (`BI`), China (`CN`), Guinea-Bissau (`GW`), Haiti (`HT`), Japan (`JP`), Kenya (`KE`), Kosovo (`XK`), Morocco (`MA`), Mozambique (`MZ`), Nepal (`NP`), Niger (`NE`), Pakistan (`PK`), Qatar (`QA`), Tunisia (`TN`), and Zimbabwe (`ZW`) |
 
-All other countries in the current provider matrix are eligible for USD ACH/FedWire account issuance, subject to compliance approval and Swerv product enablement.
+All other countries in the current provider matrix are eligible for USD ACH/FedWire account issuance through Swerv, subject to compliance approval, document requirements, and any additional due diligence requested during review.
 
 ## United States restrictions
 

@@ -24,7 +24,9 @@ curl -X POST https://api.swervpay.co/api/v1/collections \
 
 ## USD collection account
 
-Use `USD` collections to issue a permanent USD collection account for an approved customer. USD collections must use `type` set to `DEFAULT` and must include `additional_information`.
+Use `USD` collections to issue a permanent USD collection account for an approved customer in an [eligible country](/collection/country-availability). USD collections must use `type` set to `DEFAULT` and must include `additional_information`.
+
+The customer's approved KYC profile supplies the country, residential address, date of birth, phone number, and country-specific bank or national identifier. Do not replace those values in the collection request.
 
 ```bash
 curl -X POST https://api.swervpay.co/api/v1/collections \
@@ -38,20 +40,10 @@ curl -X POST https://api.swervpay.co/api/v1/collections \
     "type": "DEFAULT",
     "additional_information": {
       "account_type": "INDIVIDUAL",
-      "nin": "12345678901",
-      "tax_number": "12345678901",
-      "date_of_birth": "1994-04-12",
       "employment_status": "EMPLOYED",
       "account_designation": "PERSONAL",
       "income_band": "UNDER_10000",
       "source_of_income": "SALARY",
-      "address": {
-        "street": "12 Admiralty Way",
-        "city": "Lagos",
-        "state": "Lagos",
-        "country": "Nigeria",
-        "zip_code": "100001"
-      },
       "document": {
         "type": "NIN",
         "number": "12345678901",
@@ -66,11 +58,11 @@ curl -X POST https://api.swervpay.co/api/v1/collections \
 ```
 
 <Note>
-For USD collections, `type` must be `DEFAULT`, `customer_id` is required, and `additional_information` must include the customer's identity, address, source-of-funds, document, utility bill, and bank statement information.
+For USD collections, `type` must be `DEFAULT`, `customer_id` is required, and `additional_information` must include source-of-funds answers, the customer's government document, utility bill, and bank statement information.
 </Note>
 
 <Note>
-The current public individual USD issuance flow supports Nigerian residents. See [country availability](/collection/country-availability) for the broader provider eligibility matrix and Swerv enablement boundary.
+The government-document type must be appropriate for the customer's KYC country. Supported values are `PASSPORT`, `NIN`, `NATIONAL_ID`, `DRIVERS_LICENSE`, `VOTERS_CARD`, and `GHANA_CARD`.
 </Note>
 
 <Note>

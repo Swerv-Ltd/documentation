@@ -3929,6 +3929,16 @@
       },
       "TypesAdditionalInformation": {
         "type": "object",
+        "required": [
+          "account_designation",
+          "account_type",
+          "bank_statement",
+          "document",
+          "employment_status",
+          "income_band",
+          "source_of_income",
+          "utility_bill"
+        ],
         "properties": {
           "account_designation": {
             "type": "string"
@@ -3937,13 +3947,19 @@
             "type": "string"
           },
           "address": {
-            "$ref": "#/components/schemas/TypesAddress"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TypesAddress"
+              }
+            ],
+            "description": "Legacy compatibility field. The approved customer KYC address is authoritative for USD issuance."
           },
           "bank_statement": {
             "type": "string"
           },
           "date_of_birth": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. The approved customer KYC date of birth is authoritative."
           },
           "document": {
             "$ref": "#/components/schemas/TypesDocument"
@@ -3955,13 +3971,15 @@
             "type": "string"
           },
           "nin": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. Swerv uses the country-specific identifier stored during customer KYC."
           },
           "source_of_income": {
             "type": "string"
           },
           "tax_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. Swerv uses the country-specific identifier stored during customer KYC."
           },
           "utility_bill": {
             "type": "string"
@@ -4955,6 +4973,13 @@
       },
       "TypesDocument": {
         "type": "object",
+        "required": [
+          "expiry_date",
+          "issue_date",
+          "number",
+          "type",
+          "urls"
+        ],
         "properties": {
           "expiry_date": {
             "type": "string"
@@ -4966,7 +4991,15 @@
             "type": "string"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "PASSPORT",
+              "NIN",
+              "NATIONAL_ID",
+              "DRIVERS_LICENSE",
+              "VOTERS_CARD",
+              "GHANA_CARD"
+            ]
           },
           "urls": {
             "type": "array",

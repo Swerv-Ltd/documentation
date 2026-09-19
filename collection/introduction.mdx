@@ -40,7 +40,7 @@ To create a virtual account, use the [create](/api-reference/collections/create)
 </ParamField>
 
 <ParamField body="additional_information" type="object">
-  Required when `currency` is `USD`. This contains the customer identity, address, document, source of funds, and supporting document details required for USD account issuance.
+  Required when `currency` is `USD`. This contains the customer's source-of-funds answers, government document, and supporting-document details. Country, residential address, date of birth, phone number, and country-specific identifier are taken from the customer's approved KYC profile.
 </ParamField>
 
 
@@ -62,7 +62,7 @@ Note: `customer_id` is required for `DEFAULT` permanent virtual accounts.
 
 USD collection accounts are issued through Swervpay's Bridge-backed collection flow. Before creating a USD collection account, create the customer and submit customer KYC. Then create a `DEFAULT` collection with `currency` set to `USD` and include the required `additional_information` payload.
 
-The current public individual issuance flow supports Nigerian residents. Review [country availability](/collection/country-availability) before planning another market; underlying provider eligibility does not automatically enable that country in your Swerv account.
+Swerv uses the customer's approved KYC profile as the source of truth for country, residential address, date of birth, phone number, and bank or national identifier. Review [country availability](/collection/country-availability) before issuing in a new market.
 
 USD account issuance can be asynchronous. If the customer is already approved, the account details may be available shortly after creation. If additional review is required, listen for the `collection.created` or `collection.created.failed` webhook event.
 
@@ -75,20 +75,10 @@ USD account issuance can be asynchronous. If the customer is already approved, t
   "type": "DEFAULT",
   "additional_information": {
     "account_type": "INDIVIDUAL",
-    "nin": "12345678901",
-    "tax_number": "12345678901",
-    "date_of_birth": "1994-04-12",
     "employment_status": "EMPLOYED",
     "account_designation": "PERSONAL",
     "income_band": "UNDER_10000",
     "source_of_income": "SALARY",
-    "address": {
-      "street": "12 Admiralty Way",
-      "city": "Lagos",
-      "state": "Lagos",
-      "country": "Nigeria",
-      "zip_code": "100001"
-    },
     "document": {
       "type": "NIN",
       "number": "12345678901",
