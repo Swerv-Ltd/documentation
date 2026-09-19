@@ -3673,7 +3673,8 @@
         "type": "object",
         "properties": {
           "country": {
-            "type": "string"
+            "type": "string",
+            "description": "Customer residence country as an ISO 3166-1 alpha-2 code, for example NG, GH, GB, US, or BR."
           },
           "email": {
             "type": "string"
@@ -3738,6 +3739,9 @@
       },
       "OpenapiCustomerKycRequest": {
         "type": "object",
+        "required": [
+          "tier"
+        ],
         "properties": {
           "document": {
             "$ref": "#/components/schemas/TypesTier2KycInput"
@@ -3746,7 +3750,13 @@
             "$ref": "#/components/schemas/TypesTier1KycInput"
           },
           "tier": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "ONE",
+              "TWO",
+              "FULL"
+            ],
+            "description": "ONE submits identity and address information, TWO submits documents after Tier 1, and FULL submits both."
           }
         }
       },
@@ -3919,6 +3929,16 @@
       },
       "TypesAdditionalInformation": {
         "type": "object",
+        "required": [
+          "account_designation",
+          "account_type",
+          "bank_statement",
+          "document",
+          "employment_status",
+          "income_band",
+          "source_of_income",
+          "utility_bill"
+        ],
         "properties": {
           "account_designation": {
             "type": "string"
@@ -3927,13 +3947,19 @@
             "type": "string"
           },
           "address": {
-            "$ref": "#/components/schemas/TypesAddress"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TypesAddress"
+              }
+            ],
+            "description": "Legacy compatibility field. The approved customer KYC address is authoritative for USD issuance."
           },
           "bank_statement": {
             "type": "string"
           },
           "date_of_birth": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. The approved customer KYC date of birth is authoritative."
           },
           "document": {
             "$ref": "#/components/schemas/TypesDocument"
@@ -3945,13 +3971,15 @@
             "type": "string"
           },
           "nin": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. Swerv uses the country-specific identifier stored during customer KYC."
           },
           "source_of_income": {
             "type": "string"
           },
           "tax_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Legacy compatibility field. Swerv uses the country-specific identifier stored during customer KYC."
           },
           "utility_bill": {
             "type": "string"
@@ -4945,6 +4973,13 @@
       },
       "TypesDocument": {
         "type": "object",
+        "required": [
+          "expiry_date",
+          "issue_date",
+          "number",
+          "type",
+          "urls"
+        ],
         "properties": {
           "expiry_date": {
             "type": "string"
@@ -4956,7 +4991,15 @@
             "type": "string"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "PASSPORT",
+              "NIN",
+              "NATIONAL_ID",
+              "DRIVERS_LICENSE",
+              "VOTERS_CARD",
+              "GHANA_CARD"
+            ]
           },
           "urls": {
             "type": "array",
@@ -4994,30 +5037,52 @@
       },
       "TypesTier1KycInput": {
         "type": "object",
+        "required": [
+          "address",
+          "city",
+          "country",
+          "date_of_birth",
+          "phone_number",
+          "postal_code",
+          "state"
+        ],
         "properties": {
           "address": {
-            "type": "string"
+            "type": "string",
+            "description": "Customer residential street address."
           },
           "bvn": {
-            "type": "string"
+            "type": "string",
+            "description": "Required bank identity number for customers in Nigeria."
+          },
+          "bank_identifier": {
+            "type": "string",
+            "description": "Country-specific bank, national, or tax identifier. Required outside Nigeria when SSNIT is not supplied."
+          },
+          "bank_identifier_type": {
+            "type": "string",
+            "description": "Identifier type, for example NINO, CPF, SSN, or TIN."
           },
           "city": {
             "type": "string"
           },
           "country": {
-            "type": "string"
+            "type": "string",
+            "description": "ISO 3166-1 alpha-2 code. Must match the customer profile country."
           },
           "date_of_birth": {
             "type": "string"
           },
           "phone_number": {
-            "type": "string"
+            "type": "string",
+            "description": "Customer phone number. Use E.164 format outside Nigeria and Ghana."
           },
           "postal_code": {
             "type": "string"
           },
           "ssnit": {
-            "type": "string"
+            "type": "string",
+            "description": "Ghana Social Security and National Insurance Trust identifier."
           },
           "state": {
             "type": "string"
@@ -5026,6 +5091,12 @@
       },
       "TypesTier2KycInput": {
         "type": "object",
+        "required": [
+          "document",
+          "document_number",
+          "document_type",
+          "passport"
+        ],
         "properties": {
           "document": {
             "type": "string"
@@ -5034,7 +5105,15 @@
             "type": "string"
           },
           "document_type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "NIN",
+              "PASSPORT",
+              "NATIONAL_ID",
+              "DRIVERS_LICENSE",
+              "VOTERS_CARD",
+              "GHANA_CARD"
+            ]
           },
           "passport": {
             "type": "string"

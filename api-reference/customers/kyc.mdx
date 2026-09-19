@@ -3,6 +3,20 @@ title: 'Customer KYC'
 openapi: 'POST /customers/{id}/kyc'
 ---
 
+Submit KYC using the same ISO 3166-1 alpha-2 country code stored on the customer profile.
+
+| Customer country | Required identity fields |
+| --- | --- |
+| Nigeria (`NG`) | `bvn` |
+| Ghana (`GH`) | `ssnit`, or both `bank_identifier` and `bank_identifier_type` |
+| All other supported countries | `bank_identifier` and `bank_identifier_type` |
+
+All Tier 1 requests also require the customer's residential address, date of birth, and phone number. Use E.164 phone format, such as `+447911123456`, outside Nigeria and Ghana. `FULL` requests include both `information` and `document`.
+
+<Note>
+The KYC country must match the country supplied when the customer was created. The stored KYC address is used as the customer's issuance address for supported products.
+</Note>
+
 <RequestExample>
 
 ```bash cURL
@@ -15,14 +29,15 @@ curl -X POST https://api.swervpay.co/api/v1/customers/{id}/kyc \
 		"bvn": "12345678901",
 		"state": "Lagos",
 		"city": "Ikeja",
-		"country": "Nigeria",
+		"country": "NG",
 		"address": "No 1, Ikeja",
 		"postal_code": "100001",
-		"date_of_birth": "1990-01-01"
+		"date_of_birth": "1990-01-01",
+		"phone_number": "08012345678"
 	},
 	"document": {
-		"documentType": "PASSPORT",
-		"documentNumber": "A1234567",
+		"document_type": "PASSPORT",
+		"document_number": "A1234567",
 		"document": "https://example.com/document.jpg",
 		"passport": "https://example.com/passport.jpg"
 	}
@@ -45,10 +60,11 @@ await swervpay.customer.kyc("<CUSTOMER_ID>", {
 		bvn: "12345678901",
 		state: "Lagos",
 		city: "Ikeja",
-		country: "Nigeria",
+		country: "NG",
 		address: "No 1, Ikeja",
 		postal_code: "100001",
-		date_of_birth: "1990-01-01"
+		date_of_birth: "1990-01-01",
+		phone_number: "08012345678"
 	},
 	document: {
 		document_type: "PASSPORT",
@@ -75,10 +91,11 @@ $client->customer()->kyc('<CUSTOMER_ID>', [
 		'bvn' => '12345678901',
 		'state' => 'Lagos',
 		'city' => 'Ikeja',
-		'country' => 'Nigeria',
+		'country' => 'NG',
 		'address' => 'No 1, Ikeja',
 		'postal_code' => '100001',
-		'date_of_birth' => '1990-01-01'
+		'date_of_birth' => '1990-01-01',
+		'phone_number' => '08012345678'
 	],
 	'document' => [
 		'document_type' => 'PASSPORT',
@@ -114,10 +131,11 @@ func main() {
 			Bvn: "12345678901",
 			State: "Lagos",
 			City: "Ikeja",
-			Country: "Nigeria",
+			Country: "NG",
 			Address: "No 1, Ikeja",
 			PostalCode: "100001",
 			DateOfBirth: "1990-01-01",
+			PhoneNumber: "08012345678",
 		},
 		Tier2: swervpay.Tier2KycInput{
 			DocumentType: "PASSPORT",
@@ -138,3 +156,25 @@ func main() {
 
 </RequestExample>
 
+## Non-Nigerian example
+
+Use the customer's country-specific bank or tax identifier. Swerv normalizes the identifier type to uppercase but does not translate the identifier value.
+
+```json United Kingdom Tier 1
+{
+  "tier": "ONE",
+  "information": {
+    "bank_identifier": "QQ123456C",
+    "bank_identifier_type": "NINO",
+    "state": "England",
+    "city": "Hounslow",
+    "country": "GB",
+    "address": "Unit 2, 161-163 Staines Road",
+    "postal_code": "TW3 3JZ",
+    "date_of_birth": "1990-01-01",
+    "phone_number": "+447911123456"
+  }
+}
+```
+
+Supported Tier 2 document types are `NIN`, `PASSPORT`, `NATIONAL_ID`, `DRIVERS_LICENSE`, `VOTERS_CARD`, and `GHANA_CARD`.

@@ -48,7 +48,8 @@
           {
             "group": "Collection",
             "pages": [
-              "collection/introduction"
+              "collection/introduction",
+              "collection/country-availability"
             ]
           },
           {

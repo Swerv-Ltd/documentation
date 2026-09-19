@@ -24,7 +24,7 @@ To add a new customer to your system, use the [create](/api-reference/customers/
 </ParamField>
 
 <ParamField body="country" type="string" required>
-  The country of the customer's residence or operation. Use ISO 3166-1 alpha-2 country codes.
+  The customer's country of residence. Use an ISO 3166-1 alpha-2 code such as `NG`, `GH`, `GB`, `US`, or `BR`. The KYC request must use the same country.
 </ParamField>
 
 <ParamField body="email" type="string" required>
@@ -87,19 +87,30 @@ Customer KYC is required before issuing a `DEFAULT` USD collection account for a
 - `tier` enum (ONE, TWO, FULL) :
   - The KYC tier to request.
 - `information` object :
-  - `bvn` string : customer bvn (Nigeria)
-  - `ssnit` string : customer ssnit (Ghana)
+  - `bvn` string : required for customers in Nigeria
+  - `ssnit` string : accepted for customers in Ghana
+  - `bank_identifier` string : required outside Nigeria when `ssnit` is not supplied
+  - `bank_identifier_type` string : the country-specific identifier type, for example `NINO`, `CPF`, `SSN`, or `TIN`
   - `state` string : customer state
   - `city` string : customer city
-  - `country` string : customer country
+  - `country` string : ISO 3166-1 alpha-2 country code; must match the customer profile
   - `address` string : customer address
   - `postal_code` string : customer address postal code
   - `date_of_birth` string : customer date of birth
+  - `phone_number` string : customer phone number; use E.164 format outside Nigeria and Ghana
 - `document` object :
-  - `document_type` enum (NIN, PASSPORT, DRIVERS_LICENSE)
-  - `document_number` number : customer document number
+  - `document_type` enum (NIN, PASSPORT, NATIONAL_ID, DRIVERS_LICENSE, VOTERS_CARD, GHANA_CARD)
+  - `document_number` string : customer document number
   - `document` url : customer document url
   - `passport` url : customer passport photograph url
+
+<Info>
+Identity fields are country-aware. Nigeria requires `bvn`. Ghana accepts `ssnit`, or `bank_identifier` with `bank_identifier_type`. Every other country requires `bank_identifier` and `bank_identifier_type`. The verified address is retained as the customer's issuance address for supported products, so submit the customer's real residential address rather than a default address.
+</Info>
+
+<Note>
+`ONE` submits the `information` object. `TWO` submits the `document` object and requires an existing Tier 1 record. `FULL` submits both objects in one request.
+</Note>
 
 ```JSON Request Body
 {
@@ -108,7 +119,7 @@ Customer KYC is required before issuing a `DEFAULT` USD collection account for a
 		"bvn": "12345678901",
 		"state": "Lagos",
 		"city": "Ikeja",
-		"country": "Nigeria",
+		"country": "NG",
 		"address": "No 1, Ikeja",
 		"postal_code": "100001",
 		"date_of_birth": "1990-01-01",

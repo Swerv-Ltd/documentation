@@ -1,0 +1,33 @@
+---
+title: 'Country availability'
+description: 'Country eligibility for USD collection account issuance.'
+---
+
+USD collection account eligibility is based on the account holder's primary residential or operating address. Approval remains subject to KYC or KYB review, document checks, sanctions screening, and product availability.
+
+<Note>
+Swerv accepts the customer's country as an ISO 3166-1 alpha-2 code during customer creation and KYC. For USD account issuance, Swerv converts the approved KYC profile to the provider's alpha-3 country, address, subdivision, phone, and identifying-information structure.
+</Note>
+
+## USD ACH/FedWire availability
+
+The underlying program supports individuals and businesses in most countries. It does **not** currently support USD account issuance for residents or businesses in the following countries and territories:
+
+| Category | Countries and territories |
+| --- | --- |
+| Prohibited | Afghanistan (`AF`), Belarus (`BY`), Democratic Republic of the Congo (`CD`), Cuba (`CU`), Iran (`IR`), Iraq (`IQ`), Lebanon (`LB`), Libya (`LY`), Myanmar (`MM`), North Korea (`KP`), Russia (`RU`), Somalia (`SO`), South Sudan (`SS`), Sudan (`SD`), Syria (`SY`), Venezuela (`VE`), Yemen (`YE`), Gaza and the West Bank (`PS`), and the Ukrainian territories of Crimea, Sevastopol, Donetsk, Kherson, Luhansk, and Zaporizhzhia |
+| USD ACH/FedWire unavailable | Algeria (`DZ`), Bangladesh (`BD`), Bhutan (`BT`), Burundi (`BI`), China (`CN`), Guinea-Bissau (`GW`), Haiti (`HT`), Japan (`JP`), Kenya (`KE`), Kosovo (`XK`), Morocco (`MA`), Mozambique (`MZ`), Nepal (`NP`), Niger (`NE`), Pakistan (`PK`), Qatar (`QA`), Tunisia (`TN`), and Zimbabwe (`ZW`) |
+
+All other countries in the current provider matrix are eligible for USD ACH/FedWire account issuance through Swerv, subject to compliance approval, document requirements, and any additional due diligence requested during review.
+
+## United States restrictions
+
+- Customers whose primary residential or operating address is in New York are not supported.
+- Texas is limited to first-party orchestration flows, and custodial services are not supported for Texas customers.
+- Florida and Louisiana customers are supported, subject to the standard review.
+
+<Warning>
+Country availability can change as regulations and banking-partner coverage change. Confirm eligibility with Swerv before promising account issuance to a customer in a newly launched market.
+</Warning>
+
+For the provider's current source matrix, see the [supported countries list](https://apidocs.bridge.xyz/platform/customers/compliance/supported-countries-list).
