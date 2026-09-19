@@ -3,14 +3,14 @@ title: 'Overview'
 description: 'Create virtual collection accounts and receive payments into customer-specific accounts.'
 ---
 
-The Collections API creates virtual accounts that businesses can use to receive payments and match incoming funds to customers. Use `NGN` for Naira virtual-account flows and `USD` for the Bridge-backed collection flow.
+The Collections API creates virtual accounts that businesses can use to receive payments and match incoming funds to customers. Use `NGN` for Naira virtual-account flows and `USD` for the Lead Bank-backed collection flow.
 
 ## Supported partners
 
 The currently supported account-issuing partners are:
 
 - VFD Microfinance Bank
-- Bridge for USD collection accounts
+- Lead Bank for USD collection accounts
 
 
 ## Create Virtual Account
@@ -60,7 +60,7 @@ Note: `customer_id` is required for `DEFAULT` permanent virtual accounts.
 
 ### USD collection accounts
 
-USD collection accounts are issued through Swervpay's Bridge-backed collection flow. Before creating a USD collection account, create the customer and submit customer KYC. Then create a `DEFAULT` collection with `currency` set to `USD` and include the required `additional_information` payload.
+USD collection accounts are issued through Swervpay's Lead Bank-backed collection flow. Before creating a USD collection account, create the customer and submit customer KYC. Then create a `DEFAULT` collection with `currency` set to `USD` and include the required `additional_information` payload.
 
 Swerv uses the customer's approved KYC profile as the source of truth for country, residential address, date of birth, phone number, and bank or national identifier. Review [country availability](/collection/country-availability) before issuing in a new market.
 
@@ -92,7 +92,7 @@ USD account issuance can be asynchronous. If the customer is already approved, t
 }
 ```
 
-Swervpay securely submits the required customer data to Bridge, creates or reuses the Bridge customer profile, and issues the USD deposit account when the customer is approved.
+Swervpay securely submits the required customer data for compliance review and issues the Lead Bank USD deposit account when the customer is approved.
 
 ### 🔍 Get Collection Details
 Retrieve detailed information about a collection with its unique identifier using the [get](/api-reference/collections/get) collection endpoint.
