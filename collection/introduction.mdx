@@ -9,7 +9,8 @@ The Collections API creates virtual accounts that businesses can use to receive 
 
 The currently supported account-issuing partners are:
 
-- VFD Microfinance Bank
+- Teerus Microfinance Bank for permanent (`DEFAULT`) NGN collection accounts
+- VFD Microfinance Bank for dynamic (`ONE_TIME`) NGN collection accounts
 - Lead Bank for USD collection accounts
 
 
@@ -34,6 +35,10 @@ To create a virtual account, use the [create](/api-reference/collections/create)
 <ParamField body="type" type="string" required>
   virtual account type e.g DEFAULT (Permanent), ONE_TIME (Temporary)
 </ParamField>
+
+<Note>
+Permanent NGN accounts created with `DEFAULT` are issued through Teerus Microfinance Bank. Dynamic NGN accounts created with `ONE_TIME` are issued through VFD Microfinance Bank.
+</Note>
 
 <ParamField body="amount" type="number">
   amount expected to be paid into the virtual account. Required for ONE_TIME (Temporary) virtual account.
