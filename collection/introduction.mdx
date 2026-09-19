@@ -62,6 +62,8 @@ Note: `customer_id` is required for `DEFAULT` permanent virtual accounts.
 
 USD collection accounts are issued through Swervpay's Bridge-backed collection flow. Before creating a USD collection account, create the customer and submit customer KYC. Then create a `DEFAULT` collection with `currency` set to `USD` and include the required `additional_information` payload.
 
+The current public individual issuance flow supports Nigerian residents. Review [country availability](/collection/country-availability) before planning another market; underlying provider eligibility does not automatically enable that country in your Swerv account.
+
 USD account issuance can be asynchronous. If the customer is already approved, the account details may be available shortly after creation. If additional review is required, listen for the `collection.created` or `collection.created.failed` webhook event.
 
 ```json USD Request Body

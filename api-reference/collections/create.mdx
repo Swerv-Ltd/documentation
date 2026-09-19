@@ -70,5 +70,9 @@ For USD collections, `type` must be `DEFAULT`, `customer_id` is required, and `a
 </Note>
 
 <Note>
+The current public individual USD issuance flow supports Nigerian residents. See [country availability](/collection/country-availability) for the broader provider eligibility matrix and Swerv enablement boundary.
+</Note>
+
+<Note>
 USD account issuance may complete asynchronously. Use the `collection.created` webhook to receive final bank details, or `collection.created.failed` to receive rejection reasons.
 </Note>

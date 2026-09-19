@@ -12,11 +12,11 @@ curl -X POST https://api.swervpay.co/api/v1/customers \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
-    "firstname": "user",
-    "lastname": "user",
-    "middlename": "user",
-    "country": "user",
-    "email": "user@mailinator.com"
+    "firstname": "Ada",
+    "lastname": "Okafor",
+    "middlename": "Ifeoma",
+    "country": "NG",
+    "email": "ada@example.com"
   }'
 ```
 
@@ -31,11 +31,11 @@ const config = {
 const swervpay = new SwervpayClient(config);
 
 await swervpay.customer.create({
-    firstname: "user",
-    lastname: "user",
-    middlename: "user",
-    country: "user",
-    email: "user@mailinator.com"
+    firstname: "Ada",
+    lastname: "Okafor",
+    middlename: "Ifeoma",
+    country: "NG",
+    email: "ada@example.com"
 })
 ```
 
@@ -50,11 +50,11 @@ $config = [
 $client = new Swervpay($config);
 
 $client->customer()->create([
-    "firstname" => "user",
-    "lastname" => "user",
-    "middlename" => "user",
-    "country" => "user",
-    "email" => "user@mailinator.com"
+    "firstname" => "Ada",
+    "lastname" => "Okafor",
+    "middlename" => "Ifeoma",
+    "country" => "NG",
+    "email" => "ada@example.com"
 ]);
 ```
 
@@ -78,11 +78,11 @@ func main() {
     })
 
     data := swervpay.CreateCustomerBody{
-        Firstname: "user",
-        Lastname: "user",
-        Middlename: "user",
-        Country: "user",
-        Email: "user@mailinator.com"
+        Firstname: "Ada",
+        Lastname: "Okafor",
+        Middlename: "Ifeoma",
+        Country: "NG",
+        Email: "ada@example.com"
     }
 
 	resp, err := client.Customer.Create(ctx, data)
@@ -95,4 +95,3 @@ func main() {
 ```
 
 </RequestExample>
-
