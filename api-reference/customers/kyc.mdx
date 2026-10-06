@@ -17,6 +17,44 @@ All Tier 1 requests also require the customer's residential address, date of bir
 The KYC country must match the country supplied when the customer was created. The stored KYC address is used as the customer's issuance address for supported products.
 </Note>
 
+## Correcting Existing Customer Information
+
+Use this endpoint to correct an existing customer's KYC information, including an
+approved Tier TWO customer. Submit `tier: "ONE"` with the **complete** `information`
+object, not just the changed field. Existing Tier TWO and documents are preserved.
+Do not include replacement documents in this request.
+
+```json
+{
+  "tier": "ONE",
+  "information": {
+    "bvn": "<EXISTING_CUSTOMER_BVN>",
+    "country": "NG",
+    "state": "Lagos",
+    "city": "Ikeja",
+    "address": "No 1, Ikeja",
+    "postal_code": "100001",
+    "phone_number": "+2348012345678",
+    "date_of_birth": "1990-10-01"
+  }
+}
+```
+
+- Supply the confirmed DOB in `YYYY-MM-DD` format. Invalid calendar dates, future
+  dates, and malformed values such as `1990-1001` return HTTP 400. Dates before 1900
+  are not accepted.
+- The existing BVN or other identity number and identity type cannot be replaced.
+  Contact support for identity-replacement requests.
+- Approved Tier TWO customers must use `ONE` for information corrections. `FULL`
+  and `TWO` submissions cannot replace their approved documents.
+- A successful update does not mean card verification or issuance has completed.
+  If issuance stopped at local date validation, correct the data and retry issuance.
+  If verification was already submitted or reconciliation is required, contact
+  support before retrying.
+- Corrections do not terminate existing cards or change their stored billing address.
+
+The success response remains `{"message":"Customer kyc submitted successfully"}`.
+
 <RequestExample>
 
 ```bash cURL
