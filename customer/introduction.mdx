@@ -105,8 +105,15 @@ Customer KYC is required before issuing a `DEFAULT` USD collection account for a
   - `passport` url : customer passport photograph url
 
 <Info>
-Identity fields are country-aware. Nigeria requires `bvn`. Ghana accepts `ssnit`, or `bank_identifier` with `bank_identifier_type`. Every other country requires `bank_identifier` and `bank_identifier_type`. The verified address is retained as the customer's issuance address for supported products, so submit the customer's real residential address rather than a default address.
+Identity fields are country-aware. Nigeria requires `bvn`. Ghana accepts `ssnit`, or `bank_identifier` with `bank_identifier_type`. Every other country requires `bank_identifier` and `bank_identifier_type`. Submit the customer's real residential address for KYC. USD card billing-address preferences are separate, including the default US billing address.
 </Info>
+
+<Note>
+The upcoming [non-Nigerian card KYC flow](/customer/non-nigerian-card-kyc) adds
+asynchronous document verification before `DEFAULT` USD card issuance. It is
+not yet deployed. Customer tier approval alone does not confirm card-verification
+approval; the guide explains pending states and the new status endpoint.
+</Note>
 
 <Note>
 `ONE` submits the `information` object. `TWO` submits the `document` object and requires an existing Tier 1 record. `FULL` submits both objects in one request.

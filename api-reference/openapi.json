@@ -634,7 +634,7 @@
         "tags": [
           "card"
         ],
-        "description": "Create card",
+        "description": "Create card. Upcoming, not yet deployed: non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. After release, poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true.",
         "operationId": "createCard",
         "requestBody": {
           "content": {
@@ -652,6 +652,18 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseCardCreationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Upcoming, not yet deployed: document verification is pending. No card or debit was created.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CardVerificationError" },
+                "example": {
+                  "code": "CARD_VERIFICATION_PENDING",
+                  "message": "Customer identity verification is processing. No card has been created or debited. Check verification status before retrying card creation."
                 }
               }
             }
@@ -2074,12 +2086,43 @@
         }
       }
     },
+    "/customers/{id}/card-verification": {
+      "get": {
+        "tags": ["customer"],
+        "operationId": "getCustomerCardVerification",
+        "summary": "Get card verification (coming soon)",
+        "description": "Upcoming endpoint, not yet deployed. Check a customer belonging to the authenticated business. Poll at most once per minute. Does not create a card or debit a wallet. Submit a new card request only when can_create_card is true; approval does not automatically start issuance.",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" }, "example": "cus_example" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current verification status, not necessarily approval.",
+            "headers": { "Cache-Control": { "schema": { "type": "string", "example": "no-store" } } },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CardVerificationStatus" },
+                "example": { "customer_id": "cus_example", "status": "PENDING", "can_create_card": false }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed verification error. Inspect code and message; do not interpret unavailable status as approval.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CardVerificationError" } } }
+          },
+          "default": {
+            "description": "Authentication, customer access, or request error.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UsererrorError" } } }
+          }
+        }
+      }
+    },
     "/customers/{id}/kyc": {
       "post": {
         "tags": [
           "customer.kyc"
         ],
-        "description": "Update customer kyc",
+        "description": "Submit or correct customer KYC. A successful submission is not card-verification approval. Upcoming asynchronous non-Nigerian DEFAULT USD card verification starts on POST /cards, not on this endpoint. Supply the real residential address; card billing-address preferences are separate.",
         "operationId": "customerKyc",
         "parameters": [
           {
@@ -5118,6 +5161,27 @@
           "passport": {
             "type": "string"
           }
+        }
+      },
+      "CardVerificationStatus": {
+        "type": "object",
+        "required": ["customer_id", "status", "can_create_card"],
+        "properties": {
+          "customer_id": { "type": "string", "description": "Swerv customer ID owned by the authenticated business." },
+          "status": {
+            "type": "string",
+            "enum": ["NOT_SUBMITTED", "PENDING", "APPROVED", "REJECTED", "RECONCILIATION_REQUIRED"]
+          },
+          "can_create_card": { "type": "boolean", "description": "True when the saved verification permits another issuance attempt. Not a guarantee of successful issuance or sufficient wallet funds." }
+        }
+      },
+      "CardVerificationError": {
+        "type": "object",
+        "required": ["code", "message"],
+        "properties": {
+          "code": { "type": "string", "description": "Stable customer-facing error code." },
+          "message": { "type": "string", "description": "Customer-safe explanation and next action." },
+          "field": { "type": "string", "description": "Affected field, when available." }
         }
       },
       "UsererrorError": {

@@ -1,0 +1,177 @@
+---
+title: 'Non-Nigerian Card KYC'
+description: 'Submit document KYC, check verification status, and request a DEFAULT USD card after approval.'
+---
+
+<Warning>
+Coming soon. This asynchronous flow and its verification-status endpoint are not
+yet deployed. This page is an integration preview, not confirmation of production
+or sandbox availability. Wait for Swerv's release confirmation before using it.
+</Warning>
+
+This flow applies to **individual non-Nigerian customers requesting `DEFAULT` USD
+cards** in supported countries. Customer profile KYC and card identity verification
+are separate: a successful KYC submission or an approved customer tier does not
+by itself mean the customer is ready for card issuance.
+
+Nigerian BVN verification remains synchronous. This change does not add
+non-Nigerian NGN issuance or change `LITE`/one-time and corporate card flows.
+
+## 1. Create the Customer and Save KYC
+
+[Create the customer](/api-reference/customers/create) with their real identity,
+email, and country of residence. Retain the `cus_...` customer ID.
+
+Use [Customer KYC](/api-reference/customers/kyc) to submit `tier: "FULL"` for a
+new customer, or `TWO` when Tier 1 information already exists. Supply the complete
+information object, a supported identity document, and the required passport
+photograph. The KYC country must match the customer profile.
+
+```json
+{
+  "tier": "FULL",
+  "information": {
+    "country": "GB",
+    "bank_identifier": "<CONFIRMED_COUNTRY_IDENTIFIER>",
+    "bank_identifier_type": "NINO",
+    "date_of_birth": "1990-01-01",
+    "phone_number": "+447911123456",
+    "address": "<ACTUAL_RESIDENTIAL_STREET_ADDRESS>",
+    "city": "London",
+    "state": "England",
+    "postal_code": "<ACTUAL_POSTAL_CODE>"
+  },
+  "document": {
+    "document_type": "PASSPORT",
+    "document_number": "<ACTUAL_PASSPORT_NUMBER>",
+    "document": "https://your-domain.example/customer-identity.jpg",
+    "passport": "https://your-domain.example/customer-photo.jpg"
+  }
+}
+```
+
+Replace all sample values with the customer's confirmed details. This example
+shows the request structure; it is not a country-eligibility guarantee.
+
+- Nigeria requires `bvn`; Ghana accepts `ssnit` or the country-specific identifier
+  pair. Other supported countries require `bank_identifier` and
+  `bank_identifier_type`. These information fields do not replace the document.
+- For asynchronous card verification, document types are `PASSPORT`,
+  `NATIONAL_ID`, `DRIVERS_LICENSE`, `VOTERS_CARD`, and `GHANA_CARD`, subject to
+  country eligibility. `BVN` and `NIN` are not document types for this flow.
+- `document.document` must point to a JPEG or PNG identity image, up to **5 MiB**,
+  using a publicly reachable HTTPS URL on the standard HTTPS port. Keep the
+  image accessible until submission completes. Do not change its contents at
+  the same URL. Login-protected URLs, internal addresses, and PDFs are unsuitable.
+- `document.passport` is the required passport photograph, not a replacement for
+  the identity-document image.
+- Use hosted image URLs for this release. Do not rely on inline Base64 uploads
+  until Swerv confirms their availability and size limits for your environment.
+
+<Note>
+Use the customer's **real residential address for KYC**. The default Wyoming
+card billing address remains separate and follows the business's billing-address
+configuration. Do not substitute the Wyoming billing address for a customer's
+residential address. Existing custom-billing preferences remain separate too.
+</Note>
+
+## 2. Request the Card
+
+Call [Create Card](/api-reference/cards/create) with the existing customer ID:
+
+```json
+{
+  "customer_id": "cus_example",
+  "currency": "USD",
+  "issuer": "VISA",
+  "type": "DEFAULT",
+  "amount": 1
+}
+```
+
+`amount: 1` means USD 1 of initial card funding. Normal issuance pricing applies
+only when the request proceeds to card creation.
+
+The first request submits document verification. While verification is pending,
+the response is **HTTP 409**, not a successful card-creation response:
+
+```json
+{
+  "code": "CARD_VERIFICATION_PENDING",
+  "message": "Customer identity verification is processing. No card has been created or debited. Check verification status before retrying card creation."
+}
+```
+
+**No card ID, issuance-fee debit, prefund debit, or queued card creation exists at
+this stage.** Show a verification-pending state in your application rather than
+a failed card or completed purchase. Do not repeatedly submit card requests.
+
+## 3. Check Verification Status
+
+Poll [Get Card Verification](/api-reference/customers/card-verification) no more
+than once per minute, using the same business's bearer token:
+
+```bash
+curl https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+```json
+{
+  "customer_id": "cus_example",
+  "status": "PENDING",
+  "can_create_card": false
+}
+```
+
+| Status | Your next action |
+| --- | --- |
+| `NOT_SUBMITTED` | Complete customer KYC, then submit a card request to start verification. |
+| `PENDING` | Keep the request pending in your UI and check again after at least one minute. |
+| `APPROVED` | Submit a new card request only when `can_create_card` is `true`. |
+| `REJECTED` | Confirm identity details and contact support if correction or review is needed. Do not loop card requests. |
+| `RECONCILIATION_REQUIRED` | Contact support to reconcile the existing verification before issuance. |
+
+Treat a failed status request as an unavailable status, never as approval. There
+is no guaranteed approval time. There is **no new business-facing KYC webhook**
+in this release; use this status endpoint rather than waiting for one.
+
+## 4. Submit Issuance After Approval
+
+When `can_create_card` is `true`, call `POST /cards` again. Verification approval
+does **not** automatically resume the earlier request or debit your wallet.
+Serialize creation requests for the same intended card; do not retry an accepted
+issuance request merely because the card is still processing.
+
+The normal issuance response is HTTP 200:
+
+```json
+{
+  "card_id": "card_example",
+  "message": "Card creation is processing"
+}
+```
+
+Track that card using the existing card endpoints and [card webhooks](/webhooks/card).
+Approval permits an issuance attempt; it does not guarantee that funding or
+issuance will succeed. The approved verification is reused for future cards
+while the verified details remain unchanged and the customer remains eligible.
+
+## Corrections and Errors
+
+- `CUSTOMER_DOCUMENT_UNAVAILABLE`: the saved identity image could not be
+  downloaded and no verification was submitted. Restore access to the same
+  image URL, then retry card creation after one minute.
+- `CUSTOMER_VERIFICATION_REJECTED`: check the saved identity details. This flow
+  does not automatically resubmit rejected document verification.
+- `CARD_VERIFICATION_RECONCILIATION_REQUIRED`: an existing outcome or changed
+  verified information needs support review. Do not create another customer to
+  bypass the restriction.
+- `CARD_VERIFICATION_UNAVAILABLE`: verification is temporarily unavailable.
+  Do not change identity details to resolve an infrastructure error.
+
+Existing approved Tier TWO customers can correct their complete `information`
+object with `tier: "ONE"`; this does not replace their documents or downgrade
+their tier. See [KYC corrections](/api-reference/customers/kyc#correcting-existing-customer-information).
+Changed details after document verification submission may require reconciliation.
+Customer KYC edits do not alter existing cards' billing addresses.

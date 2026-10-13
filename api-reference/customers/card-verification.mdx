@@ -1,0 +1,53 @@
+---
+title: 'Get Card Verification'
+openapi: 'GET /customers/{id}/card-verification'
+---
+
+<Warning>
+Coming soon. This endpoint is not yet deployed. Use it only after Swerv confirms
+the asynchronous card-KYC release is available in your environment.
+</Warning>
+
+Check whether an existing customer is ready for a `DEFAULT` USD card request.
+The customer must belong to the business authenticated by your bearer token.
+This request does not create a card or debit a wallet.
+
+Poll **at most once per minute**. A check can reconcile a pending verification;
+multiple callers share the same refresh limit. Do not treat an HTTP 200 response
+alone as approval: inspect `status` and `can_create_card`.
+
+<RequestExample>
+```bash cURL
+curl https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
+  -H "Authorization: Bearer <TOKEN>"
+```
+</RequestExample>
+
+<ResponseExample>
+```json Pending
+{
+  "customer_id": "cus_example",
+  "status": "PENDING",
+  "can_create_card": false
+}
+```
+
+```json Approved
+{
+  "customer_id": "cus_example",
+  "status": "APPROVED",
+  "can_create_card": true
+}
+```
+</ResponseExample>
+
+Statuses are `NOT_SUBMITTED`, `PENDING`, `APPROVED`, `REJECTED`, and
+`RECONCILIATION_REQUIRED`. Submit a new card request only when `can_create_card`
+is `true`; issuance does not start automatically after approval.
+
+A typed verification error can return HTTP 503 with `code`, `message`, and an
+optional `field`. Preserve the pending UI state when status cannot be retrieved;
+use the error code to decide whether to retry later or contact support.
+
+See the [complete non-Nigerian KYC flow](/customer/non-nigerian-card-kyc) for
+document requirements, correction rules, and safe issuance retries.
