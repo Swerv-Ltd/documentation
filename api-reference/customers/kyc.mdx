@@ -14,8 +14,24 @@ Submit KYC using the same ISO 3166-1 alpha-2 country code stored on the customer
 All Tier 1 requests also require the customer's residential address, date of birth, and phone number. Use E.164 phone format, such as `+447911123456`, outside Nigeria and Ghana. `FULL` requests include both `information` and `document`.
 
 <Note>
-The KYC country must match the country supplied when the customer was created. The stored KYC address is used as the customer's issuance address for supported products.
+The KYC country must match the country supplied when the customer was created. Supply the customer's real residential address for identity verification. Card billing-address configuration is separate; do not substitute a default billing address for the residential address.
 </Note>
+
+## Asynchronous Card Verification for Non-Nigerians
+
+<Note>
+The [non-Nigerian card KYC guide](/customer/non-nigerian-card-kyc)
+describes the production document-verification flow for `DEFAULT` USD cards.
+</Note>
+
+Saving KYC here does not start asynchronous card verification or create a card.
+After saving the required information and documents, request a card to initiate
+verification. A pending result returns HTTP 409 with `CARD_VERIFICATION_PENDING`
+and no card debit. Check [card verification status](/api-reference/customers/card-verification),
+then submit issuance again after `can_create_card` becomes `true`.
+
+The existing Nigerian BVN path stays synchronous. Customer KYC tier approval
+and card-verification approval are separate states.
 
 ## Correcting Existing Customer Information
 

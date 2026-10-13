@@ -13,6 +13,22 @@ Create a virtual card for an approved customer. Card currency and issuer must us
 
 NGN Verve cards are charged an issuance fee of NGN 1,000 in addition to the initial card balance. The declined transaction fee is NGN 500. Card funding, withdrawal, and termination fees are currently zero. After issuance succeeds, set the card PIN using the [Set Card PIN](/api-reference/cards/set-pin) endpoint.
 
+## Pending Identity Verification
+
+<Warning>
+For non-Nigerian `DEFAULT` USD cards on the production API, the
+[document KYC flow](/customer/non-nigerian-card-kyc) can return HTTP 409 with
+`CARD_VERIFICATION_PENDING` before issuance. No card, prefund debit, or issuance-fee
+debit is created while verification is pending.
+</Warning>
+
+Poll [Get Card Verification](/api-reference/customers/card-verification)
+at most once per minute. Submit a new card request only when `can_create_card` is
+`true`. Approval does not automatically resume issuance. A normal HTTP 200 response
+with a `card_id` means issuance has started processing; track that card instead
+of submitting duplicate creation requests. The Nigerian BVN and NGN Verve paths
+remain unchanged by this addition.
+
 <RequestExample>
 
 ```bash cURL
