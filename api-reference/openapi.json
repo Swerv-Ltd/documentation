@@ -634,7 +634,7 @@
         "tags": [
           "card"
         ],
-        "description": "Create card. Upcoming, not yet deployed: non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. After release, poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true.",
+        "description": "Create card. On the production API, non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. Poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true. Confirm sandbox availability separately.",
         "operationId": "createCard",
         "requestBody": {
           "content": {
@@ -657,7 +657,7 @@
             }
           },
           "409": {
-            "description": "Upcoming, not yet deployed: document verification is pending. No card or debit was created.",
+            "description": "Document verification is pending. No card or debit was created.",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/CardVerificationError" },
@@ -2090,8 +2090,8 @@
       "get": {
         "tags": ["customer"],
         "operationId": "getCustomerCardVerification",
-        "summary": "Get card verification (coming soon)",
-        "description": "Upcoming endpoint, not yet deployed. Check a customer belonging to the authenticated business. Poll at most once per minute. Does not create a card or debit a wallet. Submit a new card request only when can_create_card is true; approval does not automatically start issuance.",
+        "summary": "Get card verification",
+        "description": "Available on the production API; confirm sandbox availability separately. Check a customer belonging to the authenticated business. Poll at most once per minute. Does not create a card or debit a wallet. Submit a new card request only when can_create_card is true; approval does not automatically start issuance.",
         "parameters": [
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" }, "example": "cus_example" }
         ],

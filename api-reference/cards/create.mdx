@@ -16,13 +16,13 @@ NGN Verve cards are charged an issuance fee of NGN 1,000 in addition to the init
 ## Pending Identity Verification
 
 <Warning>
-Coming soon; not yet deployed. For non-Nigerian `DEFAULT` USD cards, the upcoming
+For non-Nigerian `DEFAULT` USD cards on the production API, the
 [document KYC flow](/customer/non-nigerian-card-kyc) can return HTTP 409 with
 `CARD_VERIFICATION_PENDING` before issuance. No card, prefund debit, or issuance-fee
 debit is created while verification is pending.
 </Warning>
 
-After the release is enabled, poll [Get Card Verification](/api-reference/customers/card-verification)
+Poll [Get Card Verification](/api-reference/customers/card-verification)
 at most once per minute. Submit a new card request only when `can_create_card` is
 `true`. Approval does not automatically resume issuance. A normal HTTP 200 response
 with a `card_id` means issuance has started processing; track that card instead
