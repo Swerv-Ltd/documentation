@@ -144,6 +144,7 @@
               "api-reference/customers/update",
               "api-reference/customers/kyc",
               "api-reference/customers/card-verification",
+              "api-reference/customers/submit-card-verification",
               "api-reference/customers/blacklist",
               "api-reference/customers/delete"
             ]

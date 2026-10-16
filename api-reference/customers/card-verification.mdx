@@ -50,3 +50,9 @@ use the error code to decide whether to retry later or contact support.
 
 See the [complete non-Nigerian KYC flow](/customer/non-nigerian-card-kyc) for
 document requirements, correction rules, and safe issuance retries.
+
+[Verification webhooks](/webhooks/card#verification-decision-webhooks)
+notify subscribed businesses of document-verification approvals and rejections.
+This endpoint remains the source for current eligibility and a fallback for
+missed deliveries. Start verification separately with
+[Submit Card Verification](/api-reference/customers/submit-card-verification).

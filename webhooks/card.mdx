@@ -20,6 +20,74 @@ Card webhooks notify your application when a card changes state or a card transa
 
 The sections below document the payloads currently covered by this guide. Treat event IDs as idempotency keys and return `2xx` after the event has been accepted for processing.
 
+## Verification decision webhooks
+
+<Note>
+Available for asynchronous document verification. These events do not change
+the synchronous Nigerian BVN flow or automatically issue a card.
+</Note>
+
+Subscribe an enabled HTTPS endpoint to `card.verification.approved` and
+`card.verification.rejected` using the webhook create or update API. They are
+opt-in; an empty or omitted event list does not subscribe to these events.
+When updating a webhook, retain any other events you still want in the list.
+
+```json Subscription
+{
+  "url": "https://example.com/webhooks/swerv",
+  "description": "Card identity verification",
+  "events": ["card.verification.approved", "card.verification.rejected"]
+}
+```
+
+```json card.verification.approved
+{
+  "event": "card.verification.approved",
+  "id": "00b67aaf-36cf-5e6b-a640-4655dbbb733a",
+  "data": {
+    "customer_id": "cus_example",
+    "status": "APPROVED",
+    "can_create_card": true,
+    "occurred_at": "2026-10-13T14:00:00Z"
+  }
+}
+```
+
+A rejection uses `event: "card.verification.rejected"`, `status: "REJECTED"`,
+and `can_create_card: false`. These events apply to asynchronous document
+verification for non-Nigerian `DEFAULT` USD cards, not customer-tier approval.
+Verification can finish before a card exists, so the payload identifies the customer rather than a card.
+It contains no identity documents, verification tokens, or provider identifiers.
+
+Approval does **not** create a card or debit the wallet. Before submitting
+`POST /cards`, check the current [verification status](/api-reference/customers/card-verification)
+and require `can_create_card: true`. A delivery is a snapshot; subsequent KYC
+changes can invalidate eligibility. An approval snapshot can have
+`can_create_card: false` when the saved details have changed.
+
+### Verification and retries
+
+These two events retain `X-SWERV-SECRET` and add:
+
+- `X-SWERV-Event`: event type.
+- `X-SWERV-Event-Id`: stable delivery ID for this event and webhook endpoint.
+- `X-SWERV-Timestamp`: Unix timestamp in seconds for this delivery attempt.
+- `X-SWERV-Signature`: `t=<timestamp>,v1=<hex_hmac>`.
+
+Calculate HMAC-SHA256 with your webhook secret over
+`<timestamp>.<exact raw request body>`. Verify using a constant-time comparison,
+require the signature timestamp to match `X-SWERV-Timestamp`, and reject stale
+timestamps using a short tolerance such as five minutes. Do not reserialize JSON
+before checking the signature.
+
+Use the top-level `id` as your event idempotency key. The body and event/delivery
+IDs remain stable on retry; the signature timestamp is refreshed. Delivery is
+at-least-once: acknowledge promptly with `2xx` and handle duplicate notifications
+without submitting duplicate card requests. Failed deliveries use the existing
+retry mechanism and webhook logs; polling remains a fallback if delivery is missed.
+
+Other existing webhook events keep their current authentication protocol.
+
 ## Created webhook event
 
 This event is fired when a card is created.

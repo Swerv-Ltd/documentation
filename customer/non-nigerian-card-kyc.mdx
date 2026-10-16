@@ -74,7 +74,26 @@ configuration. Do not substitute the Wyoming billing address for a customer's
 residential address. Existing custom-billing preferences remain separate too.
 </Note>
 
-## 2. Request the Card
+## 2. Submit Card Verification
+
+<Note>
+[Submit Card Verification](/api-reference/customers/submit-card-verification)
+separates document verification from issuance: submit saved KYC, wait for
+an approval webhook or poll status, then request the card. Pending returns HTTP
+202 without creating a card or debiting a wallet. Nigerian BVN
+verification remains synchronous and does not require this extra step.
+</Note>
+
+```bash
+curl -X POST https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+No request body is required; the customer's saved KYC is used.
+
+### Existing Card-Creation Integrations
+
+Existing integrations may still initiate verification through card creation:
 
 Call [Create Card](/api-reference/cards/create) with the existing customer ID:
 
@@ -132,8 +151,10 @@ curl https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
 | `RECONCILIATION_REQUIRED` | Contact support to reconcile the existing verification before issuance. |
 
 Treat a failed status request as an unavailable status, never as approval. There
-is no guaranteed approval time. There is **no new business-facing KYC webhook**
-in this release; use this status endpoint rather than waiting for one.
+is no guaranteed approval time. The
+[verification decision webhooks](/webhooks/card#verification-decision-webhooks)
+provide opt-in approval and rejection notifications. Retain polling as a
+fallback and check current eligibility before issuance.
 
 ## 4. Submit Issuance After Approval
 
