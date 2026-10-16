@@ -1,0 +1,49 @@
+---
+title: 'Submit Card Verification'
+description: 'Start asynchronous document verification without creating or funding a card.'
+---
+
+<Note>
+Available on the production API. Confirm sandbox availability separately with Swerv.
+</Note>
+
+`POST /customers/{id}/card-verification`
+
+For individual non-Nigerian customers requesting DEFAULT USD cards, submit the
+customer's saved KYC for document verification. First save complete customer KYC,
+including a supported identity document and the actual residential address.
+
+The customer must belong to your authenticated business. No request body is
+required. This operation does not create a card, reserve funds, or debit a wallet.
+Nigerian customers continue using synchronous verification through `POST /cards`.
+
+```bash
+curl -X POST https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
+  -H "Authorization: Bearer <TOKEN>"
+```
+
+HTTP **202** means verification is pending:
+
+```json
+{
+  "customer_id": "cus_example",
+  "status": "PENDING",
+  "can_create_card": false
+}
+```
+
+An already approved, unchanged verification returns HTTP **200** with
+`status: "APPROVED"` and `can_create_card: true`. Repeated submissions reuse the
+existing verification; do not change customer details to force a new attempt.
+
+Validation failures return **422**; rejected verification or reconciliation
+requirements return **409**. Temporary verification/document availability errors
+return **503**. Errors contain `code`, `message`, and optionally `field`.
+
+Subscribe to [verification decision webhooks](/webhooks/card#verification-decision-webhooks),
+or poll [Get Card Verification](/api-reference/customers/card-verification) at
+most once per minute. After approval, explicitly call
+[Create Card](/api-reference/cards/create). Approval does not automatically issue a card.
+
+Existing integrations may continue initiating document verification through
+`POST /cards`; a pending response does not create or debit a card.

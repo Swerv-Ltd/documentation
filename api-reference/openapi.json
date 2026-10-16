@@ -3741,6 +3741,8 @@
           "card.authorization",
           "card.charges",
           "card.contactless.activation",
+          "card.verification.approved",
+          "card.verification.rejected",
           "card.created",
           "card.created.failed",
           "card.freezed",
