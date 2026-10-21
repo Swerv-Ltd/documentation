@@ -634,7 +634,7 @@
         "tags": [
           "card"
         ],
-        "description": "Create card. On the production API, non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. Poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true. Confirm sandbox availability separately.",
+        "description": "Create card. LITE cards cannot be topped up after issuance; set the required initial balance using amount. Choose a supported DEFAULT card when repeat funding is required. On the production API, non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. Poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true. Confirm sandbox availability separately.",
         "operationId": "createCard",
         "requestBody": {
           "content": {
@@ -828,7 +828,7 @@
         "tags": [
           "card.fund"
         ],
-        "description": "Fund card",
+        "description": "Fund an eligible card. LITE cards cannot be topped up after issuance; set their initial balance using amount during card creation. Check the card type before requesting funding. Use a supported DEFAULT card for repeat funding.",
         "operationId": "fundCard",
         "parameters": [
           {

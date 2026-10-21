@@ -134,7 +134,7 @@ Initiate the creation of a virtual or physical card by sending a request to the 
 </ParamField>
 
 <ParamField body="type" type="string" required>
- card type e.g DEFAULT, LITE or COOPERATE
+ Card type: default (`DEFAULT`), lite (`LITE`), or corporate (currently sent as `COOPERATE` in API requests). `LITE` cards cannot be topped up after issuance; use `amount` to set their initial balance. Choose a supported `DEFAULT` card for repeat funding.
 </ParamField>
 
 <ParamField body="amount" type="number">
@@ -146,19 +146,19 @@ Initiate the creation of a virtual or physical card by sending a request to the 
 </ParamField>
 
 <ParamField body="phone_number" type="string">
-Phone number of the cardholder (for cooperate & lite card type only)
+Phone number of the cardholder (for corporate and lite cards only)
 </ParamField>
 
 <ParamField body="rc_number" type="string">
- RC Number of the company (for cooperate card type only)
+ RC Number of the company (for corporate cards only)
 </ParamField>
 
 <ParamField body="director_bvn" type="string">
- BVN of the director of the company (for cooperate card type only)
+ BVN of the director of the company (for corporate cards only)
 </ParamField>
 
 <ParamField body="business_email" type="string">
-Business email of the company (for cooperate card type only)
+Business email of the company (for corporate cards only)
 </ParamField>
 
 <ParamField body="document.document_number" type="string">
@@ -197,7 +197,11 @@ Provide necessary details to set up a new card.
 ```
 
 ### 💳➕ Fund Card
-Add funds to an existing card using the [fund](/api-reference/cards/fund-card) endpoint. This operation is essential for increasing the card's available balance for use.
+Add funds to an eligible existing card using the [Fund Card](/api-reference/cards/fund-card) endpoint.
+
+<Warning>
+`LITE` cards cannot be topped up after issuance. They can only be pre-funded when created. Check the card's `type` before requesting funding; repeated attempts will not remove this restriction. Use a supported `DEFAULT` card when additional funding is required.
+</Warning>
 
 **Parameters**
 
