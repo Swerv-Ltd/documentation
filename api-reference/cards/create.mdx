@@ -5,11 +5,17 @@ openapi: 'POST /cards'
 
 Create a virtual card for an approved customer. Card currency and issuer must use one of these supported combinations:
 
+<Warning>
+`LITE` cards cannot be topped up after issuance. Set the required initial balance using `amount` when creating the card. Choose a supported `DEFAULT` card when the customer needs to add funds later.
+</Warning>
+
 | Currency | Issuer | Supported type |
 | --- | --- | --- |
-| USD | `VISA` | `DEFAULT`, `LITE`, or `COOPERATE` |
+| USD | `VISA` | `DEFAULT`, `LITE`, or corporate (`COOPERATE`) |
 | USD | `MASTERCARD` | `LITE` |
 | NGN | `VERVE` | `DEFAULT` |
+
+Corporate cards currently use the API request value `COOPERATE`. Do not send `CORPORATE`; it is not currently an accepted value.
 
 NGN Verve cards are charged an issuance fee of NGN 1,000 in addition to the initial card balance. The declined transaction fee is NGN 500. Card funding, withdrawal, and termination fees are currently zero. After issuance succeeds, set the card PIN using the [Set Card PIN](/api-reference/cards/set-pin) endpoint.
 

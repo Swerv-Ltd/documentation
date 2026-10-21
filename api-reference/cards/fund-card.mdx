@@ -3,6 +3,12 @@ title: 'Fund Card'
 openapi: 'POST /cards/{id}/fund'
 ---
 
+<Warning>
+`LITE` cards do not support funding after issuance. Their balance must be loaded through `amount` when the card is created. Do not call this endpoint for a `LITE` card; retrying will not make it reloadable.
+</Warning>
+
+Check the card's `type` before submitting a funding request. For customers who need repeat funding, issue a supported `DEFAULT` card instead.
+
 <RequestExample>
 
 ```bash cURL
