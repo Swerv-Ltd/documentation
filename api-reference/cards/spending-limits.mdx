@@ -1,0 +1,45 @@
+---
+title: 'Card Spending Limits'
+openapi: 'PATCH /cards/{id}/limits'
+---
+
+Update spending limits for an active or frozen USD card belonging to your
+authenticated business. Use the Swerv card ID, not an external card reference.
+
+| Field | Meaning |
+| --- | --- |
+| `daily_limit` | Maximum cumulative spending per day. |
+| `monthly_limit` | Maximum cumulative spending per month. |
+| `transaction_limit` | Maximum spending on one transaction. |
+
+Amounts are **US dollars, not cents**: `2.5` means $2.50. Provide at least one
+field. Values must be positive, no greater than 1,000,000,000, and have at most two
+decimal places. This numeric ceiling is input validation, not a guaranteed
+card-program allowance. Updates remain subject to the card's program rules.
+
+<RequestExample>
+```bash cURL
+curl -X PATCH https://api.swervpay.co/api/v1/cards/card_123/limits \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"daily_limit":500,"monthly_limit":5000,"transaction_limit":100}'
+```
+</RequestExample>
+
+Only supplied fields are sent for update; omitted fields are not sent as zero.
+When supplied together, the per-transaction limit must not exceed the daily or
+monthly limit, and the daily limit must not exceed the monthly limit. Existing
+configuration may impose additional validation.
+
+Zero is not accepted as a way to disable or remove a limit. Lifetime limits are
+not exposed through this endpoint. NGN cards are not supported by this endpoint.
+Day/month reset timezone and treatment of pending authorizations are not
+specified by this API; do not assume they follow the customer's local timezone.
+
+HTTP 200 confirms a successful limit update. It does not add funds, change the
+card balance, guarantee transaction approval, or unfreeze a card. No new webhook
+event is emitted, and card-detail responses do not currently include the limits.
+
+If the outcome is unresolved, contact support before retrying: the update may
+already have been applied. Sandbox saves simulated limits but does not enforce
+them against transaction fixtures or contact the live authorization network.

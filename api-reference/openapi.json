@@ -3533,6 +3533,146 @@
           }
         }
       }
+    },
+    "/cards/{id}/merchants": {
+      "patch": {
+        "tags": [
+          "card.controls"
+        ],
+        "description": "Add or remove one merchant ID from a USD card whitelist or blacklist",
+        "operationId": "updateCardMerchant",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenapiCardMerchantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/{id}/limits": {
+      "patch": {
+        "tags": [
+          "card.controls"
+        ],
+        "description": "Update USD card spending limits in dollars, not cents",
+        "operationId": "updateCardLimits",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenapiCardLimitsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5197,6 +5337,52 @@
             "additionalProperties": {
 
             }
+          }
+        }
+      },
+      "OpenapiCardMerchantRequest": {
+        "required": [
+          "list",
+          "action",
+          "merchant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "action": {
+            "enum": [
+              "add",
+              "remove"
+            ],
+            "type": "string"
+          },
+          "list": {
+            "enum": [
+              "whitelist",
+              "blacklist"
+            ],
+            "type": "string"
+          },
+          "merchant_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "OpenapiCardLimitsRequest": {
+        "type": "object",
+        "properties": {
+          "daily_limit": {
+            "type": "number",
+            "nullable": true
+          },
+          "monthly_limit": {
+            "type": "number",
+            "nullable": true
+          },
+          "transaction_limit": {
+            "type": "number",
+            "nullable": true
           }
         }
       }
