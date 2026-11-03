@@ -119,6 +119,8 @@
               "api-reference/cards/get",
               "api-reference/cards/create",
               "api-reference/cards/set-pin",
+              "api-reference/cards/merchant-controls",
+              "api-reference/cards/spending-limits",
               "api-reference/cards/fund-card",
               "api-reference/cards/withdraw-from-card",
               "api-reference/cards/regularize",

@@ -1,0 +1,52 @@
+---
+title: 'Merchant Controls'
+openapi: 'PATCH /cards/{id}/merchants'
+---
+
+Add or remove **one merchant ID (MID)** from a card's whitelist or blacklist.
+Use the Swerv card ID in the URL. The card must belong to your authenticated
+business and be an active or frozen USD card.
+
+| List | Purpose |
+| --- | --- |
+| `whitelist` | Restrict card payments to listed merchants, subject to all other card checks. |
+| `blacklist` | Block card payments at listed merchants. |
+
+Obtain the exact MID from the merchant or payment processor. Send it as a string,
+preserving leading zeros. A merchant name, website, or merchant category code is
+not a substitute. Different acquiring processors may use different MIDs for the
+same merchant.
+
+<RequestExample>
+```bash cURL
+curl -X PATCH https://api.swervpay.co/api/v1/cards/card_123/merchants \
+  -H "Authorization: Bearer <TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{"list":"blacklist","action":"add","merchant_id":"243815000157182"}'
+```
+</RequestExample>
+
+Use `action: "remove"` to remove that MID from the selected list. These operations
+do not replace a whole list or change the other list. Submit one MID per request;
+bulk arrays are not accepted. MID strings must be 1-64 printable ASCII characters,
+without leading or trailing whitespace.
+
+<Warning>
+Avoid placing the same merchant in both lists. Do not depend on an undocumented
+precedence rule. Whitelisting a merchant does not override insufficient funds,
+frozen-card status, compliance checks, or other restrictions.
+</Warning>
+
+HTTP 200 confirms a successful control update. It does not create, fund, debit,
+or unfreeze the card. Your existing fee schedule is unchanged.
+No new webhook event is emitted for this operation, and
+the card-detail response does not currently include these lists.
+
+If the response says the outcome is unresolved, contact support before retrying.
+A timeout can occur after the change was applied. Do not assume an error means
+the old rule remains in effect. Provide the Swerv card ID, operation and request
+time, never card credentials or authentication secrets.
+
+In sandbox, these operations save simulated configuration without contacting
+the live card network. Sandbox transaction fixtures do **not** simulate merchant
+authorization or guarantee live approval/decline behavior.
