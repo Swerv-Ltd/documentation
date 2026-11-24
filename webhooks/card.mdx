@@ -178,13 +178,13 @@ This event is fired when a card is funded.
 
 ## Transaction webhook event
 
-This event is fired when a card transaction is made.
+This event is fired when a card transaction is created or updated, including when an authorization is linked to its settlement.
 
 ### Transaction Categories
 
 - FUNDING
 - WITHDRAW
-- Transaction
+- TRANSACTION
 
 ### Transaction Types
 
@@ -203,7 +203,7 @@ This event is fired when a card transaction is made.
 {
   "event": "card.transaction",
   "data": {
-    "id": "card_123456789",
+    "transaction_id": "txn_123456789",
     "card_id": "card_123456789",
     "business_id": "bus_mviuNSMKi74vTY8yvfP6nQ",
     "reference": "ref_mviuNSMKi74vTY8yvfP6nQ",
@@ -219,12 +219,43 @@ This event is fired when a card transaction is made.
     "merchant_mcc": "",
     "merchant_mid": "",
     "currency": "USD",
-    "category": "FUNDING",
+    "category": "TRANSACTION",
     "created_at": "2024-02-06T02:49:18Z",
     "updated_at": "2024-02-06T02:49:18Z"
   }
 }
 ```
+
+### Authorization and settlement updates
+
+For a verified full-amount purchase, the settlement includes `original_transaction_id`, while the original authorization includes `settlement_transaction_id` and becomes `COMPLETED`. Both include `transaction_role`. These optional fields use public Swerv transaction IDs and match the fields returned by the transaction API.
+
+Example settlement update (selected fields):
+
+```json
+{
+  "event": "card.transaction",
+  "data": {
+    "card_id": "card_example",
+    "transaction_id": "txn_example_settlement",
+    "reference": "ref_example_settlement",
+    "amount": 84,
+    "currency": "USD",
+    "type": "DEBIT",
+    "category": "TRANSACTION",
+    "status": "COMPLETED",
+    "transaction_role": "SETTLEMENT",
+    "original_transaction_id": "txn_example_authorization"
+  }
+}
+```
+
+The corresponding authorization update has `transaction_id: txn_example_authorization`, `transaction_role: AUTHORIZATION`, and `settlement_transaction_id: txn_example_settlement`.
+
+Upsert by `data.transaction_id`. The two linked records represent **one purchase**, even when both show `DEBIT` and `COMPLETED`. Their references remain distinct. Linking fields may arrive in a later update; handle repeated deliveries and either arrival order. Fetch the current transaction if an older event conflicts with a completed linked record.
+
+See [transaction reconciliation](/card/transaction-reconciliation) for full examples, missing-link handling, and limitations for refunds, reversals, and partial or multiple settlements.
+
 
 ## Charges webhook event
 

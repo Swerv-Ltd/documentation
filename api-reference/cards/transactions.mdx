@@ -3,6 +3,16 @@ title: 'Get Card Transactions'
 openapi: 'GET /cards/{id}/transactions'
 ---
 
+## Authorization and settlement links
+
+A purchase authorization and settlement may have different IDs and references. Once their relationship is verified, both records show `COMPLETED` and expose optional linking fields:
+
+- `transaction_role`: `AUTHORIZATION` or `SETTLEMENT`.
+- `original_transaction_id`: on the settlement, the original authorization's public transaction ID.
+- `settlement_transaction_id`: on the authorization, the settlement's public transaction ID.
+
+Reconcile the linked records as one purchase, not two debits. Fields may appear after the initial notification and are omitted when no relationship has been verified. See [transaction reconciliation](/card/transaction-reconciliation) for examples, status handling, and delivery-order guidance.
+
 <RequestExample>
 
 ```bash cURL
