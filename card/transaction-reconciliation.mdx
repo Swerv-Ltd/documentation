@@ -17,7 +17,7 @@ These optional fields appear in [transaction detail](/api-reference/cards/get-tr
 
 The API uses `id` for the record's own transaction ID. Webhooks use `data.transaction_id`. Relationship fields always contain public Swerv transaction IDs, not card IDs or references.
 
-## Example: one $84 purchase
+## Example: one $25 purchase
 
 The following examples use fictional identifiers and show selected response fields.
 
@@ -27,7 +27,7 @@ Before settlement, the original purchase authorization is `APPROVED`. This is no
 {
   "id": "txn_example_authorization",
   "reference": "ref_example_authorization",
-  "amount": 84,
+  "amount": 25,
   "currency": "USD",
   "type": "DEBIT",
   "category": "TRANSACTION",
@@ -41,7 +41,7 @@ After a matching full settlement is verified, the original authorization becomes
 {
   "id": "txn_example_authorization",
   "reference": "ref_example_authorization",
-  "amount": 84,
+  "amount": 25,
   "currency": "USD",
   "type": "DEBIT",
   "category": "TRANSACTION",
@@ -57,7 +57,7 @@ The separate settlement record points back to the authorization:
 {
   "id": "txn_example_settlement",
   "reference": "ref_example_settlement",
-  "amount": 84,
+  "amount": 25,
   "currency": "USD",
   "type": "DEBIT",
   "category": "TRANSACTION",
@@ -68,7 +68,7 @@ The separate settlement record points back to the authorization:
 ```
 
 <Warning>
-Both linked records can show `DEBIT` and `COMPLETED`. Count the pair as one $84 purchase. Do not sum the authorization and settlement as two financial debits.
+Both linked records can show `DEBIT` and `COMPLETED`. Count the pair as one $25 purchase. Do not sum the authorization and settlement as two financial debits.
 </Warning>
 
 ## Recommended reconciliation flow
