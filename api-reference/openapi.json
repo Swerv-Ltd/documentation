@@ -2173,7 +2173,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Current verification status, not necessarily approval.",
+            "description": "Approved unchanged verification",
             "headers": {
               "Cache-Control": {
                 "schema": {
@@ -2189,8 +2189,8 @@
                 },
                 "example": {
                   "customer_id": "cus_example",
-                  "status": "PENDING",
-                  "can_create_card": false
+                  "status": "APPROVED",
+                  "can_create_card": true
                 }
               }
             }
@@ -2234,6 +2234,26 @@
                   "customer_id": "cus_example",
                   "status": "PENDING",
                   "can_create_card": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Verification pending, rejected or requiring review; inspect code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid or incomplete customer information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
                 }
               }
             }
