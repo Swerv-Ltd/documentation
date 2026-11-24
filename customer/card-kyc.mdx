@@ -59,6 +59,8 @@ For document requirements and image constraints, see [non-Nigerian card KYC](/cu
 
 An incomplete BVN response is not approval. Swerv can refresh unusable cached evidence after five minutes, or an unresolved lookup after fifteen minutes. Recovery is limited to two additional lookups and preserves prior evidence. Concurrent requests share the same pending attempt. Existing usable or reviewed evidence and screening flags are not replaced by this recovery flow. If recovery is exhausted, contact support rather than looping submissions.
 
+If the original KYC submission failed before it was saved, resubmit the complete KYC request to trigger identity recovery. The verification-only endpoint cannot reconstruct missing information or documents. Do not loop card-creation requests to recover an unsuccessful KYC submission.
+
 ## Address corrections
 
 Use an accurate residential address. City and state must fit the verification service's 20-character limit; use an accurate recognized abbreviation where appropriate, never arbitrary truncation. The street address must use standard English (ASCII) characters. Correct punctuation without changing the address. A structured address-validation rejection can be retried after the saved address is corrected and verified identity evidence agrees. Unknown provider outcomes still require reconciliation.
