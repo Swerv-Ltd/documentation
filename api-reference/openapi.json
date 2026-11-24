@@ -1090,7 +1090,7 @@
         "tags": [
           "card.transactions"
         ],
-        "description": "List all card transactions",
+        "description": "List all card transactions. Verified full-amount purchase pairs expose transaction_role and original_transaction_id or settlement_transaction_id. Both linked records may be COMPLETED; reconcile them as one purchase. Links may appear after the initial event. Existing IDs and references remain unchanged.",
         "operationId": "cardTransactions",
         "parameters": [
           {
@@ -1168,7 +1168,7 @@
         "tags": [
           "card.transaction"
         ],
-        "description": "Get card transactions",
+        "description": "Get card transactions. Verified full-amount purchase pairs expose transaction_role and original_transaction_id or settlement_transaction_id. Both linked records may be COMPLETED; reconcile them as one purchase. Links may appear after the initial event. Existing IDs and references remain unchanged.",
         "operationId": "cardTransaction",
         "parameters": [
           {
@@ -4798,6 +4798,24 @@
           "updated_at": {
             "type": "string",
             "format": "date-time"
+          },
+          "transaction_role": {
+            "type": "string",
+            "enum": [
+              "AUTHORIZATION",
+              "SETTLEMENT"
+            ],
+            "description": "Role in a verified full-amount purchase relationship. Optional; omitted when no relationship is verified. Count a linked authorization and settlement as one purchase."
+          },
+          "original_transaction_id": {
+            "type": "string",
+            "description": "On a linked settlement, the public Swerv transaction ID of its original authorization. Not a card ID or reference.",
+            "example": "txn_example_authorization"
+          },
+          "settlement_transaction_id": {
+            "type": "string",
+            "description": "On a linked authorization, the public Swerv transaction ID of its settlement. The original authorization becomes COMPLETED.",
+            "example": "txn_example_settlement"
           }
         }
       },

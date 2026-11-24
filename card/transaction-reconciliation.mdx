@@ -1,0 +1,88 @@
+---
+title: 'Transaction reconciliation'
+description: 'Link card authorizations to settlements and reconcile each purchase once.'
+---
+
+A purchase authorization and its settlement can have different transaction IDs and references. They are lifecycle records for the same payment, not two purchases. Use the explicit relationship fields to link them.
+
+## Relationship fields
+
+These optional fields appear in [transaction detail](/api-reference/cards/get-transaction), [transaction lists](/api-reference/cards/transactions), and [`card.transaction` webhooks](/webhooks/card#authorization-and-settlement-updates) after the relationship is verified.
+
+| Field | Meaning |
+| --- | --- |
+| `transaction_role` | `AUTHORIZATION` for the original authorization; `SETTLEMENT` for its settlement. |
+| `original_transaction_id` | On a settlement, the public Swerv transaction ID of its original authorization. |
+| `settlement_transaction_id` | On an authorization, the public Swerv transaction ID of its settlement. |
+
+The API uses `id` for the record's own transaction ID. Webhooks use `data.transaction_id`. Relationship fields always contain public Swerv transaction IDs, not card IDs or references.
+
+## Example: one $84 purchase
+
+The following examples use fictional identifiers and show selected response fields.
+
+Before settlement, the original purchase authorization is `APPROVED`. This is not settlement evidence.
+
+```json
+{
+  "id": "txn_example_authorization",
+  "reference": "ref_example_authorization",
+  "amount": 84,
+  "currency": "USD",
+  "type": "DEBIT",
+  "category": "TRANSACTION",
+  "status": "APPROVED"
+}
+```
+
+After a matching full settlement is verified, the original authorization becomes `COMPLETED` and links to the settlement:
+
+```json
+{
+  "id": "txn_example_authorization",
+  "reference": "ref_example_authorization",
+  "amount": 84,
+  "currency": "USD",
+  "type": "DEBIT",
+  "category": "TRANSACTION",
+  "status": "COMPLETED",
+  "transaction_role": "AUTHORIZATION",
+  "settlement_transaction_id": "txn_example_settlement"
+}
+```
+
+The separate settlement record points back to the authorization:
+
+```json
+{
+  "id": "txn_example_settlement",
+  "reference": "ref_example_settlement",
+  "amount": 84,
+  "currency": "USD",
+  "type": "DEBIT",
+  "category": "TRANSACTION",
+  "status": "COMPLETED",
+  "transaction_role": "SETTLEMENT",
+  "original_transaction_id": "txn_example_authorization"
+}
+```
+
+<Warning>
+Both linked records can show `DEBIT` and `COMPLETED`. Count the pair as one $84 purchase. Do not sum the authorization and settlement as two financial debits.
+</Warning>
+
+## Recommended reconciliation flow
+
+1. Upsert each transaction using its own `id` from the API or `data.transaction_id` from a webhook.
+2. When a settlement includes `original_transaction_id`, attach it to that authorization in your payment record. Use the completed settlement as settlement evidence.
+3. When the authorization includes `settlement_transaction_id`, close its processing state and retain both records for audit. Their IDs and references remain unchanged.
+4. Accept duplicate deliveries and updates in either order. If the linked record is missing locally, fetch it from `GET /cards/{id}/transactions/{transactionId}`.
+5. If an older notification conflicts with a completed, linked authorization, fetch the current API record before changing your local state. Do not reopen a payment based only on a stale `APPROVED` event.
+
+The relationship can become available after the initial notification. Updated `card.transaction` notifications contain the same linking fields as the API. A linking update does not create another charge or adjust the card balance.
+
+## Missing links and scope
+
+Fields are omitted when no relationship has been verified; absence of a link does not prove that two records are separate purchases. Do not infer a relationship solely from merchant, amount, date, or similar references. Fetch the latest records and contact support if reconciliation remains unresolved.
+
+Automatic linking currently covers verified, full-amount purchase settlements on the same card with matching currency. Do not apply this one-to-one model to partial or multiple settlements, refunds, or reversals without an explicit supported relationship. `COMPLETED` on other transaction categories, such as funding, is not purchase-settlement evidence.
