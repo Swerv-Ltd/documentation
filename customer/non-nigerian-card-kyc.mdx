@@ -13,7 +13,7 @@ cards** in supported countries. Customer profile KYC and card identity verificat
 are separate: a successful KYC submission or an approved customer tier does not
 by itself mean the customer is ready for card issuance.
 
-Nigerian BVN verification remains synchronous. This change does not add
+For Nigerian BVN verification, see the [customer and card KYC flow](/customer/card-kyc). This flow does not add
 non-Nigerian NGN issuance or change `LITE`/one-time and corporate card flows.
 
 ## 1. Create the Customer and Save KYC
@@ -80,8 +80,7 @@ residential address. Existing custom-billing preferences remain separate too.
 [Submit Card Verification](/api-reference/customers/submit-card-verification)
 separates document verification from issuance: submit saved KYC, wait for
 an approval webhook or poll status, then request the card. Pending returns HTTP
-202 without creating a card or debiting a wallet. Nigerian BVN
-verification remains synchronous and does not require this extra step.
+202 without creating a card or debiting a wallet. Nigerian customers can also submit verification separately; see the [general KYC flow](/customer/card-kyc).
 </Note>
 
 ```bash
@@ -144,7 +143,7 @@ curl https://api.swervpay.co/api/v1/customers/cus_example/card-verification \
 
 | Status | Your next action |
 | --- | --- |
-| `NOT_SUBMITTED` | Complete customer KYC, then submit a card request to start verification. |
+| `NOT_SUBMITTED` | Complete customer KYC, then submit card verification. |
 | `PENDING` | Keep the request pending in your UI and check again after at least one minute. |
 | `APPROVED` | Submit a new card request only when `can_create_card` is `true`. |
 | `REJECTED` | Confirm identity details and contact support if correction or review is needed. Do not loop card requests. |

@@ -5,7 +5,7 @@ description: 'Send bank payouts, retrieve payout status, and reconcile completed
 
 ### Supported Currencies
 
-The examples in this guide use Nigerian Naira (NGN) bank transfers. Confirm the currencies enabled for your business before creating a payout.
+The examples in this guide use Nigerian Naira (NGN) bank transfers. This bank payout endpoint supports NGN only; other currency values are rejected.
 
 • **Nigerian Naira (NGN)**
 
@@ -44,7 +44,7 @@ To initiate a payout, use the [create payout](/api-reference/payouts/create) end
 </ParamField>
 
 <ParamField body="amount" type="number" required>
- The total payout amount in the smallest currency unit (e.g., cents, kobo).
+ The payout amount in naira, not kobo. For example, `8500` means NGN 8,500.
 </ParamField>
 
 <ParamField body="currency" type="string" required>

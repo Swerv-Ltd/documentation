@@ -3,7 +3,7 @@ title: 'Overview'
 description: 'Retrieve exchange rates and exchange supported currencies.'
 ---
 
-The FX API supports rate lookup and currency exchange. Provide three-letter uppercase currency codes and an integer amount in the smallest currency unit used by the request.
+The FX API supports rate lookup and currency exchange. Provide three-letter uppercase currency codes and an amount in major units of the source currency: `100` means NGN 100 when `from` is `NGN`, or USD 100 when `from` is `USD`.
 
 ### Supported Conversion
 
@@ -27,7 +27,7 @@ The three-letter ISO currency code in uppercase.
 
 
 <ParamField body="amount" type="number">
- amount to convert in the smallest currency unit (e.g., cents, kobo).
+ amount to convert in major units of the `from` currency, not cents or kobo.
 </ParamField>
 
 ```json Request Body
@@ -56,7 +56,7 @@ The three-letter ISO currency code in uppercase.
 
 
 <ParamField body="amount" type="number">
- amount to convert in the smallest currency unit (e.g., cents, kobo).
+ amount to convert in major units of the `from` currency, not cents or kobo.
 </ParamField>
 
 

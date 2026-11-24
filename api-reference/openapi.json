@@ -634,7 +634,7 @@
         "tags": [
           "card"
         ],
-        "description": "Create card. LITE cards cannot be topped up after issuance; set the required initial balance using amount. Choose a supported DEFAULT card when repeat funding is required. On the production API, non-Nigerian DEFAULT USD cards can return HTTP 409 with CARD_VERIFICATION_PENDING before any card or debit exists. Poll customer card-verification status at most once per minute and submit issuance again only when can_create_card is true. Confirm sandbox availability separately.",
+        "description": "Create a card after customer and card verification. USD Mastercard supports DEFAULT and LITE; LITE cannot be topped up. Verification pending creates no card or debit. After receiving a card ID, track it rather than repeating issuance.",
         "operationId": "createCard",
         "requestBody": {
           "content": {
@@ -660,7 +660,9 @@
             "description": "Document verification is pending. No card or debit was created.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/CardVerificationError" },
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                },
                 "example": {
                   "code": "CARD_VERIFICATION_PENDING",
                   "message": "Customer identity verification is processing. No card has been created or debited. Check verification status before retrying card creation."
@@ -2088,31 +2090,173 @@
     },
     "/customers/{id}/card-verification": {
       "get": {
-        "tags": ["customer"],
+        "tags": [
+          "customer"
+        ],
         "operationId": "getCustomerCardVerification",
         "summary": "Get card verification",
         "description": "Available on the production API; confirm sandbox availability separately. Check a customer belonging to the authenticated business. Poll at most once per minute. Does not create a card or debit a wallet. Submit a new card request only when can_create_card is true; approval does not automatically start issuance.",
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" }, "example": "cus_example" }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cus_example"
+          }
         ],
         "responses": {
           "200": {
             "description": "Current verification status, not necessarily approval.",
-            "headers": { "Cache-Control": { "schema": { "type": "string", "example": "no-store" } } },
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-store"
+                }
+              }
+            },
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/CardVerificationStatus" },
-                "example": { "customer_id": "cus_example", "status": "PENDING", "can_create_card": false }
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationStatus"
+                },
+                "example": {
+                  "customer_id": "cus_example",
+                  "status": "PENDING",
+                  "can_create_card": false
+                }
               }
             }
           },
           "503": {
             "description": "Typed verification error. Inspect code and message; do not interpret unavailable status as approval.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CardVerificationError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                }
+              }
+            }
           },
           "default": {
             "description": "Authentication, customer access, or request error.",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UsererrorError" } } }
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "customer"
+        ],
+        "operationId": "submitCustomerCardVerification",
+        "summary": "Submit card verification",
+        "description": "Submit saved KYC for Nigerian BVN or supported non-Nigerian document verification without creating a card or debiting funds. No request body. Pending returns 202; approved returns 200. Correct rejected identity before retrying; create a card only when can_create_card is true.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cus_example"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Approved unchanged verification",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationStatus"
+                },
+                "example": {
+                  "customer_id": "cus_example",
+                  "status": "APPROVED",
+                  "can_create_card": true
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Typed verification error. Inspect code and message; do not interpret unavailable status as approval.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Authentication, customer access, or request error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsererrorError"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Verification pending",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string",
+                  "example": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationStatus"
+                },
+                "example": {
+                  "customer_id": "cus_example",
+                  "status": "PENDING",
+                  "can_create_card": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Verification pending, rejected or requiring review; inspect code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid or incomplete customer information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardVerificationError"
+                }
+              }
+            }
           }
         }
       }
@@ -2699,7 +2843,7 @@
         "tags": [
           "payouts"
         ],
-        "description": "Create payout",
+        "description": "Create an NGN bank payout. Amount is in naira, not kobo. Other currencies are rejected.",
         "operationId": "createPayout",
         "requestBody": {
           "content": {
@@ -5141,7 +5285,10 @@
             "type": "string"
           },
           "currency": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "NGN"
+            ]
           },
           "narration": {
             "type": "string"
@@ -5325,23 +5472,123 @@
       },
       "CardVerificationStatus": {
         "type": "object",
-        "required": ["customer_id", "status", "can_create_card"],
+        "required": [
+          "customer_id",
+          "status",
+          "can_create_card"
+        ],
         "properties": {
-          "customer_id": { "type": "string", "description": "Swerv customer ID owned by the authenticated business." },
+          "customer_id": {
+            "type": "string",
+            "description": "Swerv customer ID owned by the authenticated business."
+          },
           "status": {
             "type": "string",
-            "enum": ["NOT_SUBMITTED", "PENDING", "APPROVED", "REJECTED", "RECONCILIATION_REQUIRED"]
+            "enum": [
+              "NOT_SUBMITTED",
+              "PENDING",
+              "APPROVED",
+              "REJECTED",
+              "RECONCILIATION_REQUIRED",
+              "MANUAL_REVIEW_REQUIRED"
+            ]
           },
-          "can_create_card": { "type": "boolean", "description": "True when the saved verification permits another issuance attempt. Not a guarantee of successful issuance or sufficient wallet funds." }
+          "can_create_card": {
+            "type": "boolean",
+            "description": "True when the saved verification permits another issuance attempt. Not a guarantee of successful issuance or sufficient wallet funds."
+          },
+          "verification_id": {
+            "type": "string",
+            "description": "Stable verification identifier when available."
+          },
+          "review_case_id": {
+            "type": "string",
+            "description": "Support review case identifier."
+          },
+          "reason_code": {
+            "type": "string",
+            "description": "Machine-readable reason requiring correction or review."
+          },
+          "next_check_at": {
+            "type": "string",
+            "description": "Scheduled recovery check in RFC3339 format."
+          },
+          "exception_expires_at": {
+            "type": "string",
+            "description": "Expiry of an explicitly scoped issuance exception, when applicable."
+          },
+          "outstanding_requirements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Requirements retained on a scoped exception; absence does not establish clearance."
+          },
+          "field_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "code",
+                "message"
+              ]
+            }
+          }
         }
       },
       "CardVerificationError": {
         "type": "object",
-        "required": ["code", "message"],
+        "required": [
+          "code",
+          "message"
+        ],
         "properties": {
-          "code": { "type": "string", "description": "Stable customer-facing error code." },
-          "message": { "type": "string", "description": "Customer-safe explanation and next action." },
-          "field": { "type": "string", "description": "Affected field, when available." }
+          "code": {
+            "type": "string",
+            "description": "Stable customer-facing error code."
+          },
+          "message": {
+            "type": "string",
+            "description": "Customer-safe explanation and next action."
+          },
+          "field": {
+            "type": "string",
+            "description": "Affected field, when available."
+          },
+          "field_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "code",
+                "message"
+              ]
+            }
+          }
         }
       },
       "UsererrorError": {
@@ -5352,9 +5599,7 @@
           },
           "values": {
             "type": "object",
-            "additionalProperties": {
-
-            }
+            "additionalProperties": {}
           }
         }
       },

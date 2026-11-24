@@ -186,15 +186,16 @@ Provide necessary details to set up a new card.
 
 ```json
 {
-    "customer_id": "user",
+    "customer_id": "cus_example",
     "currency": "USD",
     "issuer": "MASTERCARD",
     "name_on_card": "Swerv",
-    "expiry_date": "2025-01-01",
     "amount": 10,
     "type": "DEFAULT"
 }
 ```
+
+Read the [supported issuance combinations](/api-reference/cards/create) and complete [customer and card KYC](/customer/card-kyc) before requesting a DEFAULT USD card. Mastercard supports DEFAULT as well as LITE; the no-top-up restriction is specific to LITE.
 
 ### 💳➕ Fund Card
 Add funds to an eligible existing card using the [Fund Card](/api-reference/cards/fund-card) endpoint.

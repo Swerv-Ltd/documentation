@@ -12,18 +12,20 @@ Create a virtual card for an approved customer. Card currency and issuer must us
 | Currency | Issuer | Supported type |
 | --- | --- | --- |
 | USD | `VISA` | `DEFAULT`, `LITE`, or corporate (`COOPERATE`) |
-| USD | `MASTERCARD` | `LITE` |
+| USD | `MASTERCARD` | `DEFAULT`, `LITE`; confirm corporate availability with Swerv |
 | NGN | `VERVE` | `DEFAULT` |
 
 Corporate cards currently use the API request value `COOPERATE`. Do not send `CORPORATE`; it is not currently an accepted value.
 
 NGN Verve cards are charged an issuance fee of NGN 1,000 in addition to the initial card balance. The declined transaction fee is NGN 500. Card funding, withdrawal, and termination fees are currently zero. After issuance succeeds, set the card PIN using the [Set Card PIN](/api-reference/cards/set-pin) endpoint.
 
+Issuer is the card brand; `type` selects the product. Mastercard does not imply LITE. Product availability remains subject to business and customer eligibility.
+
 ## Pending Identity Verification
 
 <Warning>
-For non-Nigerian `DEFAULT` USD cards on the production API, the
-[document KYC flow](/customer/non-nigerian-card-kyc) can return HTTP 409 with
+For Nigerian and supported non-Nigerian `DEFAULT` USD cards on the production API, the
+[customer and card KYC flow](/customer/card-kyc) can return HTTP 409 with
 `CARD_VERIFICATION_PENDING` before issuance. No card, prefund debit, or issuance-fee
 debit is created while verification is pending.
 </Warning>
@@ -32,8 +34,7 @@ Poll [Get Card Verification](/api-reference/customers/card-verification)
 at most once per minute. Submit a new card request only when `can_create_card` is
 `true`. Approval does not automatically resume issuance. A normal HTTP 200 response
 with a `card_id` means issuance has started processing; track that card instead
-of submitting duplicate creation requests. The Nigerian BVN and NGN Verve paths
-remain unchanged by this addition.
+of submitting duplicate creation requests. Nigerian customers can submit verification before requesting issuance. NGN Verve requirements remain separate.
 
 <RequestExample>
 
