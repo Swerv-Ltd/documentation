@@ -37,6 +37,7 @@
             "group": "Customer",
             "pages": [
               "customer/introduction",
+              "customer/card-kyc",
               "customer/non-nigerian-card-kyc"
             ]
           },
@@ -269,7 +270,12 @@
     }
   },
   "contextual": {
-    "options": ["copy", "view", "chatgpt", "claude"],
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ],
     "display": "header"
   },
   "interaction": {

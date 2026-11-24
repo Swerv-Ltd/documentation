@@ -68,7 +68,7 @@ The confidential `card.contactless.activation` event uses an HMAC signature inst
 const secret = process.env.SWERVPAY_SECRET;
 
 function verifyWebhook(req, res, next) {
-  if (req.headers['X-SWERV-SECRET'] !== secret) {
+  if (req.get('X-SWERV-SECRET') !== secret) {
     return res.status(401).json({
       message: "Unauthorized request."
     });
@@ -92,7 +92,7 @@ router.post('/webhook', verifyWebhook, (req, res) => {
 $secret = getenv('SWERVPAY_SECRET');
 
 function verifyWebhook($secret) {
-    $header = $_SERVER['HTTP_SWERVPAY_SECRET'];
+    $header = ($_SERVER['HTTP_X_SWERV_SECRET'] ?? '');
     if ($header !== $secret) {
         http_response_code(401);
         echo 'Unauthorized request';

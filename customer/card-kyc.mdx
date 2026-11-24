@@ -1,0 +1,63 @@
+---
+title: 'Customer and Card KYC'
+description: 'Verify customer identity, resolve corrections, and request a card after approval.'
+---
+
+Customer KYC and card verification are separate steps. Approved customer KYC alone does not mean a card can be issued. The verification flow is available to all businesses on the production API for supported individual DEFAULT USD cards. Country and product eligibility still apply; confirm sandbox support separately.
+
+## Integration flow
+
+1. [Create the customer](/api-reference/customers/create) using their real identity and country.
+2. [Save customer KYC](/api-reference/customers/kyc). Nigerian customers supply a BVN; supported non-Nigerian customers supply the required identifiers and documents.
+3. [Submit card verification](/api-reference/customers/submit-card-verification) using `POST /customers/{id}/card-verification`, with no request body. Saved KYC is used. This does not create a card, reserve funds, or debit a wallet.
+4. Check [verification status](/api-reference/customers/card-verification), no more than once per minute, or subscribe to [verification decision webhooks](/webhooks/card#verification-decision-webhooks).
+5. When `can_create_card` is `true`, explicitly call [Create Card](/api-reference/cards/create). Track the returned card ID through card retrieval and card webhooks.
+
+HTTP 202 from verification means processing is pending. HTTP 200 with `APPROVED` and `can_create_card: true` permits an issuance attempt. Approval does not automatically resume a previous card request or guarantee funding and issuance success.
+
+Existing integrations can continue initiating verification through card creation. A verification-pending response creates no card and makes no debit. Once issuance returns a card ID, track that card instead of submitting duplicate creation requests.
+
+## Nigerian identity reconciliation
+
+Verified BVN data is checked against the saved customer profile. Safe differences in name order, spacing and hyphenation can be reconciled automatically only when all name tokens match, the submitted date of birth agrees, screening is explicitly clear, and no existing card-verification submission prevents correction.
+
+A missing, extra or different name requires review. Verified BVN data can correct the saved date of birth through the identity-verification flow; disagreements between verified identity sources require an evidence-backed support review. Do not repeatedly edit dates to seek approval.
+
+Missing screening evidence is not clearance. A screening concern or incomplete result remains subject to review. Existing approved card verification is reused when the verified details remain unchanged; changing details after submission may require reconciliation.
+
+## Status and next action
+
+| Status | Next action |
+| --- | --- |
+| `NOT_SUBMITTED` | Save complete KYC, then submit card verification. |
+| `PENDING` | Wait for a decision webhook or poll no more than once per minute. |
+| `APPROVED` | Request issuance only when `can_create_card` is `true`. |
+| `REJECTED` | Confirm the identity details and resolve the reported issue. An unchanged rejected request is not a fresh verification attempt. |
+| `RECONCILIATION_REQUIRED` | Contact support to reconcile the existing verification. Do not create another customer to bypass review. |
+
+## Corrections and recovery
+
+| Error or review reason | Action |
+| --- | --- |
+| `CUSTOMER_KYC_REQUIRED` / `CUSTOMER_BVN_REQUIRED` | Complete the missing KYC information. |
+| `CUSTOMER_IDENTITY_NAME_MISMATCH` | Confirm the customer's legal name. Material differences require support review. |
+| `IDENTITY_CORRECTION_REQUIRED` | Resolve the rejected identity data before retrying. |
+| `IDENTITY_SCREENING_INCOMPLETE` | Contact support to obtain and review usable screening evidence. |
+| `IDENTITY_VERIFICATION_REVIEW_REQUIRED` | Contact support; do not treat this as approval. |
+| `CARD_VERIFICATION_PENDING` / `IDENTITY_VERIFICATION_PENDING` | Wait and check status. |
+| `CUSTOMER_VERIFICATION_REVIEW_REQUIRED` / `CARD_VERIFICATION_RECONCILIATION_REQUIRED` | Reconcile the existing submission with support. |
+| `IDENTITY_VERIFICATION_UNAVAILABLE` / `CARD_VERIFICATION_UNAVAILABLE` | Preserve the customer's details and retry after service recovery. |
+
+Swerv checks recoverable pending outcomes using bounded recovery. This is not a guarantee of approval and does not blindly resubmit an unchanged rejected identity. A reviewed correction can be submitted when the corrected profile and verified evidence agree.
+
+Use the [KYC correction rules](/api-reference/customers/kyc#correcting-existing-customer-information) for saved information. Repeating identical approved `FULL` or `TWO` KYC reuses the approved state; it does not replace approved documents. Keep identity documents private and provide them through the supported secure workflow.
+
+For document requirements and image constraints, see [non-Nigerian card KYC](/customer/non-nigerian-card-kyc). LITE, corporate and NGN Verve product requirements remain separate.
+
+## Incomplete identity responses
+
+An incomplete BVN response is not approval. Swerv can refresh unusable cached evidence after five minutes, or an unresolved lookup after fifteen minutes. Recovery is limited to two additional lookups and preserves prior evidence. Concurrent requests share the same pending attempt. Existing usable or reviewed evidence and screening flags are not replaced by this recovery flow. If recovery is exhausted, contact support rather than looping submissions.
+
+## Address corrections
+
+Use an accurate residential address. City and state must fit the verification service's 20-character limit; use an accurate recognized abbreviation where appropriate, never arbitrary truncation. The street address must use standard English (ASCII) characters. Correct punctuation without changing the address. A structured address-validation rejection can be retried after the saved address is corrected and verified identity evidence agrees. Unknown provider outcomes still require reconciliation.
