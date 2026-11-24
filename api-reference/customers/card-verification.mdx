@@ -56,3 +56,7 @@ notify subscribed businesses of document-verification approvals and rejections.
 This endpoint remains the source for current eligibility and a fallback for
 missed deliveries. Start verification separately with
 [Submit Card Verification](/api-reference/customers/submit-card-verification).
+
+## Review and recovery
+
+`MANUAL_REVIEW_REQUIRED` needs action; it is not ordinary processing. Inspect `reason_code` and the safe `field_errors` array (`field`, `code`, `message`). Share `review_case_id` with support when present. A pending recoverable case can include `next_check_at` for its scheduled check. See [customer and card KYC](/customer/card-kyc) for the complete status and correction flow.

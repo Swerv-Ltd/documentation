@@ -33,6 +33,7 @@ Missing screening evidence is not clearance. A screening concern or incomplete r
 | `PENDING` | Wait for a decision webhook or poll no more than once per minute. |
 | `APPROVED` | Request issuance only when `can_create_card` is `true`. |
 | `REJECTED` | Confirm the identity details and resolve the reported issue. An unchanged rejected request is not a fresh verification attempt. |
+| `MANUAL_REVIEW_REQUIRED` | Use `reason_code`, `field_errors` and `review_case_id` to resolve the issue with support. Do not retry unchanged data. |
 | `RECONCILIATION_REQUIRED` | Contact support to reconcile the existing verification. Do not create another customer to bypass review. |
 
 ## Corrections and recovery
@@ -45,7 +46,7 @@ Missing screening evidence is not clearance. A screening concern or incomplete r
 | `IDENTITY_SCREENING_INCOMPLETE` | Contact support to obtain and review usable screening evidence. |
 | `IDENTITY_VERIFICATION_REVIEW_REQUIRED` | Contact support; do not treat this as approval. |
 | `CARD_VERIFICATION_PENDING` / `IDENTITY_VERIFICATION_PENDING` | Wait and check status. |
-| `CUSTOMER_VERIFICATION_REVIEW_REQUIRED` / `CARD_VERIFICATION_RECONCILIATION_REQUIRED` | Reconcile the existing submission with support. |
+| `CUSTOMER_VERIFICATION_REVIEW_REQUIRED` / `CARD_VERIFICATION_MANUAL_REVIEW_REQUIRED` / `CARD_VERIFICATION_RECONCILIATION_REQUIRED` | Reconcile the existing submission with support. |
 | `IDENTITY_VERIFICATION_UNAVAILABLE` / `CARD_VERIFICATION_UNAVAILABLE` | Preserve the customer's details and retry after service recovery. |
 
 Swerv checks recoverable pending outcomes using bounded recovery. This is not a guarantee of approval and does not blindly resubmit an unchanged rejected identity. A reviewed correction can be submitted when the corrected profile and verified evidence agree.
@@ -61,3 +62,5 @@ An incomplete BVN response is not approval. Swerv can refresh unusable cached ev
 ## Address corrections
 
 Use an accurate residential address. City and state must fit the verification service's 20-character limit; use an accurate recognized abbreviation where appropriate, never arbitrary truncation. The street address must use standard English (ASCII) characters. Correct punctuation without changing the address. A structured address-validation rejection can be retried after the saved address is corrected and verified identity evidence agrees. Unknown provider outcomes still require reconciliation.
+
+When returned, `next_check_at` indicates the scheduled recovery check. `verification_id` identifies verification and `review_case_id` identifies the support case. Include the customer ID and review case ID when contacting support; do not send a BVN or identity document in ordinary support messages.

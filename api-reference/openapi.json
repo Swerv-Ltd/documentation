@@ -5489,12 +5489,62 @@
               "PENDING",
               "APPROVED",
               "REJECTED",
-              "RECONCILIATION_REQUIRED"
+              "RECONCILIATION_REQUIRED",
+              "MANUAL_REVIEW_REQUIRED"
             ]
           },
           "can_create_card": {
             "type": "boolean",
             "description": "True when the saved verification permits another issuance attempt. Not a guarantee of successful issuance or sufficient wallet funds."
+          },
+          "verification_id": {
+            "type": "string",
+            "description": "Stable verification identifier when available."
+          },
+          "review_case_id": {
+            "type": "string",
+            "description": "Support review case identifier."
+          },
+          "reason_code": {
+            "type": "string",
+            "description": "Machine-readable reason requiring correction or review."
+          },
+          "next_check_at": {
+            "type": "string",
+            "description": "Scheduled recovery check in RFC3339 format."
+          },
+          "exception_expires_at": {
+            "type": "string",
+            "description": "Expiry of an explicitly scoped issuance exception, when applicable."
+          },
+          "outstanding_requirements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Requirements retained on a scoped exception; absence does not establish clearance."
+          },
+          "field_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "code",
+                "message"
+              ]
+            }
           }
         }
       },
@@ -5516,6 +5566,28 @@
           "field": {
             "type": "string",
             "description": "Affected field, when available."
+          },
+          "field_errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "code": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "field",
+                "code",
+                "message"
+              ]
+            }
           }
         }
       },
